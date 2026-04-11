@@ -34,15 +34,17 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-heig
 
 .critters{
   display:flex;gap:2rem;margin-top:1rem;
-  position:relative;
+  position:relative;align-items:flex-end;
 }
-.critter{image-rendering:pixelated}
+.critters > div{display:flex;flex-direction:column;align-items:center;width:100px}
+.critter{image-rendering:pixelated;display:flex;justify-content:center}
 @keyframes waddle{0%,100%{transform:rotate(0deg) translateY(0)}25%{transform:rotate(-8deg) translateY(-3px)}75%{transform:rotate(8deg) translateY(-3px)}}
 .critter.raccoon{animation:waddle 0.6s ease-in-out infinite}
+.critter.raccoon svg{transform:scale(0.85)}
 @keyframes pirouette{0%{transform:rotateY(0deg) scale(1)}50%{transform:rotateY(180deg) scale(1.1)}100%{transform:rotateY(360deg) scale(1)}}
 .critter.otter{animation:pirouette 2.5s ease-in-out infinite}
 .critter-label{
-  font-family:var(--font-mono);font-size:10px;
+  font-family:var(--font-mono);font-size:12px;
   letter-spacing:0.1em;text-transform:uppercase;
   color:var(--ink-3);text-align:center;margin-top:6px;
 }
