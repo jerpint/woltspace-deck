@@ -90,6 +90,15 @@ app.get('/', (req, res) => {
 // Static files
 app.use(express.static(SLIDES_DIR));
 
+// 404 fallback — redirect to first slide
+app.use((req, res) => {
+  const slides = fs.readdirSync(SLIDES_DIR)
+    .filter(f => f.match(/^slide-\d+-[\w-]+\.html$/))
+    .sort();
+  if (slides.length) return res.redirect('/' + slides[0]);
+  res.status(404).send('No slides yet');
+});
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`woltspace-deck running on http://localhost:${PORT}`);
 });
