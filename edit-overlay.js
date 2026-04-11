@@ -147,5 +147,16 @@
       e.preventDefault();
       saveEdits();
     }
+    // Arrow keys for prev/next (skip when editing text)
+    if (editMode) return;
+    var navLinks = document.querySelectorAll('.slide-nav a');
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      var next = navLinks[navLinks.length - 1];
+      if (next && !next.classList.contains('hidden')) { e.preventDefault(); next.click(); }
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      var prev = navLinks[0];
+      if (prev && !prev.classList.contains('hidden')) { e.preventDefault(); prev.click(); }
+    }
   });
 })();
