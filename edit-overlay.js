@@ -1,3 +1,16 @@
+// Auto-reload — polls server for file changes, reloads when detected
+(function() {
+  var file = location.pathname.match(/(slide-\d+-[\w-]+\.html)/);
+  if (!file) return;
+  var lastHash = null;
+  setInterval(function() {
+    fetch('/api/hash?file=' + file[1]).then(function(r) { return r.json(); }).then(function(d) {
+      if (lastHash === null) { lastHash = d.hash; return; }
+      if (d.hash !== lastHash) location.reload();
+    }).catch(function() {});
+  }, 1500);
+})();
+
 // Edit overlay — makes text elements contenteditable on double-click
 // Press Escape to cancel, click Save button to persist changes
 (function() {

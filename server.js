@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const app = express();
 const PORT = parseInt(process.argv.find((a, i, arr) => arr[i - 1] === '--port') || '4010');
@@ -49,6 +50,19 @@ app.post('/api/save', (req, res) => {
   console.log(`[save] ${file}: ${changed}/${updates.length} updates applied`);
   fs.writeFileSync(filePath, html);
   res.json({ ok: true, changed });
+});
+
+// File hash for auto-reload polling
+app.get('/api/hash', (req, res) => {
+  const file = req.query.file;
+  if (!file || !file.match(/^slide-\d+-[\w-]+\.html$/)) {
+    return res.status(400).json({ error: 'Invalid file' });
+  }
+  const filePath = path.join(SLIDES_DIR, file);
+  if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'Not found' });
+  const content = fs.readFileSync(filePath);
+  const hash = crypto.createHash('md5').update(content).digest('hex').slice(0, 12);
+  res.json({ hash });
 });
 
 // List all slides
