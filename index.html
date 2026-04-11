@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>woltspace deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#EDE8DE;--surface:#F5F1E8;--surface-2:#FAF7F0;
+  --border:#D6CCBA;--border-2:#C4B89E;
+  --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
+  --terra:#C4531E;
+  --font-display:'Preahvihear',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;padding:3rem}
+h1{font-family:var(--font-display);font-size:32px;font-weight:300;margin-bottom:0.5rem}
+.sub{font-size:14px;color:var(--ink-3);margin-bottom:2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{
+  border:1px solid var(--border);border-radius:10px;background:var(--surface);
+  overflow:hidden;transition:all 0.15s;cursor:pointer;text-decoration:none;color:inherit;
+}
+.card:hover{border-color:var(--border-2);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+.card-preview{
+  width:100%;aspect-ratio:16/9;border-bottom:1px solid var(--border);
+  overflow:hidden;background:var(--bg);
+}
+.card-preview iframe{
+  width:400%;height:400%;border:none;pointer-events:none;
+  transform:scale(0.25);transform-origin:top left;
+}
+.card-info{padding:12px 16px}
+.card-num{font-family:var(--font-mono);font-size:11px;color:var(--terra);font-weight:600;letter-spacing:0.06em}
+.card-title{font-size:14px;font-weight:500;margin-top:2px}
+</style>
+</head>
+<body>
+<h1>woltspace deck</h1>
+<div class="sub">Click a slide to view & edit. Double-click text to edit in place.</div>
+<div class="grid" id="grid"></div>
+<script>
+fetch('/api/slides').then(r=>r.json()).then(slides=>{
+  const grid=document.getElementById('grid');
+  slides.forEach((file,i)=>{
+    const name=file.replace(/^slide-\d+-/,'').replace('.html','').replace(/-/g,' ');
+    const a=document.createElement('a');
+    a.className='card';
+    a.href='/'+file;
+    a.innerHTML=`
+      <div class="card-preview"><iframe src="/${file}" loading="lazy"></iframe></div>
+      <div class="card-info">
+        <div class="card-num">Slide ${i+1}</div>
+        <div class="card-title">${name}</div>
+      </div>`;
+    grid.appendChild(a);
+  });
+});
+</script>
+</body>
+</html>

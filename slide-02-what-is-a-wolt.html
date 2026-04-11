@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>what is a wolt?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#EDE8DE;--surface:#F5F1E8;--surface-2:#FAF7F0;
+  --border:#D6CCBA;--border-2:#C4B89E;
+  --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
+  --terra:#C4531E;--terra-light:#F0D5C8;
+  --amber:#C98B2A;--amber-light:#F2E4C0;
+  --font-display:'Preahvihear',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+
+.slide{
+  max-width:720px;padding:2rem 3rem;
+  display:flex;flex-direction:column;align-items:center;
+  gap:2.2rem;text-align:center;
+  animation:fadeUp 0.7s ease both;
+}
+
+h1{font-family:var(--font-display);font-size:44px;font-weight:300;color:var(--ink);letter-spacing:-0.01em}
+
+.concept{
+  font-size:20px;color:var(--ink-2);font-weight:300;
+  line-height:1.7;max-width:560px;
+}
+.concept strong{color:var(--terra);font-weight:500}
+
+.features{
+  display:flex;flex-direction:column;gap:10px;
+  list-style:none;width:100%;max-width:520px;
+  text-align:left;
+}
+.feature-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 20px;background:var(--surface);
+  border:1px solid var(--border);border-radius:10px;
+  transition:border-color 0.15s;
+}
+.feature-item:hover{border-color:var(--border-2)}
+.feature-icon{font-size:22px;flex-shrink:0;margin-top:1px}
+.feature-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.feature-desc{font-size:13px;color:var(--ink-3);line-height:1.5;margin:0}
+
+/* walking critters along the bottom */
+.scene{position:fixed;bottom:0;left:0;right:0;height:90px;overflow:hidden;pointer-events:none}
+.ground{position:absolute;bottom:0;left:0;right:0;height:16px;background:linear-gradient(to bottom,#72B855,#4A8838)}
+
+.bg-beaver{position:absolute;bottom:18px;animation:walk-across 55s linear infinite}
+.bg-raccoon{position:absolute;bottom:18px;animation:raccoon-wander 40s linear 4s infinite}
+
+@keyframes walk-across{
+  0%{transform:translateX(-120px)}
+  49%{transform:translateX(calc(100vw + 120px))}
+  49.1%{transform:translateX(calc(100vw + 120px)) scaleX(-1)}
+  98%{transform:translateX(-120px) scaleX(-1)}
+  98.1%{transform:translateX(-120px)}
+  100%{transform:translateX(-120px)}
+}
+@keyframes raccoon-wander{
+  0%{transform:translateX(15vw)}
+  44%{transform:translateX(70vw)}
+  44.1%{transform:translateX(70vw) scaleX(-1)}
+  88%{transform:translateX(15vw) scaleX(-1)}
+  88.1%{transform:translateX(15vw)}
+  100%{transform:translateX(15vw)}
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+.bob{animation:bob 0.8s ease-in-out infinite}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.slide-nav{
+  position:fixed;bottom:1.5rem;left:0;right:0;
+  display:flex;justify-content:space-between;
+  padding:0 2rem;pointer-events:none;z-index:20;
+}
+.slide-nav a{
+  pointer-events:auto;
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink-3);text-decoration:none;
+  padding:8px 16px;border:1px solid var(--border);
+  border-radius:6px;background:var(--surface);
+  transition:all 0.15s;
+}
+.slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
+.slide-nav .hidden{visibility:hidden}
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <h1>what is a wolt?</h1>
+  <div class="concept">
+    A wolt is an <strong>AI creature</strong> that lives in your infrastructure.<br>
+    It has a <strong>home</strong>, a <strong>memory</strong>, a <strong>personality</strong>,<br>
+    and it <strong>builds things</strong> alongside you.
+  </div>
+  <ul class="features">
+    <li class="feature-item"><span class="feature-icon">🧠</span><div><div class="feature-title">Persistent memory</div><p class="feature-desc">Remembers across sessions. Session 42 picks up where 41 left off.</p></div></li>
+    <li class="feature-item"><span class="feature-icon">🏠</span><div><div class="feature-title">Its own space</div><p class="feature-desc">A live site, files, drafts, artifacts. Not just a chat window.</p></div></li>
+    <li class="feature-item"><span class="feature-icon">🔧</span><div><div class="feature-title">Real tools</div><p class="feature-desc">Can code, deploy, search the web, message you on Telegram.</p></div></li>
+    <li class="feature-item"><span class="feature-icon">🐾</span><div><div class="feature-title">Personality</div><p class="feature-desc">Not a chatbot. A creature with opinions that drives the work.</p></div></li>
+  </ul>
+</div>
+
+<nav class="slide-nav">
+  <a href="slide-01-title.html">← prev</a>
+  <a href="slide-03-the-lodge.html">next →</a>
+</nav>
+
+<div class="scene">
+  <div class="ground"></div>
+  <div class="bg-beaver"><div class="bob" id="beaver-sprite"></div></div>
+  <div class="bg-raccoon"><div class="bob" id="raccoon-sprite"></div></div>
+</div>
+
+<script>
+(function(){
+  var px=3;
+  function spriteToSVG(map,palette,px){
+    var rows=map.length,cols=Math.max.apply(null,map.map(function(r){return r.length}));
+    var rects=[];
+    for(var r=0;r<rows;r++)for(var c=0;c<map[r].length;c++){
+      var ch=map[r][c];if(ch===' '||ch==='.')continue;
+      var fill=palette[ch];if(!fill)continue;
+      rects.push('<rect x="'+(c*px)+'" y="'+(r*px)+'" width="'+px+'" height="'+px+'" fill="'+fill+'"/>');
+    }
+    return '<svg width="'+(cols*px)+'" height="'+(rows*px)+'" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;display:block" shape-rendering="crispEdges">'+rects.join('')+'</svg>';
+  }
+
+  var beavMap=[
+    '..AAA........AAA.....',
+    '.ABBBA......ABBBA....',
+    '.ABAAAAAAAAAAAABA....',
+    '.ABABBBBBBBBBAABA....',
+    '..ABBBBBBBBBBBAA.....',
+    '..ABABBBBAEBBBAA.....',
+    '..ABABBBBAEBBBAA.....',
+    '.ABBAAAABAEBBBBA.....',
+    '.ABACAACCCFABBBA.....',
+    '.ABACCACCCFABBBA.AAA.',
+    '.ABBAAAAAAEBBBAAADDDA',
+    '..ABBCAFABBBBAA.AADDA',
+    '...ABAAAABBBBBBAADADA',
+    '..ABBBBBBBBBBBBAADDAA',
+    '.ABBABCCCAEBBBBBAADDA',
+    '.ABBACCCABBBBABBADADA',
+    '.AGGACCCAGGGGABBADADA',
+    '..AAACCCAAAAABBBADDA.',
+    '..ABCCCCCCFABBBBAAAA.',
+    '.AAABCCCCAAAABBBAA...',
+    'ABBBACCCABBBBBBAA....',
+    'AAAAAAAAAAAAAAAA.....',
+  ];
+  var beavPal={A:'#3f190e',B:'#af6127',C:'#fce6b0',D:'#773c1f',E:'#050003',F:'#fffee7',G:'#dd7a2d'};
+
+  var raccMap=[
+    '...BB........BBB.........',
+    '...BFGG.....GFFB.........',
+    '...BABB.....BAAB.........',
+    '...BCAABBBBBACCB.........',
+    '...BAAAAAAAAAAAB.........',
+    '...BCCCCAAACCCCB.........',
+    '...BCBCCAAACCCCB.........',
+    '.BBCCBBCBCCCBCBCB........',
+    '.BBACBBCAAACBCCAB........',
+    '.BBCAAADHHHDAAACB...BBB..',
+    '.BBCAAADHHHDAAACB...BBB..',
+    '...BCAADDDDDAEEB...BCCCB.',
+    '....BCCCCEEECBB....BAAACB',
+    '...BAAAAAAAAAAAB...BCCCBB',
+    '...BAAAAAAAAAAAB...BCCCCB',
+    '.BBAAAAAAAAAAAAAB..BAAAAB',
+    '.BBAABBAAAAABAAAB..BCCCCB',
+    '.BBAAAABAAABAAAABBBAACCCB',
+    '.GGFAAABAAABAAAAGBBAABBCG',
+    'BAABAAABAAABAAABABBCAAAB.',
+    'BAAABBBBAAABBBBAABBCCBB..',
+    'BCCAAAAAAAAAAAAACBBBB....',
+    '.BBBBGGAAAAAGBBBB........',
+    '.BBCCBBAAAAABCCCB........',
+    '...BBBBBBBBBBBBB.........',
+  ];
+  var raccPal={A:'#7f8894',B:'#282c33',C:'#40454b',D:'#f0ecf0',E:'#545c65',F:'#a0abbd',G:'#050029',H:'#efa09f'};
+
+  var b=document.getElementById('beaver-sprite');
+  if(b)b.innerHTML=spriteToSVG(beavMap,beavPal,px);
+  var r=document.getElementById('raccoon-sprite');
+  if(r)r.innerHTML=spriteToSVG(raccMap,raccPal,px);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#EDE8DE;--surface:#F5F1E8;--surface-2:#FAF7F0;
+  --border:#D6CCBA;--border-2:#C4B89E;
+  --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
+  --terra:#C4531E;--terra-light:#F0D5C8;
+  --amber:#C98B2A;--amber-light:#F2E4C0;
+  --forest:#4A8838;--forest-light:#D6E8C8;
+  --blue:#3B6EA5;--blue-light:#D0DEF0;
+  --font-display:'Preahvihear',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+
+.slide{
+  max-width:720px;width:100%;padding:1.2rem 2rem;
+  display:flex;flex-direction:column;align-items:center;
+  gap:1.2rem;text-align:center;
+  animation:fadeUp 0.7s ease both;
+}
+
+h1{font-family:var(--font-display);font-size:36px;font-weight:300;color:var(--ink);letter-spacing:-0.01em}
+
+.subtitle{font-size:15px;color:var(--ink-2);font-weight:300;line-height:1.5}
+
+/* compact stacked architecture */
+.stack{
+  display:flex;flex-direction:column;
+  width:100%;max-width:540px;
+  border:1px solid var(--border);border-radius:10px;
+  overflow:hidden;
+}
+
+.stack-layer{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 16px;
+  border-bottom:1px solid var(--border);
+}
+.stack-layer:last-child{border-bottom:none}
+
+.stack-layer.human{background:var(--blue-light)}
+.stack-layer.interface{background:var(--amber-light)}
+.stack-layer.platform{background:var(--surface)}
+.stack-layer.wolts{background:var(--forest-light)}
+.stack-layer.infra{background:var(--terra-light)}
+
+.layer-icon{font-size:18px;flex-shrink:0;width:28px;text-align:center}
+.layer-title{
+  font-family:var(--font-mono);font-size:12px;font-weight:600;
+  color:var(--ink);white-space:nowrap;min-width:120px;text-align:left;
+}
+.layer-tags{
+  display:flex;gap:4px;flex-wrap:wrap;flex:1;
+}
+.tag{
+  font-family:var(--font-mono);font-size:9px;font-weight:500;
+  letter-spacing:0.04em;text-transform:uppercase;
+  padding:2px 7px;border-radius:3px;
+  background:rgba(0,0,0,0.06);color:var(--ink-2);
+}
+
+/* side annotation */
+.side-note{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 16px;background:var(--surface);
+  border:1px dashed var(--border);border-radius:8px;
+  max-width:540px;
+}
+.side-note-icon{font-size:16px;flex-shrink:0}
+.side-note-text{font-size:11px;color:var(--ink-3);line-height:1.4;text-align:left;font-family:var(--font-mono)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.slide-nav{
+  position:fixed;bottom:1.5rem;left:0;right:0;
+  display:flex;justify-content:space-between;
+  padding:0 2rem;pointer-events:none;z-index:20;
+}
+.slide-nav a{
+  pointer-events:auto;
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink-3);text-decoration:none;
+  padding:8px 16px;border:1px solid var(--border);
+  border-radius:6px;background:var(--surface);
+  transition:all 0.15s;
+}
+.slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
+.slide-nav .hidden{visibility:hidden}
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <h1>how it all fits together</h1>
+  <div class="subtitle">Five layers, from you to bare metal.</div>
+
+  <div class="stack">
+    <div class="stack-layer human">
+      <span class="layer-icon">🧑</span>
+      <div class="layer-title">You</div>
+      <div class="layer-tags"><span class="tag">telegram</span><span class="tag">slack</span><span class="tag">browser</span><span class="tag">terminal</span></div>
+    </div>
+    <div class="stack-layer interface">
+      <span class="layer-icon">🖥</span>
+      <div class="layer-title">TUI + Viewport</div>
+      <div class="layer-tags"><span class="tag">push-view</span><span class="tag">livereload</span><span class="tag">split view</span></div>
+    </div>
+    <div class="stack-layer platform">
+      <span class="layer-icon">⚙️</span>
+      <div class="layer-title">Platform</div>
+      <div class="layer-tags"><span class="tag">fastapi</span><span class="tag">tunnel</span><span class="tag">sessions</span><span class="tag">cron</span><span class="tag">github</span></div>
+    </div>
+    <div class="stack-layer wolts">
+      <span class="layer-icon">🦝</span>
+      <div class="layer-title">Wolts</div>
+      <div class="layer-tags"><span class="tag">memory/</span><span class="tag">site/</span><span class="tag">apps/</span><span class="tag">sparks/</span><span class="tag">CLAUDE.md</span></div>
+    </div>
+    <div class="stack-layer infra">
+      <span class="layer-icon">🐳</span>
+      <div class="layer-title">Container</div>
+      <div class="layer-tags"><span class="tag">docker</span><span class="tag">git</span><span class="tag">volume</span></div>
+    </div>
+  </div>
+
+  <div class="side-note">
+    <span class="side-note-icon">💡</span>
+    <div class="side-note-text">This slide? Built by a wolt, pushed to viewport, swapped live via Telegram.</div>
+  </div>
+</div>
+
+<nav class="slide-nav">
+  <a href="slide-04-memory.html">&larr; prev</a>
+  <a href="slide-06-apps-github.html">next &rarr;</a>
+</nav>
+
+</body>
+</html>
