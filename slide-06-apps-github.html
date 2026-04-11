@@ -99,6 +99,22 @@ h1{font-family:var(--font-display);font-size:40px;font-weight:300;color:var(--in
 }
 .slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
 .slide-nav .hidden{visibility:hidden}
+
+@media(max-width:600px){
+  body{overflow-y:auto}
+  .slide{padding:1.2rem 1rem;gap:1.2rem}
+  h1{font-size:32px}
+  .subtitle{font-size:14px}
+  .two-col{flex-direction:column;gap:12px}
+  .card{max-width:none;padding:16px 14px}
+  .card-title{font-size:14px}
+  .card-body{font-size:12px}
+  .card-features li{font-size:10px;padding:4px 8px}
+  .demo-hint{padding:8px 14px}
+  .demo-hint-text{font-size:10px}
+  .slide-nav{padding:0 1rem;bottom:1rem}
+  .slide-nav a{font-size:11px;padding:6px 12px}
+}
 </style>
 </head>
 <body>
@@ -151,7 +167,7 @@ h1{font-family:var(--font-display);font-size:40px;font-weight:300;color:var(--in
 
 <nav class="slide-nav">
   <a href="slide-05-architecture.html">&larr; prev</a>
-  <a class="hidden" href="#">next &rarr;</a>
+  <a href="slide-07-creatures.html">next &rarr;</a>
 </nav>
 
 </body>

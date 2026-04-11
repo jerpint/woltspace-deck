@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>creatures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#EDE8DE;--surface:#F5F1E8;--surface-2:#FAF7F0;
+  --border:#D6CCBA;--border-2:#C4B89E;
+  --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
+  --terra:#C4531E;--terra-light:#F0D5C8;
+  --amber:#C98B2A;--amber-light:#F2E4C0;
+  --forest:#4A8838;--forest-light:#D6E8C8;
+  --blue:#3B6EA5;--blue-light:#D0DEF0;
+  --font-display:'Preahvihear',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+
+.slide{
+  max-width:760px;width:100%;padding:1.5rem 2.5rem;
+  display:flex;flex-direction:column;align-items:center;
+  gap:1.6rem;text-align:center;
+  animation:fadeUp 0.7s ease both;
+}
+
+h1{font-family:var(--font-display);font-size:40px;font-weight:300;color:var(--ink);letter-spacing:-0.01em}
+.subtitle{font-size:16px;color:var(--ink-2);font-weight:300;line-height:1.6;max-width:520px}
+.subtitle strong{color:var(--terra);font-weight:500}
+
+.creature-grid{
+  display:flex;gap:14px;width:100%;max-width:680px;
+  align-items:stretch;flex-wrap:wrap;justify-content:center;
+}
+
+.creature-card{
+  flex:1;min-width:200px;max-width:220px;
+  border:1px solid var(--border);border-radius:12px;
+  background:var(--surface);padding:18px 16px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  transition:border-color 0.15s, transform 0.15s;
+}
+.creature-card:hover{border-color:var(--border-2);transform:translateY(-2px)}
+
+.creature-emoji{font-size:36px;line-height:1}
+.creature-name{
+  font-family:var(--font-mono);font-size:14px;font-weight:600;
+  color:var(--ink);letter-spacing:0.04em;
+}
+.creature-model{
+  font-family:var(--font-mono);font-size:10px;font-weight:500;
+  color:var(--ink-3);letter-spacing:0.1em;text-transform:uppercase;
+  padding:2px 8px;border-radius:4px;background:var(--surface-2);
+  border:1px solid var(--border);
+}
+.creature-desc{
+  font-size:12px;color:var(--ink-2);line-height:1.5;
+}
+.creature-desc strong{color:var(--ink);font-weight:600}
+
+.divider{
+  width:100%;max-width:600px;display:flex;align-items:center;gap:12px;
+  margin:0.2rem 0;
+}
+.divider-line{flex:1;height:1px;background:var(--border)}
+.divider-label{
+  font-family:var(--font-mono);font-size:10px;font-weight:500;
+  color:var(--ink-3);letter-spacing:0.12em;text-transform:uppercase;
+}
+
+.ecosystem{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 18px;background:var(--forest-light);
+  border:1px solid #b0d4a0;border-radius:8px;
+  max-width:560px;
+}
+.ecosystem-icon{font-size:18px;flex-shrink:0}
+.ecosystem-text{
+  font-family:var(--font-mono);font-size:11px;
+  color:var(--ink-2);line-height:1.5;text-align:left;
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.slide-nav{
+  position:fixed;bottom:1.5rem;left:0;right:0;
+  display:flex;justify-content:space-between;
+  padding:0 2rem;pointer-events:none;z-index:20;
+}
+.slide-nav a{
+  pointer-events:auto;
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink-3);text-decoration:none;
+  padding:8px 16px;border:1px solid var(--border);
+  border-radius:6px;background:var(--surface);
+  transition:all 0.15s;
+}
+.slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
+.slide-nav .hidden{visibility:hidden}
+
+@media(max-width:600px){
+  body{overflow-y:auto}
+  .slide{padding:1.2rem 1rem;gap:1rem}
+  h1{font-size:32px}
+  .subtitle{font-size:14px}
+  .creature-grid{gap:10px}
+  .creature-card{min-width:140px;max-width:none;padding:14px 12px}
+  .creature-emoji{font-size:28px}
+  .creature-name{font-size:12px}
+  .creature-model{font-size:9px}
+  .creature-desc{font-size:11px}
+  .divider-label{font-size:9px}
+  .ecosystem{padding:8px 14px}
+  .ecosystem-text{font-size:10px}
+  .slide-nav{padding:0 1rem;bottom:1rem}
+  .slide-nav a{font-size:11px;padding:6px 12px}
+}
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <h1>the creatures</h1>
+  <div class="subtitle">
+    Every wolt is a <strong>creature</strong> with a role. Different models, different strengths, one lodge.
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-label">rodents — builders</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="creature-grid">
+    <div class="creature-card">
+      <div class="creature-emoji">🦫</div>
+      <div class="creature-name">beaver</div>
+      <div class="creature-model">sonnet</div>
+      <div class="creature-desc">The <strong>default builder</strong>. Memory, identity, site. Does the heavy lifting.</div>
+    </div>
+
+    <div class="creature-card">
+      <div class="creature-emoji">🦝</div>
+      <div class="creature-name">raccoon</div>
+      <div class="creature-model">opus</div>
+      <div class="creature-desc">The <strong>deep thinker</strong>. Complex tasks, orchestration, architecture.</div>
+    </div>
+
+    <div class="creature-card">
+      <div class="creature-emoji">🦦</div>
+      <div class="creature-name">otter</div>
+      <div class="creature-model">haiku</div>
+      <div class="creature-desc">The <strong>quick one</strong>. Fast, cheap, perfect for one-shot edits and lookups.</div>
+    </div>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-label">singletons — infrastructure</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="creature-grid">
+    <div class="creature-card">
+      <div class="creature-emoji">🐶</div>
+      <div class="creature-name">dog</div>
+      <div class="creature-model">haiku</div>
+      <div class="creature-desc">The <strong>lodge companion</strong>. Always on Telegram/Slack. Routes messages, dispatches wolts.</div>
+    </div>
+
+    <div class="creature-card">
+      <div class="creature-emoji">🐺</div>
+      <div class="creature-name">wolf</div>
+      <div class="creature-model">sonnet</div>
+      <div class="creature-desc">The <strong>scheduler</strong>. Runs crons, reminders, recurring tasks. Fires on time.</div>
+    </div>
+  </div>
+
+  <div class="ecosystem">
+    <span class="ecosystem-icon">🌲</span>
+    <div class="ecosystem-text">The dog greets you. A beaver builds your app. The wolf wakes up the raccoon every morning to write your digest. They're a team.</div>
+  </div>
+</div>
+
+<nav class="slide-nav">
+  <a href="slide-06-apps-github.html">&larr; prev</a>
+  <a href="slide-08-future.html">next &rarr;</a>
+</nav>
+
+</body>
+</html>

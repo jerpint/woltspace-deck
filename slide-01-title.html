@@ -72,6 +72,20 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-heig
 .slide-nav .hidden{visibility:hidden}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:600px){
+  body{overflow-y:auto}
+  .slide{padding:2rem 1.5rem;gap:1.2rem}
+  .brand-emoji{font-size:40px}
+  .brand-name{font-size:44px}
+  .tagline{font-size:12px}
+  .subtitle{font-size:17px}
+  .critters{gap:1rem}
+  .critters > div{width:70px}
+  .slide-nav{padding:0 1rem;bottom:1rem}
+  .slide-nav a{font-size:11px;padding:6px 12px}
+  .footer{bottom:1rem;font-size:10px}
+}
 </style>
 </head>
 <body>

@@ -98,6 +98,21 @@ h1{font-family:var(--font-display);font-size:36px;font-weight:300;color:var(--in
 }
 .slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
 .slide-nav .hidden{visibility:hidden}
+
+@media(max-width:600px){
+  body{overflow-y:auto}
+  .slide{padding:1rem;gap:1rem}
+  h1{font-size:28px}
+  .subtitle{font-size:13px}
+  .stack-layer{padding:8px 10px;gap:8px}
+  .layer-icon{font-size:15px;width:22px}
+  .layer-title{font-size:10px;min-width:80px}
+  .tag{font-size:8px;padding:2px 5px}
+  .side-note{padding:8px 12px}
+  .side-note-text{font-size:10px}
+  .slide-nav{padding:0 1rem;bottom:1rem}
+  .slide-nav a{font-size:11px;padding:6px 12px}
+}
 </style>
 </head>
 <body>

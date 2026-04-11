@@ -125,6 +125,23 @@ h1{font-family:var(--font-display);font-size:44px;font-weight:300;color:var(--in
   transition:all 0.15s;
 }
 .slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
+
+@media(max-width:600px){
+  body{overflow-y:auto}
+  .slide{padding:1.5rem 1rem;gap:1.2rem}
+  h1{font-size:32px}
+  .subtitle{font-size:15px}
+  .lodge-box{padding:14px 10px}
+  .wolts-row{gap:8px}
+  .wolt-card{min-width:100px;max-width:none;padding:10px 8px}
+  .wolt-name{font-size:11px}
+  .wolt-emoji{font-size:16px}
+  .layer{font-size:9px;padding:3px 6px}
+  .infra{flex-wrap:wrap;gap:6px}
+  .infra-item{font-size:9px;padding:4px 8px}
+  .slide-nav{padding:0 1rem;bottom:1rem}
+  .slide-nav a{font-size:11px;padding:6px 12px}
+}
 </style>
 </head>
 <body>

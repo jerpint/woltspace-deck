@@ -101,6 +101,24 @@ h1{font-family:var(--font-display);font-size:44px;font-weight:300;color:var(--in
   transition:all 0.15s;
 }
 .slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
+
+@media(max-width:600px){
+  body{overflow-y:auto}
+  .slide{padding:1.5rem 1rem;gap:1.2rem}
+  h1{font-size:32px}
+  .subtitle{font-size:15px}
+  .subtitle br{display:none}
+  .memory-diagram{flex-direction:column;gap:12px}
+  .tier{padding:14px}
+  .file-row{padding:6px 8px}
+  .file-name{font-size:10px}
+  .file-desc{font-size:11px}
+  .insight{padding:12px 14px;gap:10px}
+  .insight-icon{font-size:22px}
+  .insight-text{font-size:12px}
+  .slide-nav{padding:0 1rem;bottom:1rem}
+  .slide-nav a{font-size:11px;padding:6px 12px}
+}
 </style>
 </head>
 <body>
