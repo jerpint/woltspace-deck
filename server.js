@@ -33,16 +33,22 @@ app.post('/api/save', (req, res) => {
   if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'File not found' });
 
   let html = fs.readFileSync(filePath, 'utf-8');
+  let changed = 0;
 
-  // Apply text updates: find elements by their original text and replace
-  for (const { selector, oldText, newText } of updates) {
-    if (oldText && newText && oldText !== newText) {
-      html = html.replace(oldText.trim(), newText.trim());
+  for (const { oldHtml, newHtml } of updates) {
+    if (!oldHtml || !newHtml || oldHtml === newHtml) continue;
+
+    if (html.includes(oldHtml)) {
+      html = html.replace(oldHtml, newHtml);
+      changed++;
+    } else {
+      console.log(`[save] no match for: "${oldHtml.substring(0, 80)}..."`);
     }
   }
 
+  console.log(`[save] ${file}: ${changed}/${updates.length} updates applied`);
   fs.writeFileSync(filePath, html);
-  res.json({ ok: true });
+  res.json({ ok: true, changed });
 });
 
 // List all slides

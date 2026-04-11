@@ -1,7 +1,7 @@
 // Edit overlay — makes text elements contenteditable on double-click
 // Press Escape to cancel, click Save button to persist changes
 (function() {
-  const EDITABLE_SELECTORS = 'h1, .brand-name, .tagline, .subtitle, .concept, .feature-title, .feature-desc, .layer-title, .tier-header, .file-name, .file-desc, .insight-text, .card-title, .card-body, .side-note-text, .demo-hint-text, .lodge-label, li .feature-item div';
+  const EDITABLE_SELECTORS = 'h1, .brand-name, .tagline, .subtitle, .concept, .feature-title, .feature-desc, .layer-title, .tier-header, .file-name, .file-desc, .insight-text, .card-title, .card-body, .side-note-text, .demo-hint-text, .lodge-label, .progress-label, .progress-pct, .layer-tags .tag, .infra-item';
 
   let editMode = false;
   let pendingUpdates = [];
@@ -36,7 +36,7 @@
 
     document.querySelectorAll(EDITABLE_SELECTORS).forEach(el => {
       el.setAttribute('contenteditable', 'true');
-      el.dataset.originalText = el.textContent;
+      el.dataset.originalHtml = el.innerHTML;
       el.style.outline = '1px dashed #C4B89E';
       el.style.outlineOffset = '4px';
       el.style.cursor = 'text';
@@ -57,9 +57,9 @@
       el.style.outlineOffset = '';
       el.style.cursor = '';
       // Revert if not saved
-      if (el.dataset.originalText !== undefined) {
-        el.textContent = el.dataset.originalText;
-        delete el.dataset.originalText;
+      if (el.dataset.originalHtml !== undefined) {
+        el.innerHTML = el.dataset.originalHtml;
+        delete el.dataset.originalHtml;
       }
     });
   }
@@ -70,10 +70,10 @@
 
     const updates = [];
     document.querySelectorAll('[contenteditable]').forEach(el => {
-      const oldText = el.dataset.originalText;
-      const newText = el.textContent;
-      if (oldText && newText && oldText.trim() !== newText.trim()) {
-        updates.push({ oldText: oldText.trim(), newText: newText.trim() });
+      const oldHtml = el.dataset.originalHtml;
+      const newHtml = el.innerHTML;
+      if (oldHtml && newHtml && oldHtml !== newHtml) {
+        updates.push({ oldHtml: oldHtml, newHtml: newHtml });
       }
     });
 
@@ -82,24 +82,41 @@
       return;
     }
 
+    console.log('[edit-overlay] saving', file, updates);
+    saveBtn.textContent = 'Saving...';
+
     try {
       const res = await fetch('/api/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ file, updates }),
       });
+      console.log('[edit-overlay] response status:', res.status);
       const data = await res.json();
+      console.log('[edit-overlay] response:', data);
       if (data.ok) {
-        // Update original text refs so cancel doesn't revert
+        saveBtn.textContent = 'Saved!';
+        saveBtn.style.background = '#4A8838';
+        saveBtn.style.color = 'white';
+        // Update original refs so cancel doesn't revert
         document.querySelectorAll('[contenteditable]').forEach(el => {
-          el.dataset.originalText = el.textContent;
+          el.dataset.originalHtml = el.innerHTML;
         });
-        disableEdit();
+        setTimeout(() => disableEdit(), 800);
       } else {
+        saveBtn.textContent = 'Failed!';
+        saveBtn.style.background = '#C4531E';
+        saveBtn.style.color = 'white';
         alert('Save failed: ' + (data.error || 'unknown'));
+        setTimeout(() => { saveBtn.textContent = 'Save'; saveBtn.style.background = '#D6E8C8'; saveBtn.style.color = '#2a5a1e'; }, 2000);
       }
     } catch (e) {
+      console.error('[edit-overlay] save error:', e);
+      saveBtn.textContent = 'Failed!';
+      saveBtn.style.background = '#C4531E';
+      saveBtn.style.color = 'white';
       alert('Save failed: ' + e.message);
+      setTimeout(() => { saveBtn.textContent = 'Save'; saveBtn.style.background = '#D6E8C8'; saveBtn.style.color = '#2a5a1e'; }, 2000);
     }
   }
 
