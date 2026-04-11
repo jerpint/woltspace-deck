@@ -37,6 +37,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-heig
   position:relative;
 }
 .critter{image-rendering:pixelated}
+@keyframes waddle{0%,100%{transform:rotate(0deg) translateY(0)}25%{transform:rotate(-8deg) translateY(-3px)}75%{transform:rotate(8deg) translateY(-3px)}}
+.critter.raccoon{animation:waddle 0.6s ease-in-out infinite}
 .critter-label{
   font-family:var(--font-mono);font-size:10px;
   letter-spacing:0.1em;text-transform:uppercase;
@@ -76,13 +78,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-heig
   </div>
   <div class="tagline">gnaw. build. repeat.</div>
   <div class="subtitle">
-    A space where jerpint and wolts live, build, remember,<br>
-    and work alongside you.
-  </div>
+    A space for builders to build.</div>
   <div class="critters">
     <div><div class="critter" id="otter-sprite"></div><div class="critter-label">otter</div></div>
     <div><div class="critter" id="beaver-sprite"></div><div class="critter-label">beaver</div></div>
-    <div><div class="critter" id="raccoon-sprite"></div><div class="critter-label">raccoon</div></div>
+    <div><div class="critter raccoon" id="raccoon-sprite"></div><div class="critter-label">raccoon</div></div>
   </div>
 </div>
 <div class="footer">jerpint · PRFL · 2026</div>
