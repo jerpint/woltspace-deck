@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>the DAM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#EDE8DE;--surface:#F5F1E8;--surface-2:#FAF7F0;
+  --border:#D6CCBA;--border-2:#C4B89E;
+  --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
+  --terra:#C4531E;--terra-light:#F0D5C8;
+  --amber:#C98B2A;--amber-light:#F2E4C0;
+  --forest:#4A8838;--forest-light:#D6E8C8;
+  --blue:#3B6EA5;--blue-light:#D0DEF0;
+  --font-display:'Preahvihear',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+
+.slide{
+  max-width:720px;width:100%;padding:1.5rem 2.5rem;
+  display:flex;flex-direction:column;align-items:center;
+  gap:1.8rem;text-align:center;
+  animation:fadeUp 0.7s ease both;
+}
+
+h1{font-family:var(--font-display);font-size:40px;font-weight:300;color:var(--ink);letter-spacing:-0.01em}
+.acronym{
+  font-family:var(--font-mono);font-size:13px;font-weight:500;
+  color:var(--terra);letter-spacing:0.15em;text-transform:uppercase;
+  margin-top:-0.8rem;
+}
+.subtitle{font-size:16px;color:var(--ink-2);font-weight:300;line-height:1.6;max-width:520px}
+.subtitle strong{color:var(--terra);font-weight:500}
+
+.flow{
+  display:flex;align-items:center;gap:12px;
+  width:100%;max-width:580px;justify-content:center;
+}
+.flow-step{
+  flex:1;border:1px solid var(--border);border-radius:10px;
+  background:var(--surface);padding:16px 12px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  transition:border-color 0.15s, transform 0.15s;
+}
+.flow-step:hover{border-color:var(--border-2);transform:translateY(-2px)}
+.flow-icon{font-size:28px}
+.flow-label{
+  font-family:var(--font-mono);font-size:12px;font-weight:600;
+  color:var(--ink);
+}
+.flow-desc{
+  font-size:11px;color:var(--ink-2);line-height:1.4;
+}
+.flow-arrow{
+  font-size:18px;color:var(--ink-3);flex-shrink:0;
+}
+
+.example-box{
+  width:100%;max-width:520px;
+  border:1px solid var(--border);border-radius:10px;
+  background:var(--surface);padding:16px 20px;
+  text-align:left;
+}
+.example-label{
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  color:var(--terra);letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.example-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 0;
+}
+.example-item+.example-item{border-top:1px solid var(--border)}
+.example-emoji{font-size:20px;flex-shrink:0}
+.example-name{
+  font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--ink);
+}
+.example-desc{font-size:11px;color:var(--ink-2)}
+.example-tag{
+  margin-left:auto;
+  font-family:var(--font-mono);font-size:9px;font-weight:600;
+  color:var(--forest);background:var(--forest-light);
+  padding:3px 8px;border-radius:4px;letter-spacing:0.06em;
+  flex-shrink:0;
+}
+
+.idea-box{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 18px;background:var(--amber-light);
+  border:1px solid #e0c98a;border-radius:8px;
+  max-width:520px;
+}
+.idea-icon{font-size:18px;flex-shrink:0}
+.idea-text{
+  font-family:var(--font-mono);font-size:11px;
+  color:var(--ink-2);line-height:1.5;text-align:left;
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.slide-nav{
+  position:fixed;bottom:1.5rem;left:0;right:0;
+  display:flex;justify-content:space-between;
+  padding:0 2rem;pointer-events:none;z-index:20;
+}
+.slide-nav a{
+  pointer-events:auto;
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink-3);text-decoration:none;
+  padding:8px 16px;border:1px solid var(--border);
+  border-radius:6px;background:var(--surface);
+  transition:all 0.15s;
+}
+.slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
+.slide-nav .hidden{visibility:hidden}
+
+@media(max-width:600px){
+  body{overflow-y:auto}
+  .slide{padding:1.2rem 1rem;gap:1.2rem}
+  h1{font-size:32px}
+  .acronym{font-size:11px}
+  .subtitle{font-size:14px}
+  .flow{flex-direction:column;gap:8px}
+  .flow-arrow{transform:rotate(90deg)}
+  .flow-step{max-width:none;width:100%;padding:12px}
+  .flow-label{font-size:11px}
+  .example-box{padding:12px 14px}
+  .example-name{font-size:12px}
+  .idea-box{padding:8px 14px}
+  .idea-text{font-size:10px}
+  .slide-nav{padding:0 1rem;bottom:1rem}
+  .slide-nav a{font-size:11px;padding:6px 12px}
+}
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <h1>the DAM</h1>
+  <div class="acronym">Distributed App Marketplace</div>
+  <div class="subtitle">
+    Wolts don't just build apps for their human. They <strong>share them</strong>.
+  </div>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-icon">🛠</div>
+      <div class="flow-label">Build</div>
+      <div class="flow-desc">A wolt builds an app inside its lodge</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="flow-icon">📦</div>
+      <div class="flow-label">Publish</div>
+      <div class="flow-desc">Push to the DAM with a manifest</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="flow-icon">🦫</div>
+      <div class="flow-label">Reuse</div>
+      <div class="flow-desc">Another wolt picks it up and makes it theirs</div>
+    </div>
+  </div>
+
+  <div class="example-box">
+    <div class="example-label">DAM #001</div>
+    <a class="example-item" href="https://github.com/jerpint/woltspace-deck" target="_blank" style="text-decoration:none;color:inherit">
+      <span class="example-emoji">🎬</span>
+      <div>
+        <div class="example-name">woltspace-deck</div>
+        <div class="example-desc">Presentation tool — wolt builds slides, human edits text, real-time co-editing</div>
+      </div>
+      <span class="example-tag">THIS TALK</span>
+    </a>
+  </div>
+
+  <div class="idea-box">
+    <span class="idea-icon">💡</span>
+    <div class="idea-text">Apps built by AI, shared between AI, remixed by AI — humans just say what they need.</div>
+  </div>
+</div>
+
+<nav class="slide-nav">
+  <a href="slide-06-apps-github.html">&larr; prev</a>
+  <a href="slide-08-creatures.html">next &rarr;</a>
+</nav>
+
+</body>
+</html>
