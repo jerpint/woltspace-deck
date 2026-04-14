@@ -13,21 +13,17 @@
   --border:#D6CCBA;--border-2:#C4B89E;
   --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
   --terra:#C4531E;--terra-light:#F0D5C8;
-  --amber:#C98B2A;--amber-light:#F2E4C0;
-  --forest:#4A8838;--forest-light:#D6E8C8;
-  --blue:#3B6EA5;--blue-light:#D0DEF0;
-  --purple:#7B5EA7;--purple-light:#E0D4F0;
   --font-display:'Preahvihear',sans-serif;
   --font-body:'DM Sans',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
 
 .slide{
-  max-width:780px;width:100%;padding:1.5rem 2.5rem;
+  max-width:780px;width:100%;padding:1.2rem 2.5rem 0;
   display:flex;flex-direction:column;align-items:center;
-  gap:1.5rem;text-align:center;
+  gap:1.4rem;text-align:center;
   animation:fadeUp 0.7s ease both;
 }
 
@@ -50,39 +46,35 @@ h1 .struck::after{
   background:var(--ink-3);transform:rotate(-3deg);
 }
 
-.subtitle{
-  font-size:15px;color:var(--ink-2);font-weight:300;line-height:1.6;
-  max-width:560px;
-}
-.subtitle strong{color:var(--terra);font-weight:500}
-
-.bullets{
-  width:100%;max-width:600px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:16px 20px;
-  display:flex;flex-wrap:wrap;gap:10px 16px;
-  justify-content:center;
-}
-.bullet{
-  display:flex;align-items:center;gap:8px;
-  font-family:var(--font-mono);font-size:12px;
-  color:var(--ink-2);
-}
-.bullet-icon{font-size:16px;line-height:1}
-.bullet strong{color:var(--ink);font-weight:600}
-
 .manifesto{
-  display:flex;align-items:center;gap:14px;
-  padding:14px 20px;background:var(--surface-2);
-  border:1px solid var(--border);border-left:3px solid var(--terra);
-  border-radius:8px;max-width:640px;margin-top:0.2rem;
+  display:flex;flex-direction:column;gap:0;
+  width:100%;max-width:620px;
 }
-.manifesto-icon{font-size:20px;flex-shrink:0}
+.manifesto-line{
+  display:flex;align-items:center;gap:24px;
+  padding:10px 20px;
+  border-bottom:1px solid var(--border);
+}
+.manifesto-line:first-child{border-top:1px solid var(--border)}
+.manifesto-sprite{image-rendering:pixelated;display:flex;justify-content:center;align-items:center;flex-shrink:0;min-width:120px;min-height:80px}
+.manifesto-sprite svg{display:block}
 .manifesto-text{
-  font-family:var(--font-mono);font-size:12px;
-  color:var(--ink-2);line-height:1.55;text-align:left;
+  font-family:var(--font-display);font-size:40px;
+  color:var(--ink);font-weight:300;text-align:left;line-height:1.2;
 }
-.manifesto-text strong{color:var(--ink);font-weight:600}
+.manifesto-text .accent{color:var(--terra)}
+
+.manifesto-sub{
+  font-size:20px;color:var(--ink-2);line-height:1.6;font-weight:300;
+  max-width:500px;text-align:center;
+}
+
+@keyframes waddle{0%,100%{transform:rotate(0deg) translateY(0)}25%{transform:rotate(-6deg) translateY(-2px)}75%{transform:rotate(6deg) translateY(-2px)}}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes pirouette{0%{transform:rotateY(0deg)}50%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
+#beaver-sprite{animation:hop 1.2s ease-in-out infinite}
+#raccoon-sprite{animation:waddle 0.7s ease-in-out infinite}
+#otter-sprite{animation:pirouette 2.5s ease-in-out infinite}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
@@ -104,12 +96,12 @@ h1 .struck::after{
 
 @media(max-width:700px){
   body{overflow-y:auto}
-  .slide{padding:1.2rem 1rem;gap:1.1rem}
+  .slide{padding:1.2rem 1rem;gap:1rem}
   h1{font-size:30px}
-  .bullets{padding:12px 14px;gap:8px 12px}
-  .bullet{font-size:11px}
-  .manifesto{padding:12px 14px}
-  .manifesto-text{font-size:11px}
+  .manifesto-line{padding:10px 14px;gap:10px}
+  .manifesto-text{font-size:22px}
+  .manifesto-sprite{min-width:70px}
+  .manifesto-sub{font-size:16px}
   .slide-nav{padding:0 1rem;bottom:1rem}
   .slide-nav a{font-size:11px;padding:6px 12px}
 }
@@ -125,18 +117,22 @@ h1 .struck::after{
     <span class="struck">someone else's cloud</span>.
   </h1>
 
-  <div class="bullets">
-    <div class="bullet"><span class="bullet-icon">📖</span> <strong>open source</strong> — fork it, bend it, host it</div>
-    <div class="bullet"><span class="bullet-icon">🐙</span> <strong>GitHub native</strong> — Apps are just github repos</div>
-  </div>
-
   <div class="manifesto">
-    <span class="manifesto-icon">🌱</span>
-    <div class="manifesto-text">
-      <strong>Bring the home server back. Bring the weird web back. Bring decentralization back.</strong><br>
-      Open source, so you can hack it. Runs on your machine — laptop, home server. No cloud bills. No permissions needed.
+    <div class="manifesto-line">
+      <div class="manifesto-sprite" id="beaver-sprite"></div>
+      <div class="manifesto-text">Bring the home server <span class="accent">back</span>.</div>
+    </div>
+    <div class="manifesto-line">
+      <div class="manifesto-sprite" id="raccoon-sprite"></div>
+      <div class="manifesto-text">Bring the weird web <span class="accent">back</span>.</div>
+    </div>
+    <div class="manifesto-line">
+      <div class="manifesto-sprite" id="otter-sprite"></div>
+      <div class="manifesto-text">Bring decentralization <span class="accent">back</span>.</div>
     </div>
   </div>
+
+  <div class="manifesto-sub">Open source, so you can hack it. Runs on your machine — laptop, home server. No cloud bills. No permissions needed.</div>
 </div>
 
 <nav class="slide-nav">
@@ -144,5 +140,110 @@ h1 .struck::after{
   <a href="slide-06-roadmap.html">next &rarr;</a>
 </nav>
 
+<script>
+(function(){
+  var px=2;
+  function spriteToSVG(map,palette,px){
+    var rows=map.length,cols=Math.max.apply(null,map.map(function(r){return r.length}));
+    var rects=[];
+    for(var r=0;r<rows;r++)for(var c=0;c<map[r].length;c++){
+      var ch=map[r][c];if(ch===' '||ch==='.')continue;
+      var fill=palette[ch];if(!fill)continue;
+      rects.push('<rect x="'+(c*px)+'" y="'+(r*px)+'" width="'+px+'" height="'+px+'" fill="'+fill+'"/>');
+    }
+    return '<svg width="'+(cols*px)+'" height="'+(rows*px)+'" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;display:block" shape-rendering="crispEdges">'+rects.join('')+'</svg>';
+  }
+
+  var beavMap=[
+    '..AAA........AAA.....',
+    '.ABBBA......ABBBA....',
+    '.ABAAAAAAAAAAAABA....',
+    '.ABABBBBBBBBBAABA....',
+    '..ABBBBBBBBBBBAA.....',
+    '..ABABBBBAEBBBAA.....',
+    '..ABABBBBAEBBBAA.....',
+    '.ABBAAAABAEBBBBA.....',
+    '.ABACAACCCFABBBA.....',
+    '.ABACCACCCFABBBA.AAA.',
+    '.ABBAAAAAAEBBBAAADDDA',
+    '..ABBCAFABBBBAA.AADDA',
+    '...ABAAAABBBBBBAADADA',
+    '..ABBBBBBBBBBBBAADDAA',
+    '.ABBABCCCAEBBBBBAADDA',
+    '.ABBACCCABBBBABBADADA',
+    '.AGGACCCAGGGGABBADADA',
+    '..AAACCCAAAAABBBADDA.',
+    '..ABCCCCCCFABBBBAAAA.',
+    '.AAABCCCCAAAABBBAA...',
+    'ABBBACCCABBBBBBAA....',
+    'AAAAAAAAAAAAAAAA.....',
+  ];
+  var beavPal={A:'#3f190e',B:'#af6127',C:'#fce6b0',D:'#773c1f',E:'#050003',F:'#fffee7',G:'#dd7a2d'};
+
+  var raccMap=[
+    '...BB........BBB.........',
+    '...BFGG.....GFFB.........',
+    '...BABB.....BAAB.........',
+    '...BCAABBBBBACCB.........',
+    '...BAAAAAAAAAAAB.........',
+    '...BCCCCAAACCCCB.........',
+    '...BCBCCAAACCCCB.........',
+    '.BBCCBBCBCCCBCBCB........',
+    '.BBACBBCAAACBCCAB........',
+    '.BBCAAADHHHDAAACB...BBB..',
+    '.BBCAAADHHHDAAACB...BBB..',
+    '...BCAADDDDDAEEB...BCCCB.',
+    '....BCCCCEEECBB....BAAACB',
+    '...BAAAAAAAAAAAB...BCCCBB',
+    '...BAAAAAAAAAAAB...BCCCCB',
+    '.BBAAAAAAAAAAAAAB..BAAAAB',
+    '.BBAABBAAAAABAAAB..BCCCCB',
+    '.BBAAAABAAABAAAABBBAACCCB',
+    '.GGFAAABAAABAAAAGBBAABBCG',
+    'BAABAAABAAABAAABABBCAAAB.',
+    'BAAABBBBAAABBBBAABBCCBB..',
+    'BCCAAAAAAAAAAAAACBBBB....',
+    '.BBBBGGAAAAAGBBBB........',
+    '.BBCCBBAAAAABCCCB........',
+    '...BBBBBBBBBBBBB.........',
+  ];
+  var raccPal={A:'#7f8894',B:'#282c33',C:'#40454b',D:'#f0ecf0',E:'#545c65',F:'#a0abbd',G:'#050029',H:'#efa09f'};
+
+  var ottMap=[
+    '.....AAAAAAAA......',
+    '..AAACCCCCCCCAAA...',
+    '.ACCCCCCCCCCCCCCA..',
+    '.ACACCCCCCCCCCACA..',
+    '..ACCBACCCCBACCA...',
+    '..ACCAACDDCAACCA...',
+    'AAACBBBBAABBBBCAAA.',
+    '..ABEBABAABABEBA...',
+    '.AAABBBABBABBBAAA..',
+    '...AABBBBBBBBAA....',
+    '...ACCCCCCCCCCA....',
+    '..ACCCCBBBBCCCCA...',
+    '..ACCABBBBBBACCA...',
+    '..ACCCABBBBACCCA...',
+    '..AACCABBBBACCAA.AA',
+    '..ACAABBBBBBAACAACA',
+    '.ACCCBBBBBBBBCCCACA',
+    '.ACAAABBBBBBAAACAA.',
+    '.ACCCCABBBBACCCCA..',
+    '..ACCCAAAAAACCCA...',
+    '...AAA......AAA....',
+  ];
+  var ottPal={A:'#402110',B:'#f2d79d',C:'#9f5332',D:'#ff6970',E:'#c47b4a'};
+
+  var svg_b = spriteToSVG(beavMap,beavPal,px);
+  var svg_r = spriteToSVG(raccMap,raccPal,px);
+  var svg_o = spriteToSVG(ottMap,ottPal,px);
+
+  // Static sprites next to manifesto lines
+  var bs=document.getElementById('beaver-sprite'); if(bs) bs.innerHTML=svg_b;
+  var rs=document.getElementById('raccoon-sprite'); if(rs) rs.innerHTML=svg_r;
+  var os=document.getElementById('otter-sprite'); if(os) os.innerHTML=svg_o;
+
+})();
+</script>
 </body>
 </html>
