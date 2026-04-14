@@ -56,29 +56,20 @@ h1 .struck::after{
 }
 .subtitle strong{color:var(--terra);font-weight:500}
 
-.pillars{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
-  width:100%;max-width:720px;margin-top:0.3rem;
-}
-.pillar{
+.bullets{
+  width:100%;max-width:600px;
   background:var(--surface);border:1px solid var(--border);
-  border-radius:10px;padding:14px 12px;
-  display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;
-  transition:border-color 0.2s, transform 0.2s;
+  border-radius:12px;padding:16px 20px;
+  display:flex;flex-wrap:wrap;gap:10px 16px;
+  justify-content:center;
 }
-.pillar:hover{border-color:var(--border-2);transform:translateY(-2px)}
-.pillar-icon{font-size:22px;line-height:1}
-.pillar-label{
-  font-family:var(--font-mono);font-size:10px;font-weight:600;
-  letter-spacing:0.1em;text-transform:uppercase;color:var(--terra);
+.bullet{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--font-mono);font-size:12px;
+  color:var(--ink-2);
 }
-.pillar-desc{
-  font-size:11px;color:var(--ink-2);line-height:1.45;
-}
-
-.pillar.amber .pillar-label{color:var(--amber)}
-.pillar.forest .pillar-label{color:var(--forest)}
-.pillar.blue .pillar-label{color:var(--blue)}
+.bullet-icon{font-size:16px;line-height:1}
+.bullet strong{color:var(--ink);font-weight:600}
 
 .manifesto{
   display:flex;align-items:center;gap:14px;
@@ -115,8 +106,8 @@ h1 .struck::after{
   body{overflow-y:auto}
   .slide{padding:1.2rem 1rem;gap:1.1rem}
   h1{font-size:30px}
-  .subtitle{font-size:13px}
-  .pillars{grid-template-columns:repeat(2,1fr)}
+  .bullets{padding:12px 14px;gap:8px 12px}
+  .bullet{font-size:11px}
   .manifesto{padding:12px 14px}
   .manifesto-text{font-size:11px}
   .slide-nav{padding:0 1rem;bottom:1rem}
@@ -134,38 +125,16 @@ h1 .struck::after{
     <span class="struck">someone else's cloud</span>.
   </h1>
 
-  <div class="subtitle">
-    Woltspace is <strong>open source</strong> and runs on <strong>your devices</strong>. Not built for millions of users — built for <strong>one</strong>. Yours.
-  </div>
-
-  <div class="pillars">
-    <div class="pillar">
-      <div class="pillar-icon">📖</div>
-      <div class="pillar-label">open</div>
-      <div class="pillar-desc">Open source. Fork it, bend it, host it. No platform lock-in.</div>
-    </div>
-    <div class="pillar amber">
-      <div class="pillar-icon">🏠</div>
-      <div class="pillar-label">local</div>
-      <div class="pillar-desc">Runs on a laptop, a home server, a Pi. Your silicon, your rules.</div>
-    </div>
-    <div class="pillar forest">
-      <div class="pillar-icon">👤</div>
-      <div class="pillar-label">personal</div>
-      <div class="pillar-desc">Not built to scale to millions. Built to be <em>yours</em>. Apps of one.</div>
-    </div>
-    <div class="pillar blue">
-      <div class="pillar-icon">🧠</div>
-      <div class="pillar-label">sovereign</div>
-      <div class="pillar-desc">Local models are coming. Soon the creatures don't need the internet at all.</div>
-    </div>
+  <div class="bullets">
+    <div class="bullet"><span class="bullet-icon">📖</span> <strong>open source</strong> — fork it, bend it, host it</div>
+    <div class="bullet"><span class="bullet-icon">🐙</span> <strong>GitHub native</strong> — Apps are just github repos</div>
   </div>
 
   <div class="manifesto">
     <span class="manifesto-icon">🌱</span>
     <div class="manifesto-text">
       <strong>Bring the home server back. Bring the weird web back. Bring decentralization back.</strong><br>
-      When capable models run on-device, the whole deal changes — a lodge in every house, no cloud bill, no tenancy, no permission needed.
+      Open source, so you can hack it. Runs on your machine — laptop, home server. No cloud bills. No permissions needed.
     </div>
   </div>
 </div>
