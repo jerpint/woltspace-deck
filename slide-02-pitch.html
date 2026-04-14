@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>woltspace</title>
+<title>what is a wolt?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,6 +14,7 @@
   --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
   --terra:#C4531E;--terra-light:#F0D5C8;
   --amber:#C98B2A;--amber-light:#F2E4C0;
+  --forest:#4A8838;--forest-light:#D6E8C8;
   --font-display:'Preahvihear',sans-serif;
   --font-body:'DM Sans',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
@@ -22,38 +23,54 @@
 body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
 
 .slide{
+  max-width:740px;width:100%;padding:2.5rem;
   display:flex;flex-direction:column;align-items:center;
-  gap:1.8rem;text-align:center;padding:3rem;
+  gap:2.4rem;text-align:center;
   animation:fadeUp 0.7s ease both;
 }
-.brand{display:flex;align-items:center;gap:18px}
-.brand-emoji{font-size:64px;line-height:1}
-.brand-name{font-family:var(--font-display);font-size:72px;font-weight:300;letter-spacing:-0.02em;color:var(--ink);line-height:1}
-.tagline{font-family:var(--font-mono);font-size:14px;color:var(--ink-3);letter-spacing:0.12em;text-transform:uppercase}
-.subtitle{font-family:var(--font-body);font-size:22px;color:var(--ink-2);font-weight:300;line-height:1.6;max-width:560px}
 
-.critters{
-  display:flex;gap:2rem;margin-top:1rem;
-  position:relative;align-items:flex-end;
+h1{font-family:var(--font-display);font-size:48px;font-weight:300;color:var(--ink);letter-spacing:-0.01em;line-height:1.1}
+
+.caption{
+  font-size:18px;color:var(--ink-2);font-weight:300;line-height:1.6;max-width:520px;
 }
-.critters > div{display:flex;flex-direction:column;align-items:center;width:100px}
-.critter{image-rendering:pixelated;display:flex;justify-content:center}
-@keyframes waddle{0%,100%{transform:rotate(0deg) translateY(0)}25%{transform:rotate(-8deg) translateY(-3px)}75%{transform:rotate(8deg) translateY(-3px)}}
-.critter.raccoon{animation:waddle 0.6s ease-in-out infinite}
-.critter.raccoon svg{transform:scale(0.85)}
-@keyframes pirouette{0%{transform:rotateY(0deg) scale(1)}50%{transform:rotateY(180deg) scale(1.1)}100%{transform:rotateY(360deg) scale(1)}}
-.critter.otter{animation:pirouette 2.5s ease-in-out infinite}
-.critter-label{
-  font-family:var(--font-mono);font-size:12px;
+
+.creatures{
+  display:flex;gap:20px;width:100%;max-width:660px;
+  justify-content:center;
+}
+.creature-card{
+  flex:1;max-width:200px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:24px 16px 20px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  transition:border-color 0.2s, transform 0.2s;
+}
+.creature-card:hover{border-color:var(--border-2);transform:translateY(-3px)}
+.creature-card.terra{border-top:3px solid var(--terra)}
+.creature-card.amber{border-top:3px solid var(--amber)}
+.creature-card.forest{border-top:3px solid var(--forest)}
+
+.creature-sprite{image-rendering:pixelated;display:flex;justify-content:center;height:80px;align-items:center}
+
+.creature-name{
+  font-family:var(--font-display);font-size:22px;color:var(--ink);line-height:1;
+}
+.creature-model{
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
   letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--ink-3);text-align:center;margin-top:6px;
+  padding:3px 10px;border-radius:4px;
+}
+.terra .creature-model{color:var(--terra);background:var(--terra-light)}
+.amber .creature-model{color:var(--amber);background:var(--amber-light)}
+.forest .creature-model{color:var(--forest);background:var(--forest-light)}
+
+.creature-role{
+  font-size:13px;color:var(--ink-2);line-height:1.4;
 }
 
-.footer{
-  position:fixed;bottom:2rem;
-  font-family:var(--font-mono);font-size:11px;
-  color:var(--ink-3);letter-spacing:0.08em;
-}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
 .slide-nav{
   position:fixed;bottom:1.5rem;left:0;right:0;
   display:flex;justify-content:space-between;
@@ -69,49 +86,58 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-heig
   transition:all 0.15s;
 }
 .slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
-.slide-nav .hidden{visibility:hidden}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 @media(max-width:600px){
   body{overflow-y:auto}
-  .slide{padding:2rem 1.5rem;gap:1.2rem}
-  .brand-emoji{font-size:40px}
-  .brand-name{font-size:44px}
-  .tagline{font-size:12px}
-  .subtitle{font-size:17px}
-  .critters{gap:1rem}
-  .critters > div{width:70px}
+  .slide{padding:1.5rem 1.2rem;gap:1.6rem}
+  h1{font-size:36px}
+  .creatures{flex-direction:column;align-items:center;gap:12px}
+  .creature-card{max-width:280px;width:100%;padding:18px 14px 16px}
+  .creature-sprite{height:60px}
+  .creature-name{font-size:20px}
   .slide-nav{padding:0 1rem;bottom:1rem}
   .slide-nav a{font-size:11px;padding:6px 12px}
-  .footer{bottom:1rem;font-size:10px}
 }
 </style>
 </head>
 <body>
+
 <div class="slide">
-  <div class="brand">
-    <span class="brand-emoji">🦫</span>
-    <h1 class="brand-name">woltspace</h1>
-  </div>
-  <div class="tagline">gnaw. build. repeat.</div>
-  <div class="subtitle">
-    A space for builders to build.</div>
-  <div class="critters">
-    <div><div class="critter otter" id="otter-sprite"></div><div class="critter-label">otter</div></div>
-    <div><div class="critter" id="beaver-sprite"></div><div class="critter-label">beaver</div></div>
-    <div><div class="critter raccoon" id="raccoon-sprite"></div><div class="critter-label">raccoon</div></div>
+  <h1>what is a wolt?</h1>
+  <div class="caption">persistent builders that work alongside you.<br>different models, different strengths, same mission.</div>
+
+  <div class="creatures">
+    <div class="creature-card forest">
+      <div class="creature-sprite" id="otter-sprite"></div>
+      <div class="creature-name">otter</div>
+      <div class="creature-model">haiku</div>
+      <div class="creature-role">the quick one</div>
+    </div>
+
+    <div class="creature-card amber">
+      <div class="creature-sprite" id="beaver-sprite"></div>
+      <div class="creature-name">beaver</div>
+      <div class="creature-model">sonnet</div>
+      <div class="creature-role">the builder</div>
+    </div>
+
+    <div class="creature-card terra">
+      <div class="creature-sprite" id="raccoon-sprite"></div>
+      <div class="creature-name">raccoon</div>
+      <div class="creature-model">opus</div>
+      <div class="creature-role">the thinker</div>
+    </div>
   </div>
 </div>
-<div class="footer">builders · woltspace · 2026</div>
+
 <nav class="slide-nav">
-  <a class="hidden" href="#">← prev</a>
-  <a href="slide-02-pitch.html">next →</a>
+  <a href="slide-01-title.html">&larr; prev</a>
+  <a href="slide-03-why.html">next &rarr;</a>
 </nav>
 
 <script>
 (function(){
-  var px=4;
+  var px=3;
   function spriteToSVG(map,palette,px){
     var rows=map.length,cols=Math.max.apply(null,map.map(function(r){return r.length}));
     var rects=[];

@@ -14,7 +14,7 @@
 // Edit overlay — makes text elements contenteditable on double-click
 // Press Escape to cancel, click Save button to persist changes
 (function() {
-  const EDITABLE_SELECTORS = 'h1, .brand-name, .tagline, .subtitle, .concept, .feature-title, .feature-desc, .layer-title, .tier-header, .file-name, .file-desc, .insight-text, .card-title, .card-body, .side-note-text, .demo-hint-text, .lodge-label, .progress-label, .progress-pct, .layer-tags .tag, .infra-item';
+  const EDITABLE_SELECTORS = 'h1, .brand-name, .tagline, .subtitle, .concept, .caption, .feature-title, .feature-desc, .layer-title, .tier-header, .file-name, .file-desc, .insight-text, .card-title, .card-body, .side-note-text, .demo-hint-text, .lodge-label, .progress-label, .progress-pct, .layer-tags .tag, .infra-item, .creature-role, .bullet, .proof-label, .proof-text';
 
   let editMode = false;
   let pendingUpdates = [];

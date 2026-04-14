@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>why woltspace?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#EDE8DE;--surface:#F5F1E8;--surface-2:#FAF7F0;
+  --border:#D6CCBA;--border-2:#C4B89E;
+  --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
+  --terra:#C4531E;--terra-light:#F0D5C8;
+  --amber:#C98B2A;--amber-light:#F2E4C0;
+  --forest:#4A8838;--forest-light:#D6E8C8;
+  --font-display:'Preahvihear',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+
+.slide{
+  max-width:720px;width:100%;padding:2rem 2.5rem;
+  display:flex;flex-direction:column;align-items:center;
+  gap:1.8rem;text-align:center;
+  animation:fadeUp 0.7s ease both;
+}
+
+h1{font-family:var(--font-display);font-size:48px;font-weight:300;color:var(--ink);letter-spacing:-0.01em;line-height:1.1}
+h1 .accent{color:var(--terra)}
+
+.proof{
+  width:100%;max-width:600px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 4px 20px rgba(24,16,10,0.08);
+}
+.proof-img{
+  width:100%;height:260px;object-fit:cover;display:block;
+}
+.proof-caption{
+  padding:14px 20px;
+  display:flex;align-items:center;gap:10px;
+}
+.proof-label{
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--forest);flex-shrink:0;
+}
+.proof-text{
+  font-size:13px;color:var(--ink-2);line-height:1.4;text-align:left;
+}
+.proof-text strong{color:var(--ink);font-weight:500}
+
+.bullets{
+  width:100%;max-width:600px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:16px 20px;
+  display:flex;flex-wrap:wrap;gap:10px 16px;
+  justify-content:center;
+}
+.bullet{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--font-mono);font-size:12px;
+  color:var(--ink-2);
+}
+.bullet-icon{font-size:16px;line-height:1}
+.bullet strong{color:var(--ink);font-weight:600}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.slide-nav{
+  position:fixed;bottom:1.5rem;left:0;right:0;
+  display:flex;justify-content:space-between;
+  padding:0 2rem;pointer-events:none;z-index:20;
+}
+.slide-nav a{
+  pointer-events:auto;
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink-3);text-decoration:none;
+  padding:8px 16px;border:1px solid var(--border);
+  border-radius:6px;background:var(--surface);
+  transition:all 0.15s;
+}
+.slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
+
+@media(max-width:600px){
+  body{overflow-y:auto}
+  .slide{padding:1.5rem 1.2rem;gap:1.4rem}
+  h1{font-size:36px}
+  .proof-img{height:180px}
+  .proof-caption{padding:10px 14px;flex-direction:column;align-items:flex-start;gap:4px}
+  .bullets{padding:12px 14px;gap:8px 12px}
+  .bullet{font-size:11px}
+  .slide-nav{padding:0 1rem;bottom:1rem}
+  .slide-nav a{font-size:11px;padding:6px 12px}
+}
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <h1>why <span class="accent">woltspace</span>?</h1>
+
+  <div class="proof">
+    <img class="proof-img" src="beach-wolting.jpg" alt="wolting from the beach">
+    <div class="proof-caption">
+      <div class="proof-label">actual footage</div>
+      <div class="proof-text"><strong>Building woltspace from the beach.</strong> Phone, Telegram, ocean.</div>
+    </div>
+  </div>
+
+  <div class="bullets">
+    <div class="bullet"><span class="bullet-icon">🍳</span> <strong>let them cook</strong> — walk away, come back to finished work</div>
+    <div class="bullet"><span class="bullet-icon">🌍</span> <strong>anywhere</strong> — Telegram, Slack, browser</div>
+    <div class="bullet"><span class="bullet-icon">🐳</span> <strong>sandboxed</strong> — your wolts run on your machine</div>
+  </div>
+</div>
+
+<nav class="slide-nav">
+  <a href="slide-02-pitch.html">&larr; prev</a>
+  <a href="slide-04-apps.html">next &rarr;</a>
+</nav>
+
+</body>
+</html>
