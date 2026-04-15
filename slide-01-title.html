@@ -147,7 +147,15 @@ body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height
 <script>
 // Procedural pixel art landscape — same constants as lodge homepage
 (function(){
-  var S=5,W=Math.ceil(Math.max(window.innerWidth,screen.width||1920)/S)+6,H=42,BANK=28,RIVER=34;
+  // Scale grid to fill viewport at ~1:1 so terrain isn't zoomed in
+  var S=5;
+  var vw=Math.max(window.innerWidth,screen.width||1920);
+  var vh=Math.max(window.innerHeight,screen.height||1080);
+  var W=Math.ceil(vw/S)+6;
+  var H=Math.ceil(vh/S)+2;
+  // Keep lodge proportions: BANK=67%, RIVER=81%
+  var BANK=Math.round(H*0.667);
+  var RIVER=Math.round(H*0.810);
 
   var C={
     fa:'#8AA6BA',fb:'#6A8698',
@@ -173,12 +181,14 @@ body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height
 
   var out=[];
 
-  // Sky fill
-  for(var x=0;x<W;x++){for(var y=0;y<8;y++)out.push(dot(x,y,'#B8D4E8'));}
+  // Sky fill (proportional to H)
+  var SKY=Math.round(H*0.19);
+  for(var x=0;x<W;x++){for(var y=0;y<SKY;y++)out.push(dot(x,y,'#B8D4E8'));}
 
-  // Far hills
+  // Far hills (scale offset proportionally)
+  var FAR_DEPTH=Math.round(H*0.38);
   for(var x=0;x<W;x++){
-    var ft=BANK-16-fp[x];
+    var ft=BANK-FAR_DEPTH-fp[x];
     for(var y=Math.max(ft,0);y<BANK;y++)out.push(dot(x,y,y===ft?C.fb:C.fa));
   }
 
