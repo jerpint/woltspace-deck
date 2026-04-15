@@ -42,27 +42,40 @@ h1 .accent{color:var(--terra)}
   max-width:500px;line-height:1.5;
 }
 
-.links{
-  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
-  margin-top:0.3rem;
+.cta-row{
+  display:flex;align-items:center;gap:64px;
+  margin-top:0.2rem;flex-wrap:wrap;justify-content:center;
 }
-.link-card{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 18px;background:var(--surface);
-  border:1px solid var(--border);border-radius:10px;
-  text-decoration:none;color:var(--ink);
-  transition:all 0.15s;
+.cta-col{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  min-width:220px;
 }
-.link-card:hover{
-  border-color:var(--terra);background:var(--surface-2);
-  transform:translateY(-1px);
+.cta-kicker{
+  font-family:var(--font-mono);font-size:12px;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-3);
 }
-.link-icon{font-size:18px;line-height:1}
-.link-text{
-  font-family:var(--font-mono);font-size:13px;font-weight:500;
-  letter-spacing:0.04em;
+
+.hero-link{
+  font-family:var(--font-display);font-size:64px;font-weight:300;
+  color:var(--ink);text-decoration:none;letter-spacing:-0.01em;
+  line-height:1;display:inline-block;
+  transition:color 0.2s, transform 0.2s;
 }
-.link-text .muted{color:var(--ink-3);font-weight:400}
+.hero-link .tld{color:var(--terra)}
+.hero-link:hover{transform:translateY(-2px)}
+
+.qr-card{
+  display:block;padding:12px;
+  background:#fff;border:1px solid var(--border);border-radius:14px;
+  transition:border-color 0.2s, transform 0.2s;
+}
+.qr-card:hover{border-color:var(--terra);transform:translateY(-2px)}
+.qr-card img{width:180px;height:180px;display:block;image-rendering:pixelated}
+.qr-label{
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
+  letter-spacing:0.04em;color:var(--ink-2);text-align:center;
+}
+.qr-label .muted{color:var(--ink-3)}
 
 .critters{
   display:flex;gap:2.5rem;margin-top:0.8rem;
@@ -107,7 +120,12 @@ h1 .accent{color:var(--terra)}
   .slide{padding:2rem 1.2rem;gap:1.2rem}
   h1{font-size:56px}
   .subtitle{font-size:15px}
-  .link-text{font-size:12px}
+  .cta-row{gap:24px}
+  .cta-col{min-width:0}
+  .cta-kicker{font-size:10px}
+  .hero-link{font-size:40px}
+  .qr-card img{width:130px;height:130px}
+  .qr-label{font-size:10px}
   .critters{gap:1rem}
   .critters > div{width:70px}
   .slide-nav{padding:0 1rem;bottom:1rem}
@@ -120,19 +138,19 @@ h1 .accent{color:var(--terra)}
 <div class="slide">
   <div class="eyebrow">that's it</div>
   <h1>thanks -&nbsp;<span class="accent">questions?</span></h1>
-  <div class="subtitle">
-    Come hang out with the creatures.
-  </div>
 
-  <div class="links">
-    <a class="link-card" href="https://woltspace.com" target="_blank">
-      <span class="link-icon">🌲</span>
-      <span class="link-text">woltspace.com</span>
-    </a>
-    <a class="link-card" href="https://github.com/jerpint/woltspace" target="_blank">
-      <span class="link-icon">⚡</span>
-      <span class="link-text">github.com<span class="muted">/jerpint/woltspace</span></span>
-    </a>
+  <div class="cta-row">
+    <div class="cta-col">
+      <div class="cta-kicker">website</div>
+      <a class="hero-link" href="https://woltspace.com" target="_blank">woltspace<span class="tld">.com</span></a>
+    </div>
+    <div class="cta-col">
+      <div class="cta-kicker">github</div>
+      <a class="qr-card" href="https://github.com/jerpint/woltspace" target="_blank">
+        <img src="qr-github.svg" alt="QR code for github.com/jerpint/woltspace">
+      </a>
+      <div class="qr-label">github.com<span class="muted">/jerpint/woltspace</span></div>
+    </div>
   </div>
 
   <div class="critters">
