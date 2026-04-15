@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>what is a wolt?</title>
+<title>my wolts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,59 +23,57 @@
 body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
 
 .slide{
-  max-width:740px;width:100%;padding:2.5rem;
+  max-width:720px;width:100%;padding:2.5rem;
   display:flex;flex-direction:column;align-items:center;
-  gap:2.4rem;text-align:center;
+  gap:2rem;text-align:center;
   animation:fadeUp 0.7s ease both;
 }
 
 h1{font-family:var(--font-display);font-size:48px;font-weight:300;color:var(--ink);letter-spacing:-0.01em;line-height:1.1}
 
 .caption{
-  font-size:18px;color:var(--ink-2);font-weight:300;line-height:1.6;max-width:520px;
+  font-size:17px;color:var(--ink-2);font-weight:300;line-height:1.5;max-width:500px;
 }
 
-.creatures{
-  display:flex;gap:20px;width:100%;max-width:660px;
-  justify-content:center;
+.wolts{
+  display:flex;flex-direction:column;gap:14px;
+  width:100%;max-width:560px;
 }
-.creature-card{
-  flex:1;max-width:200px;
+.wolt-row{
+  display:flex;align-items:center;gap:22px;
   background:var(--surface);border:1px solid var(--border);
-  border-radius:14px;padding:24px 16px 20px;
-  display:flex;flex-direction:column;align-items:center;gap:12px;
+  border-radius:12px;padding:18px 22px;
+  text-align:left;
   transition:border-color 0.2s, transform 0.2s;
+  opacity:0;animation:rowIn 0.5s ease forwards;
 }
-.creature-card:hover{border-color:var(--border-2);transform:translateY(-3px)}
-.creature-card.terra{border-top:3px solid var(--terra)}
-.creature-card.amber{border-top:3px solid var(--amber)}
-.creature-card.forest{border-top:3px solid var(--forest)}
+.wolt-row:hover{border-color:var(--border-2);transform:translateX(3px)}
+.wolt-row.amber{border-left:4px solid var(--amber)}
+.wolt-row.terra{border-left:4px solid var(--terra)}
+.wolt-row:nth-child(1){animation-delay:0.15s}
+.wolt-row:nth-child(2){animation-delay:0.3s}
+.wolt-row:nth-child(3){animation-delay:0.45s}
 
-.creature-sprite{image-rendering:pixelated;display:flex;justify-content:center;height:80px;align-items:center}
-
-@keyframes waddle{0%,100%{transform:rotate(0deg) translateY(0)}25%{transform:rotate(-8deg) translateY(-3px)}75%{transform:rotate(8deg) translateY(-3px)}}
-@keyframes pirouette{0%{transform:rotateY(0deg) scale(1)}50%{transform:rotateY(180deg) scale(1.1)}100%{transform:rotateY(360deg) scale(1)}}
-@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-#otter-sprite{animation:pirouette 2.5s ease-in-out infinite}
-#beaver-sprite{animation:hop 1.2s ease-in-out infinite}
-#raccoon-sprite{animation:waddle 0.6s ease-in-out infinite}
-
-.creature-name{
-  font-family:var(--font-display);font-size:22px;color:var(--ink);line-height:1;
-}
-.creature-model{
-  font-family:var(--font-mono);font-size:10px;font-weight:600;
+.sprite{image-rendering:pixelated;flex-shrink:0;width:70px;height:70px;display:flex;align-items:center;justify-content:center}
+.wolt-text{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+.wolt-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.wolt-name{font-family:var(--font-display);font-size:22px;color:var(--ink);line-height:1}
+.wolt-tag{
+  font-family:var(--font-mono);font-size:9px;font-weight:600;
   letter-spacing:0.1em;text-transform:uppercase;
-  padding:3px 10px;border-radius:4px;
+  padding:2px 8px;border-radius:4px;
 }
-.terra .creature-model{color:var(--terra);background:var(--terra-light)}
-.amber .creature-model{color:var(--amber);background:var(--amber-light)}
-.forest .creature-model{color:var(--forest);background:var(--forest-light)}
+.amber .wolt-tag{color:var(--amber);background:var(--amber-light)}
+.terra .wolt-tag{color:var(--terra);background:var(--terra-light)}
+.wolt-role{font-size:15px;color:var(--ink);line-height:1.35;font-weight:400}
+.wolt-note{font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:0.02em}
 
-.creature-role{
-  font-size:13px;color:var(--ink-2);line-height:1.4;
-}
+@keyframes waddle{0%,100%{transform:rotate(0deg) translateY(0)}25%{transform:rotate(-8deg) translateY(-2px)}75%{transform:rotate(8deg) translateY(-2px)}}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+#beaver-sprite{animation:hop 1.3s ease-in-out infinite}
+#uxwolt-sprite, #prwolt-sprite{animation:waddle 0.7s ease-in-out infinite}
 
+@keyframes rowIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 .slide-nav{
@@ -96,12 +94,12 @@ h1{font-family:var(--font-display);font-size:48px;font-weight:300;color:var(--in
 
 @media(max-width:600px){
   body{overflow-y:auto}
-  .slide{padding:1.5rem 1.2rem;gap:1.6rem}
+  .slide{padding:1.5rem 1.2rem;gap:1.4rem}
   h1{font-size:36px}
-  .creatures{flex-direction:column;align-items:center;gap:12px}
-  .creature-card{max-width:280px;width:100%;padding:18px 14px 16px}
-  .creature-sprite{height:60px}
-  .creature-name{font-size:20px}
+  .wolt-row{padding:14px 16px;gap:14px}
+  .sprite{width:54px;height:54px}
+  .wolt-name{font-size:19px}
+  .wolt-role{font-size:14px}
   .slide-nav{padding:0 1rem;bottom:1rem}
   .slide-nav a{font-size:11px;padding:6px 12px}
 }
@@ -110,41 +108,56 @@ h1{font-family:var(--font-display);font-size:48px;font-weight:300;color:var(--in
 <body>
 
 <div class="slide">
-  <h1>what is a wolt?</h1>
-  <div class="caption">A wolt is a builder. You bring the ideas, the wolts builds for you.<br>Each wolt has its own purpose and mission, shaped by you.</div>
+  <h1>my wolts</h1>
+  <div class="caption">three creatures, working for me every day.</div>
 
-  <div class="creatures">
-    <div class="creature-card forest">
-      <div class="creature-sprite" id="otter-sprite"></div>
-      <div class="creature-name">otter</div>
-      <div class="creature-model">haiku</div>
-      <div class="creature-role">the quick one</div>
+  <div class="wolts">
+    <div class="wolt-row amber">
+      <div class="sprite" id="beaver-sprite"></div>
+      <div class="wolt-text">
+        <div class="wolt-head">
+          <div class="wolt-name">nunu</div>
+          <div class="wolt-tag">beaver · music</div>
+        </div>
+        <div class="wolt-role">curates a new playlist, tuned to my taste.</div>
+        <div class="wolt-note">22+ playlists on spotify · rated, archived, learned from</div>
+      </div>
     </div>
 
-    <div class="creature-card amber">
-      <div class="creature-sprite" id="beaver-sprite"></div>
-      <div class="creature-name">beaver</div>
-      <div class="creature-model">sonnet</div>
-      <div class="creature-role">the builder</div>
+    <div class="wolt-row terra">
+      <div class="sprite" id="uxwolt-sprite"></div>
+      <div class="wolt-text">
+        <div class="wolt-head">
+          <div class="wolt-name">uxwolt</div>
+          <div class="wolt-tag">raccoon · design</div>
+        </div>
+        <div class="wolt-role">shapes how woltspace feels — pushes back before i write a line.</div>
+        <div class="wolt-note">the lodge layout, the creature cards, the split view</div>
+      </div>
     </div>
 
-    <div class="creature-card terra">
-      <div class="creature-sprite" id="raccoon-sprite"></div>
-      <div class="creature-name">raccoon</div>
-      <div class="creature-model">opus</div>
-      <div class="creature-role">the thinker</div>
+    <div class="wolt-row terra">
+      <div class="sprite" id="prwolt-sprite"></div>
+      <div class="wolt-text">
+        <div class="wolt-head">
+          <div class="wolt-name">prwolt</div>
+          <div class="wolt-tag">raccoon · decks</div>
+        </div>
+        <div class="wolt-role">built this deck — edits slides while i talk.</div>
+        <div class="wolt-note">you're looking at his work right now</div>
+      </div>
     </div>
   </div>
 </div>
 
 <nav class="slide-nav">
-  <a href="slide-01-title.html">&larr; prev</a>
-  <a href="slide-02b-my-wolts.html">next &rarr;</a>
+  <a href="slide-02-pitch.html">&larr; prev</a>
+  <a href="slide-03-demo.html">next &rarr;</a>
 </nav>
 
 <script>
 (function(){
-  var px=3;
+  var px=2;
   function spriteToSVG(map,palette,px){
     var rows=map.length,cols=Math.max.apply(null,map.map(function(r){return r.length}));
     var rects=[];
@@ -211,37 +224,12 @@ h1{font-family:var(--font-display);font-size:48px;font-weight:300;color:var(--in
   ];
   var raccPal={A:'#7f8894',B:'#282c33',C:'#40454b',D:'#f0ecf0',E:'#545c65',F:'#a0abbd',G:'#050029',H:'#efa09f'};
 
-  var ottMap=[
-    '.....AAAAAAAA......',
-    '..AAACCCCCCCCAAA...',
-    '.ACCCCCCCCCCCCCCA..',
-    '.ACACCCCCCCCCCACA..',
-    '..ACCBACCCCBACCA...',
-    '..ACCAACDDCAACCA...',
-    'AAACBBBBAABBBBCAAA.',
-    '..ABEBABAABABEBA...',
-    '.AAABBBABBABBBAAA..',
-    '...AABBBBBBBBAA....',
-    '...ACCCCCCCCCCA....',
-    '..ACCCCBBBBCCCCA...',
-    '..ACCABBBBBBACCA...',
-    '..ACCCABBBBACCCA...',
-    '..AACCABBBBACCAA.AA',
-    '..ACAABBBBBBAACAACA',
-    '.ACCCBBBBBBBBCCCACA',
-    '.ACAAABBBBBBAAACAA.',
-    '.ACCCCABBBBACCCCA..',
-    '..ACCCAAAAAACCCA...',
-    '...AAA......AAA....',
-  ];
-  var ottPal={A:'#402110',B:'#f2d79d',C:'#9f5332',D:'#ff6970',E:'#c47b4a'};
-
   var b=document.getElementById('beaver-sprite');
   if(b)b.innerHTML=spriteToSVG(beavMap,beavPal,px);
-  var r=document.getElementById('raccoon-sprite');
-  if(r)r.innerHTML=spriteToSVG(raccMap,raccPal,px);
-  var o=document.getElementById('otter-sprite');
-  if(o)o.innerHTML=spriteToSVG(ottMap,ottPal,px);
+  var ux=document.getElementById('uxwolt-sprite');
+  if(ux)ux.innerHTML=spriteToSVG(raccMap,raccPal,px);
+  var pr=document.getElementById('prwolt-sprite');
+  if(pr)pr.innerHTML=spriteToSVG(raccMap,raccPal,px);
 })();
 </script>
 </body>
