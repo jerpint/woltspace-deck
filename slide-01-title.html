@@ -18,48 +18,19 @@
   --font-mono:'JetBrains Mono',monospace;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height:100vh;overflow:hidden;position:relative}
-
-/* Landscape fills the entire viewport */
-#bg-nature-wrap{
-  position:absolute;top:0;left:0;right:0;bottom:0;
-  overflow:hidden;background:#B8D4E8;
+body{
+  font-family:var(--font-body);background:#B8D4E8;color:var(--ink);
+  min-height:100vh;overflow:hidden;
+  display:flex;flex-direction:column;
 }
-#bg-nature{width:100%;height:100%;display:block;line-height:0}
-#bg-nature svg{display:block;width:100%;height:100%}
 
-/* Cloud layer */
-.cloud-layer{position:absolute;top:0;left:0;right:0;height:60%;pointer-events:none;overflow:hidden}
-.cloud{position:absolute;animation:cloudDrift linear infinite}
-.cloud:nth-child(1){top:5%;animation-duration:90s;animation-delay:0s}
-.cloud:nth-child(2){top:14%;animation-duration:130s;animation-delay:-30s}
-.cloud:nth-child(3){top:8%;animation-duration:110s;animation-delay:-60s}
-.cloud:nth-child(4){top:20%;animation-duration:160s;animation-delay:-15s}
-.cloud:nth-child(5){top:3%;animation-duration:120s;animation-delay:-80s}
-.cloud:nth-child(6){top:22%;animation-duration:145s;animation-delay:-45s}
-@keyframes cloudDrift{from{transform:translateX(-300px)}to{transform:translateX(calc(100vw + 300px))}}
-
-/* Scene critters — same positioning as lodge homepage */
-.scene-critter{position:absolute;image-rendering:pixelated;pointer-events:none;z-index:2}
-.scene-beaver{bottom:22%;animation:scBeaverBob 1.5s ease-in-out infinite}
-@keyframes scBeaverBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-.scene-raccoon{bottom:38%;animation:scRaccoonWalk 24s linear infinite, scRaccoonStep 1.2s ease-in-out infinite}
-@keyframes scRaccoonWalk{0%{left:-60px;opacity:0}4%{opacity:1}96%{opacity:1}100%{left:calc(100% + 60px);opacity:0}}
-@keyframes scRaccoonStep{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-.scene-otter-swim{bottom:12%;animation:scOtterSwim 14s linear infinite, scOtterBob 1.5s ease-in-out infinite}
-@keyframes scOtterSwim{0%{left:-40px;opacity:0}5%{opacity:1}95%{opacity:1}100%{left:calc(100% + 40px);opacity:0}}
-@keyframes scOtterBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-
-/* Brand overlay — sits in the sky area, above the hills */
-.brand-overlay{
-  position:absolute;top:0;left:0;right:0;bottom:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-  padding-top:12vh;
-  z-index:10;pointer-events:none;
+/* Sky area with brand — fills top portion */
+.sky{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;z-index:2;
   animation:fadeUp 0.7s ease both;
 }
 .brand-card{
-  pointer-events:auto;
   display:flex;flex-direction:column;align-items:center;gap:12px;
   padding:36px 56px 32px;
   background:rgba(237,232,222,0.85);
@@ -82,6 +53,34 @@ body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height
   font-weight:300;line-height:1.6;margin-top:4px;
 }
 
+/* Landscape banner — lodge-style, pinned to bottom */
+#bg-nature-wrap{
+  width:100%;overflow:hidden;flex-shrink:0;position:relative;
+  background:#B8D4E8;height:clamp(200px, 45vh, 420px);
+}
+#bg-nature{width:100%;height:100%;display:block;line-height:0}
+#bg-nature svg{display:block;width:100%;height:100%}
+
+/* Cloud layer — spans both sky and landscape */
+.cloud-layer{position:fixed;top:0;left:0;right:0;height:60%;pointer-events:none;overflow:hidden;z-index:1}
+.cloud{position:absolute;animation:cloudDrift linear infinite}
+.cloud:nth-child(1){top:5%;animation-duration:90s;animation-delay:0s}
+.cloud:nth-child(2){top:14%;animation-duration:130s;animation-delay:-30s}
+.cloud:nth-child(3){top:8%;animation-duration:110s;animation-delay:-60s}
+.cloud:nth-child(4){top:20%;animation-duration:160s;animation-delay:-15s}
+.cloud:nth-child(5){top:3%;animation-duration:120s;animation-delay:-80s}
+.cloud:nth-child(6){top:22%;animation-duration:145s;animation-delay:-45s}
+@keyframes cloudDrift{from{transform:translateX(-300px)}to{transform:translateX(calc(100vw + 300px))}}
+
+/* Scene critters — exact lodge CSS */
+.scene-critter{position:absolute;image-rendering:pixelated;pointer-events:none;z-index:1}
+.scene-beaver{bottom:22%;animation:scBeaverBob 1.5s ease-in-out infinite}
+@keyframes scBeaverBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.scene-raccoon{bottom:38%;animation:scRaccoonPeek 3s ease-in-out infinite}
+@keyframes scRaccoonPeek{0%,100%{transform:translateX(0)}30%,70%{transform:translateX(6px)}}
+.scene-otter-swim{bottom:16%;animation:scOtterSwim 12s linear infinite}
+@keyframes scOtterSwim{0%{left:-40px;opacity:0}5%{opacity:1}95%{opacity:1}100%{left:calc(100% + 40px);opacity:0}}
+
 /* Nav */
 .slide-nav{
   position:fixed;bottom:1.5rem;left:0;right:0;
@@ -103,11 +102,11 @@ body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 @media(max-width:600px){
-  .brand-overlay{padding-top:8vh}
   .brand-card{padding:24px 28px 20px}
   .brand-name{font-size:44px}
   .tagline{font-size:12px}
   .subtitle{font-size:16px}
+  #bg-nature-wrap{height:clamp(160px,40vh,320px)}
   .slide-nav{padding:0 1rem;bottom:1rem}
   .slide-nav a{font-size:11px;padding:6px 12px}
 }
@@ -115,28 +114,32 @@ body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height
 </head>
 <body>
 
-<div id="bg-nature-wrap">
-  <div id="bg-nature"></div>
-  <div id="river-dots"></div>
-  <div class="cloud-layer">
-    <div class="cloud" id="cl-1"></div>
-    <div class="cloud" id="cl-2"></div>
-    <div class="cloud" id="cl-3"></div>
-    <div class="cloud" id="cl-4"></div>
-    <div class="cloud" id="cl-5"></div>
-    <div class="cloud" id="cl-6"></div>
-  </div>
-  <div class="scene-critter scene-beaver" id="sc-beaver" style="left:18%"></div>
-  <div class="scene-critter scene-raccoon" id="sc-raccoon"></div>
-  <div class="scene-critter scene-otter-swim" id="sc-otter"></div>
+<!-- Clouds span the full page -->
+<div class="cloud-layer">
+  <div class="cloud" id="cl-1"></div>
+  <div class="cloud" id="cl-2"></div>
+  <div class="cloud" id="cl-3"></div>
+  <div class="cloud" id="cl-4"></div>
+  <div class="cloud" id="cl-5"></div>
+  <div class="cloud" id="cl-6"></div>
 </div>
 
-<div class="brand-overlay">
+<!-- Sky area with brand -->
+<div class="sky">
   <div class="brand-card">
     <h1 class="brand-name">woltspace</h1>
     <div class="tagline">gnaw. build. repeat.</div>
     <div class="subtitle">A space for builders to build.</div>
   </div>
+</div>
+
+<!-- Landscape banner — same as lodge homepage -->
+<div id="bg-nature-wrap">
+  <div id="bg-nature"></div>
+  <div id="river-dots"></div>
+  <div class="scene-critter scene-beaver" id="sc-beaver" style="left:15%"></div>
+  <div class="scene-critter scene-raccoon" id="sc-raccoon" style="left:42%"></div>
+  <div class="scene-critter scene-otter-swim" id="sc-otter"></div>
 </div>
 
 <nav class="slide-nav">
@@ -145,169 +148,105 @@ body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height
 </nav>
 
 <script>
-// Procedural pixel art landscape — same constants as lodge homepage
+// Procedural pixel art landscape — copied from lodge homepage
+(function(){var S=5,W=Math.ceil(window.innerWidth/S)+6,H=42,BANK=28,RIVER=34;
+var C={fa:'#8AA6BA',fb:'#6A8698',na:'#3E5A32',nb:'#293E20',ta:'#3A7030',tb:'#2A5225',tc:'#1A3A18',tt:'#4A2810',ga:'#72B855',gb:'#4A8838',gc:'#2A5A1A',ea:'#5A4020',eb:'#3A2810',ra:'#90D4E8',rb:'#4AAAC8',rc:'#2A7AAA',rd:'#1A5888',ba:'#3A7030'};
+function dot(x,y,c){return'<rect x="'+(x*S)+'" y="'+(y*S)+'" width="'+S+'" height="'+S+'" fill="'+c+'"/>';}
+var fp=[],np=[];
+for(var x=0;x<W;x++){fp[x]=Math.round(7+5*Math.sin(x*0.05+0.3)+3*Math.sin(x*0.12+1.7)+1.5*Math.sin(x*0.04+0.9));np[x]=Math.round(6+6*Math.sin(x*0.08+1.0)+3.5*Math.sin(x*0.16+0.5)+1.5*Math.sin(x*0.22+2.4));}
+var out=[];
+for(var x=0;x<W;x++){for(var y=0;y<8;y++)out.push(dot(x,y,'#B8D4E8'));}
+for(var x=0;x<W;x++){var ft=BANK-16-fp[x];for(var y=Math.max(ft,0);y<BANK;y++)out.push(dot(x,y,y===ft?C.fb:C.fa));}
+for(var x=0;x<W;x++){var nt=BANK-2-np[x];for(var y=Math.max(nt,1);y<BANK;y++)out.push(dot(x,y,y===nt?C.nb:C.na));}
+for(var x=0;x<W;x++){out.push(dot(x,BANK,C.ga));out.push(dot(x,BANK+1,C.gb));out.push(dot(x,BANK+2,C.gc));out.push(dot(x,BANK+3,C.ea));for(var y=BANK+4;y<RIVER;y++)out.push(dot(x,y,C.eb));}
+for(var x=0;x<W;x++){out.push(dot(x,RIVER,C.ba));out.push(dot(x,RIVER+1,C.rc));out.push(dot(x,RIVER+2,C.rc));out.push(dot(x,RIVER+3,C.rd));for(var y=RIVER+4;y<H;y++)out.push(dot(x,y,C.rd));}
+function tree(cx,baseY,h){for(var dy=0;dy<h;dy++){var hw=Math.floor((dy+1)*0.55),tc=dy<2?C.ta:(dy<h-2?C.tb:C.tc);for(var dx=-hw;dx<=hw;dx++){var tx=cx+dx;if(tx>=0&&tx<W)out.push(dot(tx,baseY-h+1+dy,tc));}};if(cx>=0&&cx<W){out.push(dot(cx,baseY+1,C.tt));out.push(dot(cx,baseY+2,C.tt));}}
+var tx=3;while(tx<W-3){var nt2=BANK-2-np[tx];if(nt2<BANK-7)tree(tx,nt2+Math.floor(np[tx]*0.55),5+((tx*7)%4));tx+=7+((tx*13+5)%5);}
+
+var el=document.getElementById('bg-nature');
+if(!el)return;
+var svgW=W*S,svgH=H*S;
+el.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+svgW+' '+svgH+'" preserveAspectRatio="xMidYMid slice" style="image-rendering:pixelated;display:block;width:100%;height:100%" shape-rendering="crispEdges">'+out.join('')+'</svg>';
+
+// Animated river dots
+var rd=document.getElementById('river-dots');
+
+function positionDots(){
+  var svgEl=el.querySelector('svg');
+  if(!svgEl||!rd)return;
+  var r=svgEl.getBoundingClientRect();
+  if(r.width<1)return;
+  var scale=r.width/svgW;
+  var dotPx=Math.max(2,Math.round(S*scale));
+  var rowTop=Math.round((RIVER+1)*S*scale);
+  var tileW=Math.round(3*S*scale);
+  var svgBg="<svg xmlns='http://www.w3.org/2000/svg' width='"+tileW+"' height='"+dotPx+"'>"
+    +"<rect x='0' y='0' width='"+dotPx+"' height='"+dotPx+"' fill='%2390D4E8'/>"
+    +"</svg>";
+  var styleEl=document.getElementById('river-kf');
+  if(!styleEl){styleEl=document.createElement('style');styleEl.id='river-kf';document.head.appendChild(styleEl);}
+  var bottomPct=((H-RIVER-2)/H*100).toFixed(2);
+  styleEl.textContent=
+    '@keyframes riverDots{from{transform:translateX(0)}to{transform:translateX(-50%)}}'
+    +' #river-dots{'
+    +'position:absolute;bottom:'+bottomPct+'%;height:'+dotPx+'px;'
+    +'left:0;width:200%;'
+    +'background-image:url("data:image/svg+xml,'+svgBg+'");'
+    +'background-repeat:repeat-x;'
+    +'background-size:'+tileW+'px '+dotPx+'px;'
+    +'animation:riverDots 90s linear infinite;'
+    +'pointer-events:none;'
+    +'}';
+}
+
+requestAnimationFrame(function(){requestAnimationFrame(positionDots);});
+window.addEventListener('resize', positionDots);
+})();
+
+// Pixel art clouds — copied from lodge homepage
+(function(){var CP={O:'#8898A8',w:'#E0E8EE',W:'#F8FCFF',s:'#BCC8D0'};
+var SHAPES={lg:['......OOOO...OOOO.......', '.....OwwWwOOOwwWwO......', '....OwWWWWwOwWWWWwO.....', '...OOwWWWWWwwWWWWWwOO...', '..OwwWWWWWWWWWWWWWWwO...', '..OwWWWWWWWWWWWWWWWWwO..', '..OwwWWWWWWWWWWWWWWwwO..', '..OssssssssssssssssssO..', '...OOOOOOOOOOOOOOOOOO...'],
+md:['....OOO...OOO......','...OwWwOOOwWwO.....','..OwWWWwOwWWWwO....', '.OOwWWWWwwWWWWwOO..', '.OwwWWWWWWWWWWWwO..', '.OwWWWWWWWWWWWWwO..', '.OwwWWWWWWWWWWwwO..', '.OssssssssssssssO..', '..OOOOOOOOOOOOOO...'],
+sm:['...OOO..OOO....','..OwWwOOwWwO...','.OwWWWwwWWWwO..','.OwwWWWWWWwwO..','.OwWWWWWWWWwO..','.OwwWWWWWWwwO..','.OssssssssssO..','..OOOOOOOOOO...']};
+function renderCloud(map,px){var cols=Math.max.apply(null,map.map(function(r){return r.length;})),rects=[];for(var r=0;r<map.length;r++)for(var c=0;c<map[r].length;c++){var fill=CP[map[r][c]];if(!fill)continue;rects.push('<rect x="'+(c*px)+'" y="'+(r*px)+'" width="'+px+'" height="'+px+'" fill="'+fill+'"/>');}return'<svg width="'+(cols*px)+'" height="'+(map.length*px)+'" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;display:block" shape-rendering="crispEdges">'+rects.join('')+'</svg>';}
+[{id:'cl-1',shape:'lg',px:7},{id:'cl-2',shape:'md',px:6},{id:'cl-3',shape:'sm',px:6},{id:'cl-4',shape:'lg',px:6},{id:'cl-5',shape:'md',px:5},{id:'cl-6',shape:'sm',px:5}].forEach(function(c){var el=document.getElementById(c.id);if(el)el.innerHTML=renderCloud(SHAPES[c.shape],c.px);});
+})();
+
+// Animated scene critters — canvas frame cycling, copied from lodge homepage
 (function(){
-  // Scale grid to fill viewport at ~1:1 so terrain isn't zoomed in
-  var S=5;
-  var vw=Math.max(window.innerWidth,screen.width||1920);
-  var vh=Math.max(window.innerHeight,screen.height||1080);
-  var W=Math.ceil(vw/S)+6;
-  var H=Math.ceil(vh/S)+2;
-  // Keep lodge proportions: BANK=67%, RIVER=81%
-  var BANK=Math.round(H*0.667);
-  var RIVER=Math.round(H*0.810);
+  var px=3;
 
-  var C={
-    fa:'#8AA6BA',fb:'#6A8698',
-    na:'#3E5A32',nb:'#293E20',
-    ta:'#3A7030',tb:'#2A5225',tc:'#1A3A18',tt:'#4A2810',
-    ga:'#72B855',gb:'#4A8838',gc:'#2A5A1A',
-    ea:'#5A4020',eb:'#3A2810',
-    ra:'#90D4E8',rb:'#4AAAC8',rc:'#2A7AAA',rd:'#1A5888',
-    ba:'#3A7030'
-  };
+  function makeSprite(frames, w, h, fps){
+    var cv=document.createElement('canvas');
+    cv.width=w; cv.height=h;
+    cv.style.cssText='image-rendering:pixelated;display:block;width:'+w+'px;height:'+h+'px';
+    var ctx=cv.getContext('2d');
+    var fi=0;
 
-  var O=S+1; // slightly oversized to prevent subpixel grid gaps when scaled
-  function dot(x,y,c){
-    return'<rect x="'+(x*S)+'" y="'+(y*S)+'" width="'+O+'" height="'+O+'" fill="'+c+'"/>';
-  }
-
-  // Generate terrain profiles via sine waves
-  var fp=[],np=[];
-  for(var x=0;x<W;x++){
-    fp[x]=Math.round(7+5*Math.sin(x*0.05+0.3)+3*Math.sin(x*0.12+1.7)+1.5*Math.sin(x*0.04+0.9));
-    np[x]=Math.round(6+6*Math.sin(x*0.08+1.0)+3.5*Math.sin(x*0.16+0.5)+1.5*Math.sin(x*0.22+2.4));
-  }
-
-  var out=[];
-
-  // Sky fill (proportional to H)
-  var SKY=Math.round(H*0.19);
-  for(var x=0;x<W;x++){for(var y=0;y<SKY;y++)out.push(dot(x,y,'#B8D4E8'));}
-
-  // Far hills (scale offset proportionally)
-  var FAR_DEPTH=Math.round(H*0.38);
-  for(var x=0;x<W;x++){
-    var ft=BANK-FAR_DEPTH-fp[x];
-    for(var y=Math.max(ft,0);y<BANK;y++)out.push(dot(x,y,y===ft?C.fb:C.fa));
-  }
-
-  // Near hills
-  for(var x=0;x<W;x++){
-    var nt=BANK-2-np[x];
-    for(var y=Math.max(nt,1);y<BANK;y++)out.push(dot(x,y,y===nt?C.nb:C.na));
-  }
-
-  // Grass + earth layers
-  for(var x=0;x<W;x++){
-    out.push(dot(x,BANK,C.ga));
-    out.push(dot(x,BANK+1,C.gb));
-    out.push(dot(x,BANK+2,C.gc));
-    out.push(dot(x,BANK+3,C.ea));
-    for(var y=BANK+4;y<RIVER;y++)out.push(dot(x,y,C.eb));
-  }
-
-  // River + deep water
-  for(var x=0;x<W;x++){
-    out.push(dot(x,RIVER,C.ba));
-    out.push(dot(x,RIVER+1,C.rc));
-    out.push(dot(x,RIVER+2,C.rc));
-    out.push(dot(x,RIVER+3,C.rd));
-    for(var y=RIVER+4;y<H;y++)out.push(dot(x,y,C.rd));
-  }
-
-  // Trees on near hills
-  function tree(cx,baseY,h){
-    for(var dy=0;dy<h;dy++){
-      var hw=Math.floor((dy+1)*0.55);
-      var tc=dy<2?C.ta:(dy<h-2?C.tb:C.tc);
-      for(var dx=-hw;dx<=hw;dx++){
-        var tx=cx+dx;
-        if(tx>=0&&tx<W)out.push(dot(tx,baseY-h+1+dy,tc));
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      var f=frames[fi];
+      for(var r=0;r<f.map.length;r++){
+        var row=f.map[r];
+        for(var c=0;c<row.length;c++){
+          var ch=row[c];
+          if(ch==='.'||ch===' ')continue;
+          var col=f.pal[ch];
+          if(!col)continue;
+          ctx.fillStyle=col;
+          ctx.fillRect(c*px,r*px,px,px);
+        }
       }
+      fi=(fi+1)%frames.length;
     }
-    if(cx>=0&&cx<W){out.push(dot(cx,baseY+1,C.tt));out.push(dot(cx,baseY+2,C.tt));}
-  }
-  var tx=2;
-  while(tx<W-2){
-    var nt2=BANK-2-np[tx];
-    if(nt2<BANK-5)tree(tx,nt2+Math.floor(np[tx]*0.45),3+((tx*7)%3));
-    tx+=4+((tx*11+3)%4);
+
+    draw();
+    setInterval(draw, 1000/fps);
+    return cv;
   }
 
-  var el=document.getElementById('bg-nature');
-  if(!el)return;
-  var svgW=W*S,svgH=H*S;
-  el.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+svgW+' '+svgH+'" preserveAspectRatio="xMidYMax slice" style="image-rendering:pixelated;display:block;width:100%;height:100%" shape-rendering="crispEdges">'+out.join('')+'</svg>';
-
-  // Animated river dots
-  var rd=document.getElementById('river-dots');
-  function positionDots(){
-    var svgEl=el.querySelector('svg');
-    if(!svgEl||!rd)return;
-    var r=svgEl.getBoundingClientRect();
-    if(r.width<1)return;
-    var scale=r.width/svgW;
-    var dotPx=Math.max(2,Math.round(S*scale));
-    var tileW=Math.round(3*S*scale);
-    var svgBg="<svg xmlns='http://www.w3.org/2000/svg' width='"+tileW+"' height='"+dotPx+"'>"
-      +"<rect x='0' y='0' width='"+dotPx+"' height='"+dotPx+"' fill='%2390D4E8'/>"
-      +"</svg>";
-    var styleEl=document.getElementById('river-kf');
-    if(!styleEl){styleEl=document.createElement('style');styleEl.id='river-kf';document.head.appendChild(styleEl);}
-    var bottomPct=((H-RIVER-2)/H*100).toFixed(2);
-    styleEl.textContent=
-      '@keyframes riverDots{from{transform:translateX(0)}to{transform:translateX(-50%)}}'
-      +' #river-dots{'
-      +'position:absolute;bottom:'+bottomPct+'%;height:'+dotPx+'px;'
-      +'left:0;width:200%;'
-      +'background-image:url("data:image/svg+xml,'+svgBg+'");'
-      +'background-repeat:repeat-x;'
-      +'background-size:'+tileW+'px '+dotPx+'px;'
-      +'animation:riverDots 90s linear infinite;'
-      +'pointer-events:none;'
-      +'}';
-  }
-  requestAnimationFrame(function(){requestAnimationFrame(positionDots);});
-  window.addEventListener('resize',positionDots);
-})();
-
-// Pixel art clouds
-(function(){
-  var CP={O:'#8898A8',w:'#E0E8EE',W:'#F8FCFF',s:'#BCC8D0'};
-  var SHAPES={
-    lg:['......OOOO...OOOO.......', '.....OwwWwOOOwwWwO......', '....OwWWWWwOwWWWWwO.....', '...OOwWWWWWwwWWWWWwOO...', '..OwwWWWWWWWWWWWWWWwO...', '..OwWWWWWWWWWWWWWWWWwO..', '..OwwWWWWWWWWWWWWWWwwO..', '..OssssssssssssssssssO..', '...OOOOOOOOOOOOOOOOOO...'],
-    md:['....OOO...OOO......','...OwWwOOOwWwO.....','..OwWWWwOwWWWwO....', '.OOwWWWWwwWWWWwOO..', '.OwwWWWWWWWWWWWwO..', '.OwWWWWWWWWWWWWwO..', '.OwwWWWWWWWWWWwwO..', '.OssssssssssssssO..', '..OOOOOOOOOOOOOO...'],
-    sm:['...OOO..OOO....','..OwWwOOwWwO...','.OwWWWwwWWWwO..','.OwwWWWWWWwwO..','.OwWWWWWWWWwO..','.OwwWWWWWWwwO..','.OssssssssssO..','..OOOOOOOOOO...']
-  };
-  function renderCloud(map,px){
-    var cols=Math.max.apply(null,map.map(function(r){return r.length;})),rects=[];
-    for(var r=0;r<map.length;r++)for(var c=0;c<map[r].length;c++){
-      var fill=CP[map[r][c]];if(!fill)continue;
-      rects.push('<rect x="'+(c*px)+'" y="'+(r*px)+'" width="'+px+'" height="'+px+'" fill="'+fill+'"/>');
-    }
-    return'<svg width="'+(cols*px)+'" height="'+(map.length*px)+'" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;display:block" shape-rendering="crispEdges">'+rects.join('')+'</svg>';
-  }
-  [{id:'cl-1',shape:'lg',px:7},{id:'cl-2',shape:'md',px:6},{id:'cl-3',shape:'sm',px:6},{id:'cl-4',shape:'lg',px:6},{id:'cl-5',shape:'md',px:5},{id:'cl-6',shape:'sm',px:5}].forEach(function(c){
-    var el=document.getElementById(c.id);if(el)el.innerHTML=renderCloud(SHAPES[c.shape],c.px);
-  });
-})();
-
-// Scene critters in the landscape
-(function(){
-  var px=4;
-  function spriteToSVG(map,palette,px){
-    var rows=map.length,cols=Math.max.apply(null,map.map(function(r){return r.length}));
-    var rects=[];
-    for(var r=0;r<rows;r++)for(var c=0;c<map[r].length;c++){
-      var ch=map[r][c];if(ch===' '||ch==='.')continue;
-      var fill=palette[ch];if(!fill)continue;
-      rects.push('<rect x="'+(c*px)+'" y="'+(r*px)+'" width="'+px+'" height="'+px+'" fill="'+fill+'"/>');
-    }
-    return '<svg width="'+(cols*px)+'" height="'+(rows*px)+'" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;display:block" shape-rendering="crispEdges">'+rects.join('')+'</svg>';
-  }
-
-  var beavMap=[
+  // ── BEAVER walk frames ──
+  var beavFull=[
     '..AAA........AAA.....',
     '.ABBBA......ABBBA....',
     '.ABAAAAAAAAAAAABA....',
@@ -331,9 +270,17 @@ body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height
     'ABBBACCCABBBBBBAA....',
     'AAAAAAAAAAAAAAAA.....',
   ];
+  var beavB=beavFull.slice(0,19).concat([
+    'AABBBACCCABBBBBBAA...',
+    '.AAAAAAAAAAAAAAAA....',
+    '.....................',
+  ]);
   var beavPal={A:'#3f190e',B:'#af6127',C:'#fce6b0',D:'#773c1f',E:'#050003',F:'#fffee7',G:'#dd7a2d'};
+  var beavW=21*px, beavH=22*px;
+  var beavFrames=[{map:beavFull,pal:beavPal},{map:beavB,pal:beavPal}];
 
-  var raccMap=[
+  // ── RACCOON idle frames ──
+  var raccFull=[
     '...BB........BBB.........',
     '...BFGG.....GFFB.........',
     '...BABB.....BAAB.........',
@@ -360,9 +307,15 @@ body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height
     '.BBCCBBAAAAABCCCB........',
     '...BBBBBBBBBBBBB.........',
   ];
+  var raccB=raccFull.slice(0,1).concat([
+    '...BFHH.....HFFB.........',
+  ]).concat(raccFull.slice(2));
   var raccPal={A:'#7f8894',B:'#282c33',C:'#40454b',D:'#f0ecf0',E:'#545c65',F:'#a0abbd',G:'#050029',H:'#efa09f'};
+  var raccW=25*px, raccH=25*px;
+  var raccFrames=[{map:raccFull,pal:raccPal},{map:raccB,pal:raccPal}];
 
-  var ottMap=[
+  // ── OTTER swim frames ──
+  var ottFull=[
     '.....AAAAAAAA......',
     '..AAACCCCCCCCAAA...',
     '.ACCCCCCCCCCCCCCA..',
@@ -385,14 +338,23 @@ body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height
     '..ACCCAAAAAACCCA...',
     '...AAA......AAA....',
   ];
+  var ottB=ottFull.slice(0,17).concat([
+    '..ACAAABBBBBBAAACAA',
+    '..ACCCCABBBBACCCCA.',
+    '...ACCCAAAAAACCCA..',
+    '....AAA......AAA...',
+  ]);
   var ottPal={A:'#402110',B:'#f2d79d',C:'#9f5332',D:'#ff6970',E:'#c47b4a'};
+  var ottW=19*px, ottH=21*px;
+  var ottFrames=[{map:ottFull,pal:ottPal},{map:ottB,pal:ottPal}];
 
-  var b=document.getElementById('sc-beaver');
-  if(b)b.innerHTML=spriteToSVG(beavMap,beavPal,px);
-  var r=document.getElementById('sc-raccoon');
-  if(r)r.innerHTML=spriteToSVG(raccMap,raccPal,px);
-  var o=document.getElementById('sc-otter');
-  if(o)o.innerHTML=spriteToSVG(ottMap,ottPal,px);
+  // ── Apply to scene critters ──
+  var sb=document.getElementById('sc-beaver');
+  if(sb){sb.innerHTML='';sb.appendChild(makeSprite(beavFrames,beavW,beavH,4));}
+  var sr=document.getElementById('sc-raccoon');
+  if(sr){sr.innerHTML='';sr.appendChild(makeSprite(raccFrames,raccW,raccH,2));}
+  var so=document.getElementById('sc-otter');
+  if(so){so.innerHTML='';so.appendChild(makeSprite(ottFrames,ottW,ottH,4));}
 })();
 </script>
 </body>
