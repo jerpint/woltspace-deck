@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#EDE8DE;--surface:#F5F1E8;--surface-2:#FAF7F0;
+  --border:#D6CCBA;--border-2:#C4B89E;
+  --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
+  --terra:#C4531E;--terra-light:#F0D5C8;
+  --amber:#C98B2A;--amber-light:#F2E4C0;
+  --forest:#4A8838;--forest-light:#D6E8C8;
+  --blue:#3B6EA5;--blue-light:#D0DEF0;
+  --font-display:'Preahvihear',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+.slide{
+  max-width:740px;width:100%;padding:2rem 2.5rem;
+  display:flex;flex-direction:column;align-items:center;
+  gap:1.6rem;text-align:center;
+  animation:fadeUp 0.7s ease both;
+}
+
+.title-row{
+  display:flex;align-items:center;gap:14px;
+  flex-wrap:wrap;justify-content:center;
+}
+h1{font-family:var(--font-display);font-size:44px;font-weight:300;color:var(--ink);letter-spacing:-0.01em;line-height:1.1}
+.wip-tag{
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  letter-spacing:0.15em;text-transform:uppercase;
+  padding:4px 10px;border-radius:4px;
+  color:var(--terra);background:var(--terra-light);
+  border:1px dashed var(--terra);
+}
+
+.timeline{
+  display:flex;flex-direction:column;gap:14px;
+  width:100%;max-width:620px;
+}
+
+.timeline-item{
+  display:grid;grid-template-columns:22px 1fr 24px 1fr;
+  gap:18px;align-items:center;
+  padding:14px 22px;border-radius:10px;
+  background:var(--surface);border:1px solid var(--border);
+  opacity:0;animation:rowIn 0.5s ease forwards;
+  transition:border-color 0.2s, transform 0.2s;
+}
+.timeline-item:hover{border-color:var(--border-2);transform:translateX(3px)}
+.timeline-item:nth-child(1){animation-delay:0.1s}
+.timeline-item:nth-child(2){animation-delay:0.22s}
+.timeline-item:nth-child(3){animation-delay:0.34s}
+.timeline-item:nth-child(4){animation-delay:0.46s}
+
+.timeline-dot{
+  width:14px;height:14px;border-radius:50%;
+  flex-shrink:0;
+}
+.timeline-dot.terra{background:var(--terra);box-shadow:0 0 0 3px var(--terra-light)}
+.timeline-dot.amber{background:var(--amber);box-shadow:0 0 0 3px var(--amber-light)}
+.timeline-dot.forest{background:var(--forest);box-shadow:0 0 0 3px var(--forest-light)}
+.timeline-dot.blue{background:var(--blue);box-shadow:0 0 0 3px var(--blue-light)}
+
+.item-arrow{
+  font-family:var(--font-mono);font-size:16px;color:var(--ink-3);
+  text-align:center;
+}
+
+.timeline-title{
+  font-family:var(--font-display);font-size:22px;
+  color:var(--ink);line-height:1.15;text-align:left;
+}
+
+.why-tag{
+  font-family:var(--font-mono);font-size:14px;font-weight:600;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:7px 14px;border-radius:6px;
+  justify-self:start;
+}
+.why-tag.terra{color:var(--terra);background:var(--terra-light)}
+.why-tag.amber{color:var(--amber);background:var(--amber-light)}
+.why-tag.forest{color:var(--forest);background:var(--forest-light)}
+.why-tag.blue{color:var(--blue);background:var(--blue-light)}
+
+@keyframes rowIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.slide-nav{
+  position:fixed;bottom:1.5rem;left:0;right:0;
+  display:flex;justify-content:space-between;
+  padding:0 2rem;pointer-events:none;z-index:20;
+}
+.slide-nav a{
+  pointer-events:auto;
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink-3);text-decoration:none;
+  padding:8px 16px;border:1px solid var(--border);
+  border-radius:6px;background:var(--surface);
+  transition:all 0.15s;
+}
+.slide-nav a:hover{border-color:var(--border-2);color:var(--ink);background:var(--surface-2)}
+
+@media(max-width:600px){
+  body{overflow-y:auto}
+  .slide{padding:1.5rem 1.2rem;gap:1.2rem}
+  h1{font-size:32px}
+  .timeline{gap:10px}
+  .timeline-item{grid-template-columns:16px 1fr 18px 1fr;gap:10px;padding:10px 14px}
+  .timeline-title{font-size:16px}
+  .why-tag{font-size:11px;padding:5px 10px}
+  .item-arrow{font-size:13px}
+  .slide-nav{padding:0 1rem;bottom:1rem}
+  .slide-nav a{font-size:11px;padding:6px 12px}
+}
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <h1>where this is going</h1>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot amber"></div>
+      <div class="timeline-title">more harnesses</div>
+      <div class="item-arrow">&rarr;</div>
+      <span class="why-tag amber">no lock-in</span>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot blue"></div>
+      <div class="timeline-title">DAM (distributed app marketplace)</div>
+      <div class="item-arrow">&rarr;</div>
+      <span class="why-tag blue">community driven</span>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot terra"></div>
+      <div class="timeline-title">local models</div>
+      <div class="item-arrow">&rarr;</div>
+      <span class="why-tag terra">private to you</span>
+    </div>
+  </div>
+</div>
+
+<nav class="slide-nav">
+  <a href="slide-04-why.html">&larr; prev</a>
+  <a href="slide-05-ethos.html">next &rarr;</a>
+</nav>
+
+</body>
+</html>
