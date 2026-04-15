@@ -13,47 +13,76 @@
   --border:#D6CCBA;--border-2:#C4B89E;
   --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
   --terra:#C4531E;--terra-light:#F0D5C8;
-  --amber:#C98B2A;--amber-light:#F2E4C0;
   --font-display:'Preahvihear',sans-serif;
   --font-body:'DM Sans',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+body{font-family:var(--font-body);background:#B8D4E8;color:var(--ink);min-height:100vh;overflow:hidden;position:relative}
 
-.slide{
-  display:flex;flex-direction:column;align-items:center;
-  gap:1.8rem;text-align:center;padding:3rem;
+/* Landscape fills the entire viewport */
+#bg-nature-wrap{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  overflow:hidden;background:#B8D4E8;
+}
+#bg-nature{width:100%;height:100%;display:block;line-height:0}
+#bg-nature svg{display:block;width:100%;height:100%}
+
+/* Cloud layer */
+.cloud-layer{position:absolute;top:0;left:0;right:0;height:60%;pointer-events:none;overflow:hidden}
+.cloud{position:absolute;animation:cloudDrift linear infinite}
+.cloud:nth-child(1){top:5%;animation-duration:90s;animation-delay:0s}
+.cloud:nth-child(2){top:14%;animation-duration:130s;animation-delay:-30s}
+.cloud:nth-child(3){top:8%;animation-duration:110s;animation-delay:-60s}
+.cloud:nth-child(4){top:20%;animation-duration:160s;animation-delay:-15s}
+.cloud:nth-child(5){top:3%;animation-duration:120s;animation-delay:-80s}
+.cloud:nth-child(6){top:22%;animation-duration:145s;animation-delay:-45s}
+@keyframes cloudDrift{from{transform:translateX(-300px)}to{transform:translateX(calc(100vw + 300px))}}
+
+/* Scene critters — same positioning as lodge homepage */
+.scene-critter{position:absolute;image-rendering:pixelated;pointer-events:none;z-index:2}
+.scene-beaver{bottom:22%;animation:scBeaverBob 1.5s ease-in-out infinite}
+@keyframes scBeaverBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.scene-raccoon{bottom:38%;animation:scRaccoonWalk 24s linear infinite, scRaccoonStep 1.2s ease-in-out infinite}
+@keyframes scRaccoonWalk{0%{left:-60px;opacity:0}4%{opacity:1}96%{opacity:1}100%{left:calc(100% + 60px);opacity:0}}
+@keyframes scRaccoonStep{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.scene-otter-swim{bottom:12%;animation:scOtterSwim 14s linear infinite, scOtterBob 1.5s ease-in-out infinite}
+@keyframes scOtterSwim{0%{left:-40px;opacity:0}5%{opacity:1}95%{opacity:1}100%{left:calc(100% + 40px);opacity:0}}
+@keyframes scOtterBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+/* Brand overlay — sits in the sky area, above the hills */
+.brand-overlay{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  padding-top:12vh;
+  z-index:10;pointer-events:none;
   animation:fadeUp 0.7s ease both;
 }
-.brand{display:flex;align-items:center;gap:18px}
-.brand-emoji{font-size:64px;line-height:1}
-.brand-name{font-family:var(--font-display);font-size:72px;font-weight:300;letter-spacing:-0.02em;color:var(--ink);line-height:1}
-.tagline{font-family:var(--font-mono);font-size:14px;color:var(--ink-3);letter-spacing:0.12em;text-transform:uppercase}
-.subtitle{font-family:var(--font-body);font-size:22px;color:var(--ink-2);font-weight:300;line-height:1.6;max-width:560px}
+.brand-card{
+  pointer-events:auto;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  padding:36px 56px 32px;
+  background:rgba(237,232,222,0.85);
+  border:1px solid var(--border);
+  border-radius:18px;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  box-shadow:0 8px 40px rgba(24,16,10,0.12);
+}
+.brand-name{
+  font-family:var(--font-display);font-size:72px;font-weight:300;
+  letter-spacing:-0.02em;color:var(--ink);line-height:1;
+}
+.tagline{
+  font-family:var(--font-mono);font-size:14px;color:var(--ink-3);
+  letter-spacing:0.12em;text-transform:uppercase;
+}
+.subtitle{
+  font-family:var(--font-body);font-size:20px;color:var(--ink-2);
+  font-weight:300;line-height:1.6;margin-top:4px;
+}
 
-.critters{
-  display:flex;gap:2rem;margin-top:1rem;
-  position:relative;align-items:flex-end;
-}
-.critters > div{display:flex;flex-direction:column;align-items:center;width:100px}
-.critter{image-rendering:pixelated;display:flex;justify-content:center}
-@keyframes waddle{0%,100%{transform:rotate(0deg) translateY(0)}25%{transform:rotate(-8deg) translateY(-3px)}75%{transform:rotate(8deg) translateY(-3px)}}
-.critter.raccoon{animation:waddle 0.6s ease-in-out infinite}
-.critter.raccoon svg{transform:scale(0.85)}
-@keyframes pirouette{0%{transform:rotateY(0deg) scale(1)}50%{transform:rotateY(180deg) scale(1.1)}100%{transform:rotateY(360deg) scale(1)}}
-.critter.otter{animation:pirouette 2.5s ease-in-out infinite}
-.critter-label{
-  font-family:var(--font-mono);font-size:12px;
-  letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--ink-3);text-align:center;margin-top:6px;
-}
-
-.footer{
-  position:fixed;bottom:2rem;
-  font-family:var(--font-mono);font-size:11px;
-  color:var(--ink-3);letter-spacing:0.08em;
-}
+/* Nav */
 .slide-nav{
   position:fixed;bottom:1.5rem;left:0;right:0;
   display:flex;justify-content:space-between;
@@ -74,42 +103,187 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-heig
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 @media(max-width:600px){
-  body{overflow-y:auto}
-  .slide{padding:2rem 1.5rem;gap:1.2rem}
-  .brand-emoji{font-size:40px}
+  .brand-overlay{padding-top:8vh}
+  .brand-card{padding:24px 28px 20px}
   .brand-name{font-size:44px}
   .tagline{font-size:12px}
-  .subtitle{font-size:17px}
-  .critters{gap:1rem}
-  .critters > div{width:70px}
+  .subtitle{font-size:16px}
   .slide-nav{padding:0 1rem;bottom:1rem}
   .slide-nav a{font-size:11px;padding:6px 12px}
-  .footer{bottom:1rem;font-size:10px}
 }
 </style>
 </head>
 <body>
-<div class="slide">
-  <div class="brand">
-    <span class="brand-emoji">🦫</span>
-    <h1 class="brand-name">woltspace</h1>
+
+<div id="bg-nature-wrap">
+  <div id="bg-nature"></div>
+  <div id="river-dots"></div>
+  <div class="cloud-layer">
+    <div class="cloud" id="cl-1"></div>
+    <div class="cloud" id="cl-2"></div>
+    <div class="cloud" id="cl-3"></div>
+    <div class="cloud" id="cl-4"></div>
+    <div class="cloud" id="cl-5"></div>
+    <div class="cloud" id="cl-6"></div>
   </div>
-  <div class="tagline">gnaw. build. repeat.</div>
-  <div class="subtitle">
-    A space for builders to build.</div>
-  <div class="critters">
-    <div><div class="critter otter" id="otter-sprite"></div><div class="critter-label">otter</div></div>
-    <div><div class="critter" id="beaver-sprite"></div><div class="critter-label">beaver</div></div>
-    <div><div class="critter raccoon" id="raccoon-sprite"></div><div class="critter-label">raccoon</div></div>
+  <div class="scene-critter scene-beaver" id="sc-beaver" style="left:18%"></div>
+  <div class="scene-critter scene-raccoon" id="sc-raccoon"></div>
+  <div class="scene-critter scene-otter-swim" id="sc-otter"></div>
+</div>
+
+<div class="brand-overlay">
+  <div class="brand-card">
+    <h1 class="brand-name">woltspace</h1>
+    <div class="tagline">gnaw. build. repeat.</div>
+    <div class="subtitle">A space for builders to build.</div>
   </div>
 </div>
-<div class="footer">builders · woltspace · 2026</div>
+
 <nav class="slide-nav">
-  <a class="hidden" href="#">← prev</a>
-  <a href="slide-02-pitch.html">next →</a>
+  <a class="hidden" href="#">&larr; prev</a>
+  <a href="slide-02-pitch.html">next &rarr;</a>
 </nav>
 
 <script>
+// Procedural pixel art landscape — same constants as lodge homepage
+(function(){
+  var S=5,W=Math.ceil(Math.max(window.innerWidth,screen.width||1920)/S)+6,H=42,BANK=28,RIVER=34;
+
+  var C={
+    fa:'#8AA6BA',fb:'#6A8698',
+    na:'#3E5A32',nb:'#293E20',
+    ta:'#3A7030',tb:'#2A5225',tc:'#1A3A18',tt:'#4A2810',
+    ga:'#72B855',gb:'#4A8838',gc:'#2A5A1A',
+    ea:'#5A4020',eb:'#3A2810',
+    ra:'#90D4E8',rb:'#4AAAC8',rc:'#2A7AAA',rd:'#1A5888',
+    ba:'#3A7030'
+  };
+
+  var O=S+1; // slightly oversized to prevent subpixel grid gaps when scaled
+  function dot(x,y,c){
+    return'<rect x="'+(x*S)+'" y="'+(y*S)+'" width="'+O+'" height="'+O+'" fill="'+c+'"/>';
+  }
+
+  // Generate terrain profiles via sine waves
+  var fp=[],np=[];
+  for(var x=0;x<W;x++){
+    fp[x]=Math.round(7+5*Math.sin(x*0.05+0.3)+3*Math.sin(x*0.12+1.7)+1.5*Math.sin(x*0.04+0.9));
+    np[x]=Math.round(6+6*Math.sin(x*0.08+1.0)+3.5*Math.sin(x*0.16+0.5)+1.5*Math.sin(x*0.22+2.4));
+  }
+
+  var out=[];
+
+  // Sky fill
+  for(var x=0;x<W;x++){for(var y=0;y<8;y++)out.push(dot(x,y,'#B8D4E8'));}
+
+  // Far hills
+  for(var x=0;x<W;x++){
+    var ft=BANK-16-fp[x];
+    for(var y=Math.max(ft,0);y<BANK;y++)out.push(dot(x,y,y===ft?C.fb:C.fa));
+  }
+
+  // Near hills
+  for(var x=0;x<W;x++){
+    var nt=BANK-2-np[x];
+    for(var y=Math.max(nt,1);y<BANK;y++)out.push(dot(x,y,y===nt?C.nb:C.na));
+  }
+
+  // Grass + earth layers
+  for(var x=0;x<W;x++){
+    out.push(dot(x,BANK,C.ga));
+    out.push(dot(x,BANK+1,C.gb));
+    out.push(dot(x,BANK+2,C.gc));
+    out.push(dot(x,BANK+3,C.ea));
+    for(var y=BANK+4;y<RIVER;y++)out.push(dot(x,y,C.eb));
+  }
+
+  // River + deep water
+  for(var x=0;x<W;x++){
+    out.push(dot(x,RIVER,C.ba));
+    out.push(dot(x,RIVER+1,C.rc));
+    out.push(dot(x,RIVER+2,C.rc));
+    out.push(dot(x,RIVER+3,C.rd));
+    for(var y=RIVER+4;y<H;y++)out.push(dot(x,y,C.rd));
+  }
+
+  // Trees on near hills
+  function tree(cx,baseY,h){
+    for(var dy=0;dy<h;dy++){
+      var hw=Math.floor((dy+1)*0.55);
+      var tc=dy<2?C.ta:(dy<h-2?C.tb:C.tc);
+      for(var dx=-hw;dx<=hw;dx++){
+        var tx=cx+dx;
+        if(tx>=0&&tx<W)out.push(dot(tx,baseY-h+1+dy,tc));
+      }
+    }
+    if(cx>=0&&cx<W){out.push(dot(cx,baseY+1,C.tt));out.push(dot(cx,baseY+2,C.tt));}
+  }
+  var tx=2;
+  while(tx<W-2){
+    var nt2=BANK-2-np[tx];
+    if(nt2<BANK-5)tree(tx,nt2+Math.floor(np[tx]*0.45),3+((tx*7)%3));
+    tx+=4+((tx*11+3)%4);
+  }
+
+  var el=document.getElementById('bg-nature');
+  if(!el)return;
+  var svgW=W*S,svgH=H*S;
+  el.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+svgW+' '+svgH+'" preserveAspectRatio="xMidYMax slice" style="image-rendering:pixelated;display:block;width:100%;height:100%" shape-rendering="crispEdges">'+out.join('')+'</svg>';
+
+  // Animated river dots
+  var rd=document.getElementById('river-dots');
+  function positionDots(){
+    var svgEl=el.querySelector('svg');
+    if(!svgEl||!rd)return;
+    var r=svgEl.getBoundingClientRect();
+    if(r.width<1)return;
+    var scale=r.width/svgW;
+    var dotPx=Math.max(2,Math.round(S*scale));
+    var tileW=Math.round(3*S*scale);
+    var svgBg="<svg xmlns='http://www.w3.org/2000/svg' width='"+tileW+"' height='"+dotPx+"'>"
+      +"<rect x='0' y='0' width='"+dotPx+"' height='"+dotPx+"' fill='%2390D4E8'/>"
+      +"</svg>";
+    var styleEl=document.getElementById('river-kf');
+    if(!styleEl){styleEl=document.createElement('style');styleEl.id='river-kf';document.head.appendChild(styleEl);}
+    var bottomPct=((H-RIVER-2)/H*100).toFixed(2);
+    styleEl.textContent=
+      '@keyframes riverDots{from{transform:translateX(0)}to{transform:translateX(-50%)}}'
+      +' #river-dots{'
+      +'position:absolute;bottom:'+bottomPct+'%;height:'+dotPx+'px;'
+      +'left:0;width:200%;'
+      +'background-image:url("data:image/svg+xml,'+svgBg+'");'
+      +'background-repeat:repeat-x;'
+      +'background-size:'+tileW+'px '+dotPx+'px;'
+      +'animation:riverDots 90s linear infinite;'
+      +'pointer-events:none;'
+      +'}';
+  }
+  requestAnimationFrame(function(){requestAnimationFrame(positionDots);});
+  window.addEventListener('resize',positionDots);
+})();
+
+// Pixel art clouds
+(function(){
+  var CP={O:'#8898A8',w:'#E0E8EE',W:'#F8FCFF',s:'#BCC8D0'};
+  var SHAPES={
+    lg:['......OOOO...OOOO.......', '.....OwwWwOOOwwWwO......', '....OwWWWWwOwWWWWwO.....', '...OOwWWWWWwwWWWWWwOO...', '..OwwWWWWWWWWWWWWWWwO...', '..OwWWWWWWWWWWWWWWWWwO..', '..OwwWWWWWWWWWWWWWWwwO..', '..OssssssssssssssssssO..', '...OOOOOOOOOOOOOOOOOO...'],
+    md:['....OOO...OOO......','...OwWwOOOwWwO.....','..OwWWWwOwWWWwO....', '.OOwWWWWwwWWWWwOO..', '.OwwWWWWWWWWWWWwO..', '.OwWWWWWWWWWWWWwO..', '.OwwWWWWWWWWWWwwO..', '.OssssssssssssssO..', '..OOOOOOOOOOOOOO...'],
+    sm:['...OOO..OOO....','..OwWwOOwWwO...','.OwWWWwwWWWwO..','.OwwWWWWWWwwO..','.OwWWWWWWWWwO..','.OwwWWWWWWwwO..','.OssssssssssO..','..OOOOOOOOOO...']
+  };
+  function renderCloud(map,px){
+    var cols=Math.max.apply(null,map.map(function(r){return r.length;})),rects=[];
+    for(var r=0;r<map.length;r++)for(var c=0;c<map[r].length;c++){
+      var fill=CP[map[r][c]];if(!fill)continue;
+      rects.push('<rect x="'+(c*px)+'" y="'+(r*px)+'" width="'+px+'" height="'+px+'" fill="'+fill+'"/>');
+    }
+    return'<svg width="'+(cols*px)+'" height="'+(map.length*px)+'" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;display:block" shape-rendering="crispEdges">'+rects.join('')+'</svg>';
+  }
+  [{id:'cl-1',shape:'lg',px:7},{id:'cl-2',shape:'md',px:6},{id:'cl-3',shape:'sm',px:6},{id:'cl-4',shape:'lg',px:6},{id:'cl-5',shape:'md',px:5},{id:'cl-6',shape:'sm',px:5}].forEach(function(c){
+    var el=document.getElementById(c.id);if(el)el.innerHTML=renderCloud(SHAPES[c.shape],c.px);
+  });
+})();
+
+// Scene critters in the landscape
 (function(){
   var px=4;
   function spriteToSVG(map,palette,px){
@@ -203,11 +377,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-heig
   ];
   var ottPal={A:'#402110',B:'#f2d79d',C:'#9f5332',D:'#ff6970',E:'#c47b4a'};
 
-  var b=document.getElementById('beaver-sprite');
+  var b=document.getElementById('sc-beaver');
   if(b)b.innerHTML=spriteToSVG(beavMap,beavPal,px);
-  var r=document.getElementById('raccoon-sprite');
+  var r=document.getElementById('sc-raccoon');
   if(r)r.innerHTML=spriteToSVG(raccMap,raccPal,px);
-  var o=document.getElementById('otter-sprite');
+  var o=document.getElementById('sc-otter');
   if(o)o.innerHTML=spriteToSVG(ottMap,ottPal,px);
 })();
 </script>
