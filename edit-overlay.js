@@ -25,7 +25,7 @@
   btn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;padding:6px 14px;border-radius:6px;border:1px solid #D6CCBA;background:#F5F1E8;color:#5C4D3C;font-family:monospace;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:0.05em;text-transform:uppercase;transition:all 0.15s;';
   btn.onmouseenter = () => { btn.style.borderColor = '#C4B89E'; btn.style.color = '#18100A'; };
   btn.onmouseleave = () => { btn.style.borderColor = '#D6CCBA'; btn.style.color = '#5C4D3C'; };
-  document.body.appendChild(btn);
+  // document.body.appendChild(btn); // disabled for presentation
 
   // Save button (hidden until edit mode)
   const saveBtn = document.createElement('button');
