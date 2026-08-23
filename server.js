@@ -114,6 +114,22 @@ app.get('/api/slides', (req, res) => res.json(slideList()));
 // Raw copy, parsed — handy for checking what the deck thinks the words are
 app.get('/api/copy', (req, res) => res.json(copyLayer.loadCopy()));
 
+// Status — read-only and CORS-open so deckwolt's presenter hub (served from a
+// different origin) can show whether the deck is up and whether it is still
+// writable. Reporting the mode beats probing it with a write.
+app.get('/api/status', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  const slides = slideList();
+  const copy = copyLayer.loadCopy();
+  res.json({
+    ok: true,
+    readonly: READONLY,
+    slides: slides.length,
+    slideNames: slides,
+    copySlides: Object.keys(copy).length,
+  });
+});
+
 // Serve index — slide navigator
 app.get('/', (req, res) => {
   const indexFile = path.join(SLIDES_DIR, 'index.html');
