@@ -83,6 +83,12 @@ Link `<nav class="slide-nav">` to the adjacent slides so keyboard nav works (cop
 an existing slide), mark text elements with `data-copy="key"`, then add a matching
 `## slide-07-my-topic` block to `copy.md`.
 
+## Runbook
+
+[RUNBOOK.md](RUNBOOK.md) holds the per-slide clock for the live talk, the cut
+order if it runs long, and demo pre-flight. Update it whenever the slot changes —
+a deck built for 10 minutes is a different deck than one built for 30.
+
 ## One deck at a time
 
 The live deck's slides sit at the repo root. When a talk is done it gets archived under `decks/`
