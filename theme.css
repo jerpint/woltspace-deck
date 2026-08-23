@@ -30,6 +30,9 @@ body {
   animation:fadeUp 0.6s ease both;
 }
 .slide.left { text-align:left; align-items:stretch }
+.slide.tight { gap:1.05rem; padding-bottom:3.6rem }
+.slide.tight h1 { font-size:clamp(26px,4.3vw,42px) }
+.slide.tight .lede { font-size:clamp(14px,1.8vw,17px) }
 
 @keyframes fadeUp { from { opacity:0; transform:translateY(12px) } to { opacity:1; transform:translateY(0) } }
 
@@ -64,12 +67,12 @@ h1 .accent, h2 .accent { color:var(--terra) }
 strong { font-weight:600; color:var(--ink) }
 /* "main — rest" list items: the separator is restored here by default, and
    suppressed by the layouts that give .rest its own block or pill. */
-.rest::before { content:'\2014\a0' }
+.rest::before { content:'\a0\2014\a0' }
 ul.cards > li .rest::before,
 ul.rows > li .rest::before,
 ul.timeline > li .rest::before,
-ul.manifesto > li .rest::before,
-ul.chips > li .rest::before { content:none }
+ul.manifesto > li .rest::before { content:none }
+ul.chips > li .rest::before { content:'\a0' }
 code {
   font-family:var(--font-mono); font-size:0.88em;
   background:var(--surface-2); border:1px solid var(--border);
@@ -80,6 +83,10 @@ code {
 ul.cards { list-style:none; display:grid; gap:12px; width:100%;
   grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr)) }
 ul.cards.two { grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr)) }
+@media (min-width:880px) { ul.cards.four { grid-template-columns:repeat(4,1fr) } }
+ul.cards.four > li { padding:15px 14px 14px }
+ul.cards.four > li strong { font-size:clamp(16px,1.9vw,19px) }
+ul.cards.four > li .rest { font-size:12.5px; line-height:1.4 }
 ul.cards > li {
   background:var(--surface); border:1px solid var(--border); border-radius:12px;
   padding:16px 18px; text-align:left; font-size:14px; line-height:1.5;
@@ -335,7 +342,8 @@ ul.manifesto > li code { font-size:0.8em }
   width:100%; flex-wrap:wrap;
 }
 .swap .sprite { animation:bob 2.6s ease-in-out infinite }
-.swap ul.chips { width:auto; flex-direction:column; align-items:flex-start; gap:7px }
+.swap ul.chips { width:auto; flex-direction:column; align-items:flex-start; gap:6px }
+.swap .note { max-width:34ch; text-align:left }
 .swap ul.chips > li { white-space:nowrap }
 @keyframes bob { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-6px) } }
 

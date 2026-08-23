@@ -63,8 +63,8 @@ the unit
 A wolt is the identity that **persists** the harness.
 
 ### lede
-Switch harnesses and it shouldn't matter. Same name, same memory, same home,
-same apps — a different engine underneath. That's the whole idea.
+Switch harnesses and it shouldn't matter. Same name, same memory, same home —
+a different engine underneath.
 
 ### cards
 - **identity** — a name, a species, a role. Twelve lines of `wolt.json`.
@@ -78,7 +78,7 @@ same apps — a different engine underneath. That's the whole idea.
 - **opencode** — kimi-k3, glm-5.2
 
 ### note
-All three running in one lodge right now. The wolt doesn't notice.
+All three run in one lodge. The wolt doesn't notice.
 
 ---
 
@@ -141,9 +141,8 @@ It stays up, and you reach it from anywhere.
 - **these slides** — served from the lodge
 
 ### note
-**That last one is literal.** This deck is an app inside woltspace, on jerpint's
-box, reachable at `woltspace-deck.woltspace.com` over the public internet — and
-deckwolt is editing it while you read.
+**That last one is literal.** These slides are an app inside woltspace, served
+from this box over the public internet.
 
 ---
 
