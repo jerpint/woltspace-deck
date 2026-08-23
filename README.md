@@ -60,6 +60,11 @@ editing and file editing never fight — there's one source of truth either way.
   mode. Escape cancels.
 - **Arrow keys** (or space) navigate between slides.
 - **`?present`** on any slide URL hides the edit controls for stage use.
+- **`DECK_READONLY=1`** turns off editing entirely — the overlay isn't offered and
+  `/api/save` returns 403. Auto-reload still works. **Set this whenever the deck is
+  reachable from the public internet**: editing is unauthenticated by design, so a
+  public writable deck lets anyone rewrite the slides. The server logs its mode at
+  startup.
 - **Index page** at `/` shows a grid of all slides with live previews.
 - **`/api/copy`** returns the parsed copy as JSON — useful for checking what the deck thinks the
   words are.

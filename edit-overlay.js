@@ -19,7 +19,8 @@
 // Add ?present to the URL to hide the controls for stage use.
 (function() {
   const LEGACY_SELECTORS = 'h1, h2, .brand-name, .tagline, .subtitle, .concept, .caption, .lede, .card-title, .card-body, .bullet, .note';
-  const PRESENTING = new URLSearchParams(location.search).has('present');
+  const PRESENTING = new URLSearchParams(location.search).has('present')
+    || window.DECK_READONLY === true;
 
   let editMode = false;
 

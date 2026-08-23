@@ -65,6 +65,7 @@ function inlineMd(s) {
     .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')
+    .replace(/~~([^~]+)~~/g, '<span class="struck">$1</span>')
     .replace(/`([^`]+)`/g, '<code>$1</code>');
 }
 
@@ -81,9 +82,18 @@ function renderField(value) {
       .map(l => l.replace(/^\s*-\s+/, ''));
     const isTerm = items.some(i => /^\$\s/.test(i));
     return items.map(item => {
-      if (!isTerm) return `<li>${inlineMd(item)}</li>`;
-      const cmd = /^\$\s/.test(item);
-      return `<li class="${cmd ? 'cmd' : 'out'}">${inlineMd(item.replace(/^\$\s+/, ''))}</li>`;
+      if (isTerm) {
+        const cmd = /^\$\s/.test(item);
+        return `<li class="${cmd ? 'cmd' : 'out'}">${inlineMd(item.replace(/^\$\s+/, ''))}</li>`;
+      }
+      // "main — rest" splits so layouts can style the halves independently.
+      // Requires a spaced em/en dash, so mid-sentence hyphens are safe.
+      const split = item.match(/^([\s\S]+?)\s+[—–]\s+([\s\S]+)$/);
+      if (split) {
+        return `<li>${inlineMd(split[1].trim())}` +
+               `<span class="rest">${inlineMd(split[2].trim())}</span></li>`;
+      }
+      return `<li>${inlineMd(item)}</li>`;
     }).join('\n');
   }
   return value.split(/\n{2,}/).map(inlineMd).join('<br><br>');
@@ -94,6 +104,8 @@ function htmlToMd(html) {
   const items = [...html.matchAll(/<li\b([^>]*)>([\s\S]*?)<\/li>/gi)]
     .map(m => (/class="[^"]*\bcmd\b[^"]*"/i.test(m[1]) ? '$ ' : '') + m[2]);
   const toMd = (s) => s
+    .replace(/\s*<span class="rest">([\s\S]*?)<\/span>/gi, ' — $1')
+    .replace(/<span class="struck">([\s\S]*?)<\/span>/gi, '~~$1~~')
     .replace(/<a\b[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, '[$2]($1)')
     .replace(/<(strong|b)\b[^>]*>([\s\S]*?)<\/\1>/gi, '**$2**')
     .replace(/<(em|i)\b[^>]*>([\s\S]*?)<\/\1>/gi, '*$2*')

@@ -10,6 +10,11 @@ const SLIDES_DIR = __dirname;
 
 app.use(express.json({ limit: '1mb' }));
 
+// Read-only mode — set DECK_READONLY=1 when the deck is exposed publicly.
+// Editing is unauthenticated by design (it's a local tool), so a public deck
+// must not stay writable: anyone could rewrite the slides mid-talk.
+const READONLY = /^(1|true|yes)$/i.test(process.env.DECK_READONLY || '');
+
 const isSlideName = (f) => /^slide-\d+-[\w-]+\.html$/.test(f);
 const slideList = () => fs.readdirSync(SLIDES_DIR).filter(isSlideName).sort();
 
@@ -23,13 +28,18 @@ app.get('/slide-*.html', (req, res) => {
   html = copyLayer.renderSlide(html, name.replace(/\.html$/, ''), copyLayer.loadCopy());
 
   const editScript = fs.readFileSync(path.join(SLIDES_DIR, 'edit-overlay.js'), 'utf-8');
-  html = html.replace('</body>', `<script>${editScript}</script></body>`);
+  const flag = `<script>window.DECK_READONLY=${READONLY};</script>`;
+  html = html.replace('</body>', `${flag}<script>${editScript}</script></body>`);
 
   res.type('html').send(html);
 });
 
 // Save endpoint — copy edits land in copy.md; raw HTML edits patch the template
 app.post('/api/save', (req, res) => {
+  if (READONLY) {
+    console.log('[save] refused — DECK_READONLY is set');
+    return res.status(403).json({ error: 'Deck is read-only (DECK_READONLY is set)' });
+  }
   const { file, fields, updates } = req.body;
   if (!file || !isSlideName(file)) {
     return res.status(400).json({ error: 'Invalid file name' });
@@ -114,4 +124,10 @@ app.use((req, res) => {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`woltspace-deck running on http://localhost:${PORT}`);
+  if (READONLY) {
+    console.log('[deck] READ-ONLY — edit overlay off, /api/save refuses writes');
+  } else {
+    console.log('[deck] editable — /api/save accepts unauthenticated writes.');
+    console.log('[deck] Before exposing this deck publicly, restart with DECK_READONLY=1');
+  }
 });

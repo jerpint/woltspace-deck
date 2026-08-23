@@ -32,10 +32,10 @@ Eight slides, and slide 07 hands off to the demo.
 woltspace
 
 ### tagline
-bring your own harness
+The scaffold for your harnesses
 
 ### subtitle
-The scaffold your coding agents run on.
+Bring your own harness.
 
 ---
 
@@ -47,10 +47,10 @@ the thesis
 ### heading
 The harness is the easy part now.
 
-### bullets
-- Claude Code, Codex, opencode — pick one, it works. That problem is solved.
-- What nobody hands you is everything *around* it: where the agent lives, what it remembers, how you reach it, how two of them talk.
-- You build that yourself, every time. **woltspace is that layer, built once** — and the harness is just a slot you fill.
+### manifesto
+- The **harness** is solved. — Claude Code, Codex, opencode. Pick one, it works.
+- The **scaffold** isn't. — Where the agent lives. What it remembers. How you reach it. How two of them talk.
+- So you build it *yourself*. — Every time. Per harness. And you throw it away when you switch.
 
 ---
 
@@ -60,13 +60,17 @@ The harness is the easy part now.
 the unit
 
 ### heading
-A **wolt** is a harness with a life around it.
+A wolt is the identity that **persists** the harness.
+
+### lede
+Switch harnesses and it shouldn't matter. Same name, same memory, same home,
+same apps — a different engine underneath. That's the whole idea.
 
 ### cards
-- **HARNESS** — the agent loop. Pinned per wolt.
-- **IDENTITY** — a name, a species, a role. Twelve lines of `wolt.json`.
-- **MEMORY** — files on disk that outlive every session.
-- **HOME** — its own directory, its own site, its own apps.
+- **identity** — a name, a species, a role. Twelve lines of `wolt.json`.
+- **memory** — files on disk that outlive every session.
+- **home** — its own directory, its own site, its own apps.
+- **harness** — the swappable part. One line of config.
 
 ### chips
 - **claude** — opus-5
@@ -74,7 +78,7 @@ A **wolt** is a harness with a life around it.
 - **opencode** — kimi-k3, glm-5.2
 
 ### note
-All three running in one lodge right now. Swap the harness, keep the wolt.
+All three running in one lodge right now. The wolt doesn't notice.
 
 ---
 
@@ -130,14 +134,15 @@ reach
 ### heading
 It stays up, and you reach it from anywhere.
 
-### cards
-- **APPS** — a directory, a fixed port, a keeper wolt. One flag puts it on a real subdomain.
-- **TELEGRAM** — start a session from your phone, reply in a thread. Native, not a bridge.
-- **PUSH BACK** — the wolt messages *you* when it's done. One line.
-- **TUI** — a full terminal in the browser, when you need to actually look.
+### timeline
+- **apps that stay up** — own port, own subdomain
+- **telegram, natively** — your phone is the terminal
+- **wolts push back** — it messages you when done
+- **these slides** — served from the lodge
 
 ### note
-This deck is one of those apps — live at woltspace-deck.woltspace.com, and
+**That last one is literal.** This deck is an app inside woltspace, on jerpint's
+box, reachable at `woltspace-deck.woltspace.com` over the public internet — and
 deckwolt is editing it while you read.
 
 ---
@@ -166,10 +171,10 @@ Slide exists to hand off. Talk over it, then switch away.
 woltspace
 
 ### tagline
-bring your own harness
+The scaffold for your harnesses
 
 ### subtitle
-The agent is swappable. The scaffold around it is the product.
+Bring your own harness.
 
 ### note
 github.com/jerpint/woltspace — and a live lodge to poke at.

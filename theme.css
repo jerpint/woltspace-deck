@@ -7,6 +7,8 @@
   --terra:#C4531E; --terra-light:#F0D5C8;
   --amber:#C98B2A; --amber-light:#F2E4C0;
   --green:#3A6644; --green-light:#D6E8C8;
+  --forest:#4A8838; --forest-light:#D6E8C8;
+  --blue:#3A7BA8; --blue-light:#CFE3F0;
   --font-display:'Preahvihear',sans-serif;
   --font-body:'DM Sans',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
@@ -34,7 +36,13 @@ body {
 /* ── type ── */
 .kicker {
   font-family:var(--font-mono); font-size:11px; font-weight:600;
-  letter-spacing:0.16em; text-transform:uppercase; color:var(--terra);
+  letter-spacing:0.18em; text-transform:uppercase; color:var(--terra);
+}
+/* ~~strike~~ — for "your ~~coding agents~~ wolts" */
+.struck { position:relative; display:inline-block; color:var(--ink-3) }
+.struck::after {
+  content:''; position:absolute; left:-2%; right:-2%; top:52%; height:2px;
+  background:var(--ink-3); transform:rotate(-3deg);
 }
 h1 {
   font-family:var(--font-display); font-weight:300; line-height:1.12;
@@ -54,6 +62,14 @@ h1 .accent, h2 .accent { color:var(--terra) }
   font-family:var(--font-mono); font-size:12px; line-height:1.5; color:var(--ink-3);
 }
 strong { font-weight:600; color:var(--ink) }
+/* "main — rest" list items: the separator is restored here by default, and
+   suppressed by the layouts that give .rest its own block or pill. */
+.rest::before { content:'\2014\a0' }
+ul.cards > li .rest::before,
+ul.rows > li .rest::before,
+ul.timeline > li .rest::before,
+ul.manifesto > li .rest::before,
+ul.chips > li .rest::before { content:none }
 code {
   font-family:var(--font-mono); font-size:0.88em;
   background:var(--surface-2); border:1px solid var(--border);
@@ -122,7 +138,7 @@ ul.term {
   color:#E8E0D2; box-shadow:0 6px 24px rgba(24,16,10,0.18);
 }
 .term > li.cmd { color:#F2E4C0 }
-.term > li.cmd::before { content:'$ '; color:var(--terra) }
+.term > li.cmd::before { content:'$ '; color:#5BC87A }
 .term > li.out { color:#9A8878 }
 .term > li strong { font-weight:400; color:#8FBF7A }
 .term > li code { background:transparent; border:none; padding:0; color:inherit }
@@ -182,3 +198,129 @@ body.hero { background:#B8D4E8; justify-content:center }
 }
 .brand-card .note { margin-top:6px }
 @media (max-width:640px) { .brand-card { padding:24px 28px 22px } }
+
+/* ══════════════════════════════════════════════════════════════════════
+   Components ported from the April 2026 deck (prwolt's) — rebuilt as
+   copy-driven list layouts. A list item written "**label** — rest" gives
+   <strong> plus <span class="rest">, so each layout styles the two halves.
+   ══════════════════════════════════════════════════════════════════════ */
+
+@keyframes rowIn { from { opacity:0; transform:translateY(10px) } to { opacity:1; transform:translateY(0) } }
+
+/* ── accent cards: border-top accent, display-font label ── */
+ul.cards.accent > li {
+  border-top:3px solid var(--border-2); padding:20px 18px 18px;
+  display:flex; flex-direction:column; gap:8px; text-align:center;
+  transition:border-color 0.2s, transform 0.2s;
+}
+ul.cards.accent > li:hover { transform:translateY(-3px) }
+ul.cards.accent > li:nth-child(4n+1) { border-top-color:var(--terra) }
+ul.cards.accent > li:nth-child(4n+2) { border-top-color:var(--amber) }
+ul.cards.accent > li:nth-child(4n+3) { border-top-color:var(--forest) }
+ul.cards.accent > li:nth-child(4n+4) { border-top-color:var(--blue) }
+ul.cards.accent > li strong {
+  font-family:var(--font-display); font-weight:300; text-transform:none;
+  letter-spacing:0; font-size:clamp(18px,2.4vw,22px); color:var(--ink);
+  line-height:1.1; margin:0;
+}
+ul.cards.accent > li .rest { font-size:13.5px; line-height:1.45; color:var(--ink-2) }
+
+/* ── striped rows: left accent bar, display-font label ── */
+ul.rows.striped {
+  background:none; border:none; box-shadow:none;
+  gap:12px; overflow:visible;
+}
+ul.rows.striped > li {
+  background:var(--surface); border:1px solid var(--border);
+  border-left:4px solid var(--border-2); border-radius:12px;
+  padding:15px 20px; align-items:baseline; gap:14px;
+  opacity:0; animation:rowIn 0.5s ease forwards;
+  transition:border-color 0.2s, transform 0.2s;
+}
+ul.rows.striped > li:hover { transform:translateX(3px) }
+ul.rows.striped > li:nth-child(4n+1) { border-left-color:var(--terra) }
+ul.rows.striped > li:nth-child(4n+2) { border-left-color:var(--amber) }
+ul.rows.striped > li:nth-child(4n+3) { border-left-color:var(--forest) }
+ul.rows.striped > li:nth-child(4n+4) { border-left-color:var(--blue) }
+ul.rows.striped > li:nth-child(1) { animation-delay:0.12s }
+ul.rows.striped > li:nth-child(2) { animation-delay:0.24s }
+ul.rows.striped > li:nth-child(3) { animation-delay:0.36s }
+ul.rows.striped > li:nth-child(4) { animation-delay:0.48s }
+ul.rows.striped > li strong {
+  font-family:var(--font-mono); font-size:13px; color:var(--ink); min-width:11ch;
+}
+ul.rows.striped > li .rest { flex:1; min-width:0; color:var(--ink-2) }
+
+/* ── timeline: dot · title · consequence pill ── */
+ul.timeline {
+  list-style:none; width:100%; max-width:640px;
+  display:flex; flex-direction:column; gap:13px;
+}
+ul.timeline > li {
+  display:grid; grid-template-columns:14px 1fr auto; gap:18px; align-items:center;
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:14px 22px; text-align:left;
+  opacity:0; animation:rowIn 0.5s ease forwards;
+  transition:border-color 0.2s, transform 0.2s;
+}
+ul.timeline > li:hover { border-color:var(--border-2); transform:translateX(3px) }
+ul.timeline > li::before {
+  content:''; width:14px; height:14px; border-radius:50%;
+  background:var(--terra); box-shadow:0 0 0 3px var(--terra-light);
+}
+ul.timeline > li:nth-child(4n+2)::before { background:var(--amber); box-shadow:0 0 0 3px var(--amber-light) }
+ul.timeline > li:nth-child(4n+3)::before { background:var(--forest); box-shadow:0 0 0 3px var(--forest-light) }
+ul.timeline > li:nth-child(4n+4)::before { background:var(--blue); box-shadow:0 0 0 3px var(--blue-light) }
+ul.timeline > li:nth-child(1) { animation-delay:0.1s }
+ul.timeline > li:nth-child(2) { animation-delay:0.22s }
+ul.timeline > li:nth-child(3) { animation-delay:0.34s }
+ul.timeline > li:nth-child(4) { animation-delay:0.46s }
+ul.timeline > li strong {
+  font-family:var(--font-display); font-weight:300;
+  font-size:clamp(16px,2.3vw,22px); line-height:1.15; color:var(--ink);
+}
+ul.timeline > li .rest {
+  font-family:var(--font-mono); font-size:clamp(10px,1.4vw,13px); font-weight:600;
+  letter-spacing:0.1em; text-transform:uppercase;
+  padding:6px 13px; border-radius:6px; white-space:nowrap;
+  color:var(--terra); background:var(--terra-light);
+}
+ul.timeline > li:nth-child(4n+2) .rest { color:var(--amber); background:var(--amber-light) }
+ul.timeline > li:nth-child(4n+3) .rest { color:var(--forest); background:var(--forest-light) }
+ul.timeline > li:nth-child(4n+4) .rest { color:var(--blue); background:var(--blue-light) }
+
+/* ── manifesto: big display statements, bold goes accent ── */
+ul.manifesto {
+  list-style:none; width:100%; max-width:660px;
+  display:flex; flex-direction:column;
+}
+ul.manifesto > li {
+  padding:14px 6px; text-align:left;
+  border-bottom:1px solid var(--border);
+  font-family:var(--font-display); font-weight:300; line-height:1.25;
+  font-size:clamp(19px,3.1vw,32px); color:var(--ink);
+}
+ul.manifesto > li:first-child { border-top:1px solid var(--border) }
+ul.manifesto > li strong, ul.manifesto > li em {
+  font-family:inherit; font-weight:300; font-style:normal; color:var(--terra);
+}
+ul.manifesto > li .rest {
+  display:block; margin-top:5px;
+  font-family:var(--font-body); font-size:clamp(13px,1.7vw,15.5px);
+  line-height:1.5; color:var(--ink-2);
+}
+ul.manifesto > li code { font-size:0.8em }
+
+/* ── terminal with window chrome ── */
+.terminal {
+  width:100%; max-width:620px; border-radius:10px; overflow:hidden;
+  box-shadow:0 6px 28px rgba(24,16,10,0.16);
+}
+.terminal-chrome {
+  background:#2A1F14; padding:10px 14px; display:flex; align-items:center; gap:7px;
+}
+.terminal-chrome i { width:10px; height:10px; border-radius:50%; display:block }
+.terminal-chrome i:nth-child(1) { background:#FF5F56 }
+.terminal-chrome i:nth-child(2) { background:#FFBD2E }
+.terminal-chrome i:nth-child(3) { background:#27C93F }
+.terminal ul.term { border:none; border-radius:0; box-shadow:none; background:#1A130C }
