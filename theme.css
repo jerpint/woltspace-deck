@@ -324,3 +324,30 @@ ul.manifesto > li code { font-size:0.8em }
 .terminal-chrome i:nth-child(2) { background:#FFBD2E }
 .terminal-chrome i:nth-child(3) { background:#27C93F }
 .terminal ul.term { border:none; border-radius:0; box-shadow:none; background:#1A130C }
+
+/* ── pixel creatures (sprites.js) ── */
+.sprite { image-rendering:pixelated; display:flex; align-items:center; justify-content:center; flex-shrink:0 }
+.sprite svg { display:block }
+
+/* slide 03 — one creature, the harness swapping underneath it */
+.swap {
+  display:flex; align-items:center; justify-content:center; gap:clamp(14px,3vw,34px);
+  width:100%; flex-wrap:wrap;
+}
+.swap .sprite { animation:bob 2.6s ease-in-out infinite }
+.swap ul.chips { width:auto; flex-direction:column; align-items:flex-start; gap:7px }
+.swap ul.chips > li { white-space:nowrap }
+@keyframes bob { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-6px) } }
+
+/* slide 05 — two wolts either side of the transcript */
+.talk {
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(10px,2.4vw,26px); width:100%;
+}
+.talk .terminal { flex:1; min-width:0 }
+.talk .sprite { animation:bob 2.6s ease-in-out infinite }
+.talk .sprite:last-child { animation-delay:1.3s }
+@media (max-width:640px) {
+  .talk .sprite { display:none }
+  .swap { gap:10px }
+}

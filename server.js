@@ -88,7 +88,18 @@ app.post('/api/save', (req, res) => {
 // so editing copy in any editor reloads the browser.
 app.get('/api/hash', (req, res) => {
   const file = req.query.file;
-  if (!file || !isSlideName(file)) return res.status(400).json({ error: 'Invalid file' });
+
+  // No file → hash the whole deck, so the index grid can detect any change.
+  if (!file) {
+    const h = crypto.createHash('md5');
+    for (const f of [...slideList(), 'copy.md', 'theme.css']) {
+      const fp = path.join(SLIDES_DIR, f);
+      if (fs.existsSync(fp)) h.update(fs.readFileSync(fp));
+    }
+    return res.json({ hash: h.digest('hex').slice(0, 12) });
+  }
+
+  if (!isSlideName(file)) return res.status(400).json({ error: 'Invalid file' });
   const filePath = path.join(SLIDES_DIR, file);
   if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'Not found' });
 

@@ -75,6 +75,12 @@ editing and file editing never fight — there's one source of truth either way.
   `ul.chips`), the `.term` terminal block, nav, and the hero brand card. Slides stay ~1KB each.
 - `scene.css` + `scene.js` — the pixel forest background scene. Drop both into a slide and it
   builds itself; used on the title and closing slides.
+- `sprites.js` — the pixel creatures (beaver, raccoon, otter) from the April deck. Any element
+  with `data-sprite="raccoon"` gets the sprite as inline SVG; `data-px` sets the scale.
+- Layout classes: `ul.cards[.accent]`, `ul.rows[.striped]`, `ul.bullets`, `ul.chips`,
+  `ul.timeline`, `ul.manifesto`, and `.terminal` wrapping a `ul.term`. A list item written
+  `main — rest` (spaced em dash) splits into `<strong>` + `<span class="rest">` so each layout
+  styles the halves independently.
 
 ## Adding slides
 

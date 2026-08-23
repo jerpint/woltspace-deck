@@ -65,6 +65,18 @@ fetch('/api/slides').then(r=>r.json()).then(slides=>{
     grid.appendChild(a);
   });
 });
+
+// Auto-reload — the grid used to never refresh, so edits looked like they
+// hadn't landed. Polls a hash of every slide plus copy.md and theme.css.
+(function(){
+  var last=null;
+  setInterval(function(){
+    fetch('/api/hash').then(function(r){return r.json()}).then(function(d){
+      if(last===null){last=d.hash;return}
+      if(d.hash!==last)location.reload();
+    }).catch(function(){});
+  },1500);
+})();
 </script>
 </body>
 </html>
