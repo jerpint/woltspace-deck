@@ -162,7 +162,7 @@ a public URL, and a wolt whose job is to maintain it.
 - **live now** — 8 apps in this lodge. This deck is one of them.
 
 ### note
-You're looking at deck.woltspace.com. deckwolt is editing it while you read.
+You're looking at woltspace-deck.woltspace.com. deckwolt is editing it while you read.
 
 ---
 
