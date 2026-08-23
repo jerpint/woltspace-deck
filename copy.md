@@ -115,8 +115,8 @@ Wolts talk to each other.
 
 ### term
 - $ woltspace session send codexw "review the deck copy?"
-- delivered → codexw-scruffy-maple-0df670
-- $ woltspace session spawn deckwolt "build slides 6-9"
+- delivered → codexw-grumpy-den-45be2b
+- $ woltspace session spawn deckwolt "shoot the slides, check for overflow"
 - SESSION=**deckwolt-swift-maple-405189**
 
 ### bullets
@@ -152,15 +152,7 @@ from this box over the public internet.
 live
 
 ### heading
-Let's actually run it.
-
-### bullets
-- *(fill this in once you know the demo — three beats, max)*
-- *(what the audience should watch for)*
-- *(what it proves)*
-
-### note
-Slide exists to hand off. Talk over it, then switch away.
+demo time.
 
 ---
 
@@ -176,4 +168,10 @@ The scaffold for your harnesses
 Bring your own harness.
 
 ### note
-github.com/jerpint/woltspace — and a live lodge to poke at.
+Scan either one. Both are live right now.
+
+### qr-github
+the code
+
+### qr-project
+the project

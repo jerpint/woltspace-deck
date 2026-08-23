@@ -69,6 +69,15 @@ function inlineMd(s) {
     .replace(/`([^`]+)`/g, '<code>$1</code>');
 }
 
+// Would splitting here leave an unclosed *emphasis*, `code`, or ~~strike~~?
+// Counting markers is subtly wrong ("**bold" has an even number of asterisks),
+// so check the symptom directly: after rendering, no marker should survive.
+function balanced(s) {
+  // A complete [link](url) renders to <a>, so a surviving bracket means the
+  // split cut one in half. Same idea for the emphasis markers.
+  return !/[*`~\[\]]/.test(inlineMd(s));
+}
+
 // A field is either a list (every non-blank line starts with "- ") or prose.
 function isList(value) {
   const lines = value.split('\n').filter(l => l.trim());
@@ -87,9 +96,11 @@ function renderField(value) {
         return `<li class="${cmd ? 'cmd' : 'out'}">${inlineMd(item.replace(/^\$\s+/, ''))}</li>`;
       }
       // "main — rest" splits so layouts can style the halves independently.
-      // Requires a spaced em/en dash, so mid-sentence hyphens are safe.
+      // Requires a spaced em/en dash, so mid-sentence hyphens are safe — and
+      // both halves must have balanced markers, or a dash sitting INSIDE an
+      // emphasis span would cut it in half and leave literal asterisks.
       const split = item.match(/^([\s\S]+?)\s+[—–]\s+([\s\S]+)$/);
-      if (split) {
+      if (split && balanced(split[1]) && balanced(split[2])) {
         return `<li>${inlineMd(split[1].trim())}` +
                `<span class="rest">${inlineMd(split[2].trim())}</span></li>`;
       }
