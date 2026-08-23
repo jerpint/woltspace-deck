@@ -77,16 +77,22 @@ function isList(value) {
 function renderField(value) {
   if (!value) return '';
   if (isList(value)) {
-    return value.split('\n').filter(l => l.trim())
-      .map(l => `<li>${inlineMd(l.replace(/^\s*-\s+/, ''))}</li>`)
-      .join('\n');
+    const items = value.split('\n').filter(l => l.trim())
+      .map(l => l.replace(/^\s*-\s+/, ''));
+    const isTerm = items.some(i => /^\$\s/.test(i));
+    return items.map(item => {
+      if (!isTerm) return `<li>${inlineMd(item)}</li>`;
+      const cmd = /^\$\s/.test(item);
+      return `<li class="${cmd ? 'cmd' : 'out'}">${inlineMd(item.replace(/^\$\s+/, ''))}</li>`;
+    }).join('\n');
   }
   return value.split(/\n{2,}/).map(inlineMd).join('<br><br>');
 }
 
 // ── html → markdown (for saving overlay edits back into copy.md) ───────
 function htmlToMd(html) {
-  const items = [...html.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi)].map(m => m[1]);
+  const items = [...html.matchAll(/<li\b([^>]*)>([\s\S]*?)<\/li>/gi)]
+    .map(m => (/class="[^"]*\bcmd\b[^"]*"/i.test(m[1]) ? '$ ' : '') + m[2]);
   const toMd = (s) => s
     .replace(/<a\b[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, '[$2]($1)')
     .replace(/<(strong|b)\b[^>]*>([\s\S]*?)<\/\1>/gi, '**$2**')

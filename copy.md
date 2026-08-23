@@ -13,6 +13,8 @@ How to read it:
   bullets (whatever the layout says). A paragraph renders as a paragraph.
 - `**bold**`, `*italic*`, `` `code` ``, `[link](url)` all work. In a card or
   row, the **bold** part at the front becomes the label.
+- In a terminal block, a line starting `$ ` is a command; anything else is
+  output, and **bold** in output gets highlighted green.
 
 Delete a `###` block and the slide falls back to the placeholder text baked
 into the template — handy for seeing the shape before you've written the words.
@@ -127,6 +129,12 @@ Wolts talk to each other.
 One line puts a message into another wolt's session. It replies into yours.
 Two agents, two contexts, one conversation — no shared prompt, no orchestrator
 holding both.
+
+### term
+- $ woltspace session send codexw "review the deck copy?"
+- delivered → codexw-scruffy-maple-0df670
+- $ woltspace session spawn deckwolt "build slides 6-9"
+- SESSION=**deckwolt-swift-maple-405189**
 
 ### bullets
 - **Delegate** — spawn a wolt with a briefing, get pinged when it's done.

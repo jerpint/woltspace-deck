@@ -113,17 +113,19 @@ ul.chips > li {
 }
 ul.chips > li strong { color:var(--terra); font-weight:600 }
 
-/* ── terminal block ── */
-.term {
+/* ── terminal block: a copy list whose "$ " lines are commands ── */
+ul.term {
+  list-style:none;
   width:100%; background:#1C1710; border:1px solid #3A3026; border-radius:12px;
   padding:16px 18px; text-align:left; overflow:auto;
   font-family:var(--font-mono); font-size:clamp(11px,1.5vw,13.5px); line-height:1.65;
   color:#E8E0D2; box-shadow:0 6px 24px rgba(24,16,10,0.18);
 }
-.term .cmd { color:#F2E4C0 }
-.term .cmd::before { content:'$ '; color:var(--terra) }
-.term .out { color:#9A8878 }
-.term .hi { color:#8FBF7A }
+.term > li.cmd { color:#F2E4C0 }
+.term > li.cmd::before { content:'$ '; color:var(--terra) }
+.term > li.out { color:#9A8878 }
+.term > li strong { font-weight:400; color:#8FBF7A }
+.term > li code { background:transparent; border:none; padding:0; color:inherit }
 
 /* ── nav ── */
 .slide-nav {
