@@ -1,0 +1,182 @@
+/* theme.css — shared deck styles. Slides stay thin; the look lives here. */
+
+:root {
+  --bg:#EDE8DE; --surface:#F5F1E8; --surface-2:#FAF7F0;
+  --border:#D6CCBA; --border-2:#C4B89E;
+  --ink:#18100A; --ink-2:#5C4D3C; --ink-3:#9A8878;
+  --terra:#C4531E; --terra-light:#F0D5C8;
+  --amber:#C98B2A; --amber-light:#F2E4C0;
+  --green:#3A6644; --green-light:#D6E8C8;
+  --font-display:'Preahvihear',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+
+body {
+  font-family:var(--font-body); background:var(--bg); color:var(--ink);
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; overflow:hidden;
+}
+
+/* ── layout ── */
+.slide {
+  width:100%; max-width:840px; padding:2rem 2.5rem 4.5rem;
+  display:flex; flex-direction:column; align-items:center;
+  gap:1.5rem; text-align:center;
+  animation:fadeUp 0.6s ease both;
+}
+.slide.left { text-align:left; align-items:stretch }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px) } to { opacity:1; transform:translateY(0) } }
+
+/* ── type ── */
+.kicker {
+  font-family:var(--font-mono); font-size:11px; font-weight:600;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--terra);
+}
+h1 {
+  font-family:var(--font-display); font-weight:300; line-height:1.12;
+  font-size:clamp(30px,5.2vw,52px); letter-spacing:-0.01em;
+}
+h2 {
+  font-family:var(--font-display); font-weight:300; line-height:1.2;
+  font-size:clamp(22px,3.4vw,32px);
+}
+h1 .accent, h2 .accent { color:var(--terra) }
+.lede {
+  font-size:clamp(15px,2.1vw,20px); font-weight:300; line-height:1.55;
+  color:var(--ink-2); max-width:44ch;
+}
+.slide.left .lede { max-width:60ch }
+.note {
+  font-family:var(--font-mono); font-size:12px; line-height:1.5; color:var(--ink-3);
+}
+strong { font-weight:600; color:var(--ink) }
+code {
+  font-family:var(--font-mono); font-size:0.88em;
+  background:var(--surface-2); border:1px solid var(--border);
+  border-radius:4px; padding:1px 5px; color:var(--terra);
+}
+
+/* ── cards: a copy list rendered as a grid of titled cards ── */
+ul.cards { list-style:none; display:grid; gap:12px; width:100%;
+  grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr)) }
+ul.cards.two { grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr)) }
+ul.cards > li {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:16px 18px; text-align:left; font-size:14px; line-height:1.5;
+  color:var(--ink-2); box-shadow:0 2px 10px rgba(24,16,10,0.04);
+}
+ul.cards > li strong {
+  display:block; font-family:var(--font-mono); font-size:11px; font-weight:600;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--terra);
+  margin-bottom:7px;
+}
+
+/* ── rows: a copy list rendered as tight labelled lines ── */
+ul.rows { list-style:none; width:100%; display:flex; flex-direction:column;
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  overflow:hidden; box-shadow:0 2px 10px rgba(24,16,10,0.04) }
+ul.rows > li {
+  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+  padding:12px 18px; text-align:left; font-size:14px; line-height:1.45; color:var(--ink-2);
+  border-bottom:1px solid var(--border);
+}
+ul.rows > li:last-child { border-bottom:none }
+ul.rows > li strong {
+  font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--ink);
+  min-width:9ch; flex-shrink:0;
+}
+ul.rows > li code { background:var(--surface-2) }
+
+/* ── bullets: a copy list rendered as plain prose points ── */
+ul.bullets { list-style:none; width:100%; max-width:60ch;
+  display:flex; flex-direction:column; gap:11px }
+ul.bullets > li {
+  position:relative; padding-left:20px; text-align:left;
+  font-size:clamp(14px,1.8vw,17px); line-height:1.5; color:var(--ink-2);
+}
+ul.bullets > li::before {
+  content:''; position:absolute; left:2px; top:0.62em;
+  width:7px; height:7px; border-radius:2px; background:var(--terra);
+}
+
+/* ── chips: a copy list rendered as inline mono tags ── */
+ul.chips { list-style:none; display:flex; flex-wrap:wrap; gap:8px; justify-content:center }
+.slide.left ul.chips { justify-content:flex-start }
+ul.chips > li {
+  font-family:var(--font-mono); font-size:12px; color:var(--ink-2);
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:999px; padding:5px 13px;
+}
+ul.chips > li strong { color:var(--terra); font-weight:600 }
+
+/* ── terminal block ── */
+.term {
+  width:100%; background:#1C1710; border:1px solid #3A3026; border-radius:12px;
+  padding:16px 18px; text-align:left; overflow:auto;
+  font-family:var(--font-mono); font-size:clamp(11px,1.5vw,13.5px); line-height:1.65;
+  color:#E8E0D2; box-shadow:0 6px 24px rgba(24,16,10,0.18);
+}
+.term .cmd { color:#F2E4C0 }
+.term .cmd::before { content:'$ '; color:var(--terra) }
+.term .out { color:#9A8878 }
+.term .hi { color:#8FBF7A }
+
+/* ── nav ── */
+.slide-nav {
+  position:fixed; bottom:1.5rem; left:0; right:0; z-index:20;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:0 2rem; pointer-events:none;
+}
+.slide-nav a {
+  pointer-events:auto;
+  font-family:var(--font-mono); font-size:12px; font-weight:500;
+  letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--ink-3); text-decoration:none;
+  padding:8px 16px; border:1px solid var(--border);
+  border-radius:6px; background:var(--surface); transition:all 0.15s;
+}
+.slide-nav a:hover { border-color:var(--border-2); color:var(--ink); background:var(--surface-2) }
+.slide-nav .hidden { visibility:hidden }
+
+@media (max-width:640px) {
+  body { overflow-y:auto; align-items:flex-start }
+  .slide { padding:1.6rem 1.2rem 4.5rem; gap:1.2rem }
+  ul.rows > li { flex-direction:column; gap:4px }
+  ul.rows > li strong { min-width:0 }
+  .slide-nav { padding:0 1rem; bottom:1rem }
+  .slide-nav a { font-size:11px; padding:6px 12px }
+}
+
+/* ── hero slides (title / close): brand card floating over the forest scene ── */
+body.hero { background:#B8D4E8; justify-content:center }
+.hero-wrap {
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; z-index:2; padding:2rem 1.2rem 4.5rem;
+  animation:fadeUp 0.7s ease both;
+}
+.brand-card {
+  display:flex; flex-direction:column; align-items:center; gap:11px;
+  padding:36px 56px 32px; text-align:center;
+  background:rgba(237,232,222,0.86);
+  border:1px solid var(--border); border-radius:18px;
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  box-shadow:0 8px 40px rgba(24,16,10,0.14);
+}
+.brand-name {
+  font-family:var(--font-display); font-weight:300; line-height:1;
+  font-size:clamp(42px,8vw,72px); letter-spacing:-0.02em; color:var(--ink);
+}
+.brand-card .tagline {
+  font-family:var(--font-mono); font-size:clamp(12px,1.6vw,14px);
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--terra);
+}
+.brand-card .subtitle {
+  font-size:clamp(15px,2.2vw,20px); font-weight:300; line-height:1.55; color:var(--ink-2);
+  margin-top:2px;
+}
+.brand-card .note { margin-top:6px }
+@media (max-width:640px) { .brand-card { padding:24px 28px 22px } }
