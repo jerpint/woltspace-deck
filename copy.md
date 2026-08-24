@@ -84,8 +84,8 @@ the compute layer
 A container where everything is allowed.
 
 ### timeline
-- **a docker container** — on your box, sandboxed from it
-- **everything allowed** — inside it, no permission prompts
+- **a docker container** — on your machine, no permissions prompts
+- **all harnesses supported** — if it can run in a CLI, it's compatible
 - **cloudflared or your domain** — a real URL for what it runs
 - **these slides** — an app in that container
 
