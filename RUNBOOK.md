@@ -10,20 +10,25 @@ that proves the rest. Everything before it is setup for the demo, not a substitu
 | # | Slide | Budget | The one job |
 |---|-------|--------|-------------|
 | 01 | title | 0:20 | Say the line: *woltspace — the scaffold for your harnesses.* |
-| 02 | thesis | 1:00 | Coding is more than one session: harness vs scaffold. |
-| 03 | wolts | 1:10 | What a wolt is — and that three harnesses run here today. |
-| 04 | woltspace | 0:40 | Name the three parts. Don't explain them — 05–07 do that. |
-| 05 | compute | 1:10 | A container where everything is allowed, with a real URL. |
-| 06 | reach | 0:50 | Telegram, Slack, terminal — same session underneath. |
-| 07 | coordination | 1:10 | IWCL: agents talking with no orchestrator holding both. |
-| 08 | terminal | 3:20 | Show it. Hand off and switch away. |
-| 09 | close | 0:40 | Repeat the line, point at the QRs, take questions. |
+| 02 | thesis | 0:30 | One sentence, then stop. Let it land. |
+| 03 | harness + scaffold | 0:50 | The split: what drives agents vs where they persist. |
+| 04 | wolts | 1:00 | What a wolt is — and that three harnesses run here today. |
+| 05 | woltspace | 0:40 | Name the three parts. Don't explain them — 06–08 do that. |
+| 06 | compute | 1:00 | A container where everything is allowed, with a real URL. |
+| 07 | reach | 0:50 | Telegram, Slack, terminal — same session underneath. |
+| 08 | coordination | 1:00 | IWCL: agents talking with no orchestrator holding both. |
+| 09 | terminal | 3:10 | Show it. Hand off and switch away. |
+| 10 | close | 0:40 | Repeat the line, point at the QRs, take questions. |
 | | | **10:00** | |
 
-Slide 04 is a promise: three items, numbered `01`–`03`. Slides 05, 06 and 07
+Slide 05 is a promise: three items, numbered `01`–`03`. Slides 06, 07 and 08
 carry those numbers in their kickers and arrive in that order, so the audience
 always knows which third of the scaffold they're in. If you reorder the
 enumeration, reorder the slides — the numbers come from CSS and won't warn you.
+
+Slides 02 and 03 are a pair: 02 is the claim on its own, 03 is the split that
+explains it. 02 is deliberately a half-minute — its whole job is to land and get
+out of the way.
 
 Ten minutes exactly with no slack, which means it's really nine — a demo always
 overruns. Plan for that.
@@ -32,15 +37,15 @@ overruns. Plan for that.
 
 Cut in this order. Each cut is safe on its own; the story still lands.
 
-1. **06 reach** — the shallowest of the three; say it over the demo instead.
-   If you cut it, drop "How you reach them" from 04 too, or the promise breaks.
-2. **02 thesis** → fold into the title beat: harness versus scaffold, one sentence.
+1. **07 reach** — the shallowest of the three; say it over the demo instead.
+   If you cut it, drop "How you reach them" from 05 too, or the promise breaks.
+2. **02 thesis** → fold the sentence into the title beat and open on 03.
 
-Do **not** cut 03, 04, 05 or 07. 03 earns the word "wolt" (everything after
-depends on it), 04 is the promise the back half keeps, and 05 and 07 are the
-two parts nobody else has.
+Do **not** cut 03, 04, 05, 06 or 08. 03 sets up the whole vocabulary, 04 earns
+the word "wolt" (everything after depends on it), 05 is the promise the back
+half keeps, and 06 and 08 are the two parts nobody else has.
 
-**Cutting an explain slide means editing 04.** The enumeration and the slides
+**Cutting an explain slide means editing 05.** The enumeration and the slides
 after it have to match, or you promise three things and deliver two.
 
 ## Demo

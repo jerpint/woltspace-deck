@@ -440,3 +440,34 @@ h1.huge { font-size:clamp(44px,11vw,132px); line-height:1 }
 /* Long labels shouldn't wrap the row into three lines. */
 ul.timeline > li strong { text-wrap:balance }
 
+
+/* ── statement slide: one line, the wolts under it. No lodge scene — that
+   belongs to the title slide alone. ── */
+body.statement { justify-content:center }
+.statement-wrap {
+  flex:1; display:flex; align-items:center; justify-content:center;
+  gap:clamp(10px,1.8vw,26px);
+  position:relative; z-index:2; padding:2rem 1.6rem 5rem;
+  animation:fadeUp 0.7s ease both;
+}
+.statement-text {
+  display:flex; flex-direction:column; align-items:flex-start;
+  gap:clamp(10px,1.6vw,18px); text-align:left;
+}
+.statement-wrap .kicker { color:var(--terra) }
+.statement-line {
+  font-family:var(--font-display); font-weight:300; line-height:1.14;
+  font-size:clamp(28px,5.4vw,62px); color:var(--ink);
+  letter-spacing:-0.01em;
+  /* wraps into a block beside the wolt; balance keeps the lines even.
+     fit-content so the box hugs the longest line instead of reserving 13ch
+     and leaving a gap before the wolt. */
+  max-width:11.5ch; width:fit-content; text-wrap:balance;
+}
+/* Static on purpose: the bobbing and drifting are the lodge's, not this slide's. */
+.statement-wolt { flex-shrink:0 }
+@media (max-width:700px) {
+  .statement-wrap { flex-direction:column; gap:18px }
+  .statement-text { align-items:center; text-align:center }
+  .statement-line { max-width:18ch }
+}

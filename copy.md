@@ -19,14 +19,18 @@ The scaffold for your harnesses
 
 ## slide-02-thesis
 
-
-
-
 ### kicker
 the thesis
 
 ### heading
 Coding is more than just a single session
+
+---
+
+## slide-03-harness
+
+### kicker
+harness and scaffold
 
 ### manifesto
 - The **harness** is what drives coding agents. — Claude Code, Codex, opencode inside a terminal
@@ -34,7 +38,7 @@ Coding is more than just a single session
 
 ---
 
-## slide-03-wolts
+## slide-04-wolts
 
 ### kicker
 the unit
@@ -62,7 +66,7 @@ All three run in one lodge. The wolt doesn't notice.
 
 ---
 
-## slide-04-woltspace
+## slide-05-woltspace
 
 ### kicker
 Woltspace is the scaffold for your wolts
@@ -75,7 +79,7 @@ Coordination
 
 ---
 
-## slide-05-compute
+## slide-06-compute
 
 ### kicker
 the compute layer
@@ -95,7 +99,7 @@ container, over the public internet, from jerpint's box.
 
 ---
 
-## slide-06-reach
+## slide-07-reach
 
 ### kicker
 how you reach them
@@ -114,7 +118,7 @@ Same session underneath all three. The interface is a detail.
 
 ---
 
-## slide-07-coordination
+## slide-08-coordination
 
 ### kicker
 coordination
@@ -139,7 +143,7 @@ session, and it replies into yours.
 
 ---
 
-## slide-08-terminal
+## slide-09-terminal
 
 ### kicker
 live
@@ -149,7 +153,7 @@ demo time.
 
 ---
 
-## slide-09-close
+## slide-10-close
 
 ### brand
 woltspace
