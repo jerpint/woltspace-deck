@@ -119,7 +119,7 @@ an `allow`.
 **To close it again:** delete that one application. The hostname falls straight
 back to the wildcard and is gated as before.
 
-### Order on the day
+### Order on the day (already done once)
 
 1. Confirm read-only: `curl -s localhost:4010/api/status` → `"readonly":true`.
 2. Confirm the writes are refused: `POST /api/save` and `/api/copy` → 403.
