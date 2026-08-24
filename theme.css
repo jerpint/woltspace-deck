@@ -275,7 +275,7 @@ ul.timeline {
   display:flex; flex-direction:column; gap:13px;
 }
 ul.timeline > li {
-  display:grid; grid-template-columns:14px 1fr auto; gap:18px; align-items:center;
+  display:grid; grid-template-columns:14px auto minmax(0,1fr); gap:18px; align-items:center;
   background:var(--surface); border:1px solid var(--border); border-radius:10px;
   padding:14px 22px; text-align:left;
   opacity:0; animation:rowIn 0.5s ease forwards;
@@ -298,9 +298,10 @@ ul.timeline > li strong {
   font-size:clamp(16px,2.3vw,22px); line-height:1.15; color:var(--ink);
 }
 ul.timeline > li .rest {
-  font-family:var(--font-mono); font-size:clamp(10px,1.4vw,13px); font-weight:600;
-  letter-spacing:0.1em; text-transform:uppercase;
-  padding:6px 13px; border-radius:6px; white-space:nowrap;
+  font-family:var(--font-mono); font-size:clamp(10px,1.35vw,13px); font-weight:600;
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:6px 13px; border-radius:6px;
+  justify-self:end; text-align:center; text-wrap:balance;
   color:var(--terra); background:var(--terra-light);
 }
 ul.timeline > li:nth-child(4n+2) .rest { color:var(--amber); background:var(--amber-light) }
@@ -411,3 +412,26 @@ h1.huge { font-size:clamp(44px,11vw,132px); line-height:1 }
 }
 .stack .line:first-child { border-top:1px solid var(--border) }
 .stack .line strong { font-weight:300; color:var(--terra) }
+
+/* ── enumerate on 04, then explain one per slide — the numbers tie them
+   together, and they come from CSS so they never drift from the order. ── */
+.stack.numbered { counter-reset:part }
+.stack.numbered .line {
+  counter-increment:part;
+  display:flex; align-items:baseline; gap:clamp(12px,2.2vw,22px);
+}
+.stack.numbered .line::before {
+  content:'0' counter(part);
+  font-family:var(--font-mono); font-weight:600;
+  font-size:clamp(12px,1.5vw,16px); color:var(--terra);
+  flex-shrink:0; min-width:2.4ch;
+}
+
+/* Each explain slide carries its number in the kicker. Set --step per slide. */
+.kicker.step::before {
+  content:'0' var(--step, '') '\a0\a0';
+  color:var(--terra); opacity:.55;
+}
+/* Long labels shouldn't wrap the row into three lines. */
+ul.timeline > li strong { text-wrap:balance }
+

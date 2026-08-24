@@ -140,6 +140,7 @@ function save() {
       var warn = [];
       if (res.d.missing && res.d.missing.length) warn.push('no copy for: ' + res.d.missing.join(', '));
       if (res.d.unknown && res.d.unknown.length) warn.push('no such slide: ' + res.d.unknown.join(', '));
+      if (res.d.orphans && res.d.orphans.length) warn.push('nowhere to show: ' + res.d.orphans.join(', '));
       if (warn.length) msg('warn', warn.join(' · '), true);
       else msg('ok', 'saved — slides reloaded (' + res.d.slides + ' blocks)');
     })

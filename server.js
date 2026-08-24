@@ -165,9 +165,23 @@ app.post('/api/copy', (req, res) => {
   const missing = slides.filter(s => !found.includes(s));
   const unknown = found.filter(s => !slides.includes(s));
 
+  // A slot with no matching data-copy in the template renders nowhere, so say so
+  // rather than dropping the words in silence.
+  const orphans = [];
+  for (const name of found) {
+    const file = path.join(SLIDES_DIR, name + '.html');
+    if (!fs.existsSync(file)) continue;
+    const html = fs.readFileSync(file, 'utf-8');
+    const slots = new Set([...html.matchAll(/\bdata-copy="([\w-]+)"/g)].map(m => m[1]));
+    for (const key of Object.keys(parsed[name])) {
+      if (!slots.has(key)) orphans.push(`${name}/${key}`);
+    }
+  }
+
   fs.writeFileSync(copyLayer.COPY_FILE, text);
-  console.log(`[copy] saved — ${found.length} slide blocks`);
-  res.json({ ok: true, slides: found.length, missing, unknown });
+  console.log(`[copy] saved — ${found.length} slide blocks` +
+    (orphans.length ? `, ${orphans.length} orphaned slot(s): ${orphans.join(', ')}` : ''));
+  res.json({ ok: true, slides: found.length, missing, unknown, orphans });
 });
 
 // Serve index — slide navigator
