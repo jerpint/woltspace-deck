@@ -112,7 +112,10 @@ app.get('/api/hash', (req, res) => {
 app.get('/api/slides', (req, res) => res.json(slideList()));
 
 // Raw copy, parsed — handy for checking what the deck thinks the words are
-app.get('/api/copy', (req, res) => res.json(copyLayer.loadCopy()));
+app.get('/api/copy', (req, res) => {
+  if (READONLY) return res.status(404).json({ error: 'Not found' });
+  res.json(copyLayer.loadCopy());
+});
 
 // Status — read-only and CORS-open so deckwolt's presenter hub (served from a
 // different origin) can show whether the deck is up and whether it is still
@@ -133,12 +136,15 @@ app.get('/api/status', (req, res) => {
 // Copy editor — the whole deck's words in one textarea. Built for a phone:
 // jerpint asked to edit copy in a simple file, not dig through slide HTML.
 app.get('/copy', (req, res) => {
+  if (READONLY) return res.status(404).send('Not found');
   res.sendFile(path.join(SLIDES_DIR, 'copy-editor.html'));
 });
 
 // Read copy.md as plain text (browsers download text/markdown instead of
 // showing it, which is useless on a phone).
 app.get('/copy.md', (req, res) => {
+  // Raw copy includes the author's <!-- notes -->; not for a public deck.
+  if (READONLY) return res.status(404).send('Not found');
   if (!fs.existsSync(copyLayer.COPY_FILE)) return res.status(404).send('no copy.md');
   res.type('text/plain; charset=utf-8').send(fs.readFileSync(copyLayer.COPY_FILE, 'utf-8'));
 });
@@ -161,6 +167,23 @@ app.post('/api/copy', (req, res) => {
   }
 
   const slides = slideList().map(f => f.replace(/\.html$/, ''));
+
+  // Refusing only the empty string was not enough: any non-empty text that
+  // parses to no slide blocks at all would blank every slide on the deck.
+  // A real edit always keeps at least one, so treat zero as a mistake.
+  if (Object.keys(parsed).length === 0) {
+    return res.status(400).json({
+      error: 'No slide blocks found (expected "## slide-NN-slug") — refusing to save',
+    });
+  }
+  // And never let a save drop most of the deck in one go.
+  const kept = slides.filter(s => s in parsed).length;
+  if (slides.length >= 3 && kept < Math.ceil(slides.length / 2)) {
+    return res.status(400).json({
+      error: `Only ${kept} of ${slides.length} slides have copy — refusing to save. ` +
+             `Remove a slide's file if you mean to drop it.`,
+    });
+  }
   const found = Object.keys(parsed);
   const missing = slides.filter(s => !found.includes(s));
   const unknown = found.filter(s => !slides.includes(s));
@@ -193,8 +216,35 @@ app.get('/', (req, res) => {
   res.send('No slides yet');
 });
 
-// Static files
-app.use(express.static(SLIDES_DIR));
+// Static files — allowlisted, not the whole directory.
+//
+// express.static(SLIDES_DIR) served everything next to the slides: .git (the
+// full repo is reconstructable from it), node_modules, the server source,
+// package-lock, the archived decks, and RUNBOOK.md. None of that belongs on a
+// public URL, and a deck only needs its own assets. So: deny dotfiles, allow a
+// known set of asset types, and name the few files that may be served.
+const ASSET_EXT = new Set(['.css', '.js', '.svg', '.png', '.jpg', '.jpeg', '.gif', '.webp',
+                           '.ico', '.woff', '.woff2', '.mp4', '.webm']);
+const ALWAYS_DENY = new Set(['server.js', 'copy.js', 'makeqr.js']);
+
+app.use((req, res, next) => {
+  const rel = decodeURIComponent(req.path).replace(/^\/+/, '');
+  if (!rel) return next();
+
+  // No dotfiles or dot-directories, ever (.git, .env, .gitignore).
+  if (rel.split('/').some(seg => seg.startsWith('.'))) return res.status(404).send('Not found');
+  // No traversal, and nothing out of the deck directory.
+  const full = path.resolve(SLIDES_DIR, rel);
+  if (!full.startsWith(SLIDES_DIR + path.sep)) return res.status(404).send('Not found');
+  // Don't serve the server's own source.
+  if (ALWAYS_DENY.has(path.basename(rel))) return res.status(404).send('Not found');
+  // Never serve dependencies or the archive over HTTP.
+  if (/^(node_modules|decks)\//.test(rel)) return res.status(404).send('Not found');
+
+  if (!ASSET_EXT.has(path.extname(rel).toLowerCase())) return res.status(404).send('Not found');
+  if (!fs.existsSync(full) || !fs.statSync(full).isFile()) return res.status(404).send('Not found');
+  return res.sendFile(full);
+});
 
 // 404 fallback — redirect to first slide
 app.use((req, res) => {
@@ -207,8 +257,9 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`woltspace-deck running on http://localhost:${PORT}`);
   if (READONLY) {
     console.log('[deck] READ-ONLY — edit overlay off, /api/save refuses writes');
+    console.log('[deck] authoring surfaces off: /copy, /copy.md, GET /api/copy');
   } else {
-    console.log('[deck] editable — /api/save accepts unauthenticated writes.');
+    console.log('[deck] editable — /api/save and /api/copy accept unauthenticated writes.');
     console.log('[deck] Before exposing this deck publicly, restart with DECK_READONLY=1');
   }
 });
