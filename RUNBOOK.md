@@ -84,41 +84,40 @@ does not mean unauthenticated.
 
 ### What is already done
 
-- **Read-only by default.** `DECK_READONLY=1` is in the app's start command, so
-  writes are refused and `/copy`, `/copy.md` and `GET /api/copy` do not exist.
-  Check it, don't assume it: `curl -s localhost:4010/api/status`.
-- **Static serving is an allowlist.** Dotfiles (`.git`), `node_modules/`,
-  `decks/`, and the server source are all refused; only known asset types under
-  the deck directory are served.
+- **The app is named `deck`**, so the lodge serves it at `deck.woltspace.com`.
+  `"public": true` is set and the app is running — but note that the platform's
+  "sharing" only means *served on the subdomain*. It does not touch Access.
+- **Read-only.** `DECK_READONLY=1` is in the start command: writes are refused
+  and `/copy`, `/copy.md`, `GET /api/copy` do not exist. Verify, don't assume:
+  `curl -s localhost:4010/api/status`.
+- **Static serving is an allowlist.** `.git`, `node_modules/`, `decks/` and the
+  server source are all refused; only known asset types under the deck
+  directory are served.
+- **The hostname reaches only the deck.** The lodge's router scopes strictly by
+  subdomain: `/apps`, `/apps/<app>/start`, `/tui`, `/wolt/...` all 404 on the
+  deck hostname, GET and POST alike. Verified with Host-header probes.
 
-### Why the hostname is what it is
+### Why one Access app exposes only this hostname
 
-The lodge routes `{app-name}.{domain}` to the app of that name. This app is
-named `deck` in `woltspace.json` **and its directory is `wolts/apps/deck`** —
-the directory name is what the router matches. That, and nothing else, is why
-it answers at `deck.woltspace.com`. Rename either and the hostname moves with
-it; no Cloudflare or DNS change is involved.
+The account's Access applications, most specific first:
 
-### The one step left, and it is yours
+| Application | Hostname | Policy |
+|---|---|---|
+| `woltspace-lodge` | `jerpint.woltspace.com` | allow: jerpint |
+| `woltspace-ssh` | `ssh.woltspace.com` | allow |
+| `blog-app` | `blog.woltspace.com` | allow: 2 emails |
+| `growth-chart-app` | `growth-chart.woltspace.com` | allow: jerpint, erika |
+| `woltspace-apps` | `*.woltspace.com` | allow: jerpint |
 
-Open the hostname with a bypass policy. A more specific hostname match wins over
-the `*.woltspace.com` wildcard, so no other app is affected:
+Access matches the **most specific hostname**, so a new application for
+`deck.woltspace.com` overrides the wildcard for that hostname and nothing else.
+The wildcard keeps gating every other app; the lodge has its own application and
+is untouched. This is the same mechanism `blog` and `growth-chart` already use to
+widen access per app — the only new thing here is a `bypass` decision instead of
+an `allow`.
 
-```bash
-# Needs CLOUDFLARE_ACCOUNT_ID + CLOUDFLARE_API_TOKEN from /workspace/wolts/.env
-APP=$(curl -s -X POST \
-  "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/access/apps" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json" \
-  --data '{"name":"deck-public","domain":"deck.woltspace.com","type":"self_hosted","session_duration":"24h"}' \
-  | python3 -c "import json,sys; print(json.load(sys.stdin)['result']['id'])")
-
-curl -s -X POST \
-  "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/access/apps/$APP/policies" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json" \
-  --data '{"name":"public-bypass","decision":"bypass","include":[{"everyone":{}}]}'
-```
-
-Delete that Access application afterwards to close it again. Keep the `$APP` id.
+**To close it again:** delete that one application. The hostname falls straight
+back to the wildcard and is gated as before.
 
 ### Order on the day
 
