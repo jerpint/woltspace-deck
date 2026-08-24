@@ -50,6 +50,17 @@ that key, so you can build a layout before the words are written.
 Round-trip: browser edits save **back into `copy.md`**, converted to markdown. So in-browser
 editing and file editing never fight — there's one source of truth either way.
 
+### Three ways to edit the copy
+
+| | Where | Good for |
+|---|---|---|
+| **`/copy`** | the whole file in one textarea, Ctrl+S to save | writing, restructuring, phone edits |
+| **Edit overlay** | on a slide: Edit button, type in place, Ctrl+S | tweaking one line while looking at it |
+| **`copy.md`** | the file on disk, any editor | bulk changes, git |
+
+All three write to the same `copy.md`. Saving from `/copy` rejects an empty file and reports
+slide names that don't match any slide, instead of silently blanking them.
+
 ## How it works
 
 - **Slides are HTML files** named `slide-01-title.html`, `slide-02-whatever.html`. The server

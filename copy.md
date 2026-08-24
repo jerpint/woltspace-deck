@@ -1,13 +1,11 @@
-# Deck copy — woltspace: the scaffold for harnesses
+# Deck copy
 
-**This file is the words. The HTML is just the layout.**
+**This file is the words. The HTML is just the layout.** Edit, save, and the
+open slide reloads itself. Full syntax reference at the bottom.
 
-Edit anything below, save, and the open slide reloads on its own. You never
-need to touch a `slide-*.html` file to change what the deck says.
+---
 
-How to read it:
-
-- `## slide-01-title` — which slide the block belongs to
+## slide-01-title` — which slide the block belongs to
 - `### heading` — a text slot on that slide; content runs until the next `###`
 - A block of lines starting with `- ` renders as that slide's cards / rows /
   bullets / chips (whatever the layout says). A paragraph renders as a paragraph.
@@ -175,3 +173,23 @@ the code
 
 ### qr-project
 the project
+
+---
+
+# Syntax
+
+- `## slide-NN-slug` — starts a slide's block. Must match a slide file's name.
+- `### key` — a text slot on that slide. Content runs to the next `###`, `##`, or `---`.
+- Lines starting `- ` become that slot's list — cards, rows, bullets, chips or
+  a terminal, whichever the slide's layout uses. A paragraph stays a paragraph.
+- `**bold**`, `*italic*`, `` `code` ``, `[link](url)`, `~~strike~~` all work.
+- `main — rest` (with a spaced em dash) splits an item in two: in a card the
+  first half is the title, in a timeline row the second half becomes the pill.
+- In a terminal block, a line starting `$ ` is a command; anything else is
+  output, and `**bold**` in output highlights green.
+
+Delete a `### block` and that slot falls back to the placeholder baked into the
+template — so a half-written deck still reads.
+
+Saving here rejects an empty file and tells you if a slide name doesn't match
+any slide, rather than silently blanking it.

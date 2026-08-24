@@ -130,6 +130,46 @@ app.get('/api/status', (req, res) => {
   });
 });
 
+// Copy editor — the whole deck's words in one textarea. Built for a phone:
+// jerpint asked to edit copy in a simple file, not dig through slide HTML.
+app.get('/copy', (req, res) => {
+  res.sendFile(path.join(SLIDES_DIR, 'copy-editor.html'));
+});
+
+// Read copy.md as plain text (browsers download text/markdown instead of
+// showing it, which is useless on a phone).
+app.get('/copy.md', (req, res) => {
+  if (!fs.existsSync(copyLayer.COPY_FILE)) return res.status(404).send('no copy.md');
+  res.type('text/plain; charset=utf-8').send(fs.readFileSync(copyLayer.COPY_FILE, 'utf-8'));
+});
+
+// Save the whole copy file. Parsed before writing, so a broken edit is
+// rejected with a reason instead of silently blanking every slide.
+app.post('/api/copy', (req, res) => {
+  if (READONLY) return res.status(403).json({ error: 'Deck is read-only (DECK_READONLY is set)' });
+
+  const { text } = req.body;
+  if (typeof text !== 'string' || !text.trim()) {
+    return res.status(400).json({ error: 'Empty copy — refusing to save' });
+  }
+
+  let parsed;
+  try {
+    parsed = copyLayer.parseCopy(text);
+  } catch (e) {
+    return res.status(400).json({ error: 'Could not parse: ' + e.message });
+  }
+
+  const slides = slideList().map(f => f.replace(/\.html$/, ''));
+  const found = Object.keys(parsed);
+  const missing = slides.filter(s => !found.includes(s));
+  const unknown = found.filter(s => !slides.includes(s));
+
+  fs.writeFileSync(copyLayer.COPY_FILE, text);
+  console.log(`[copy] saved — ${found.length} slide blocks`);
+  res.json({ ok: true, slides: found.length, missing, unknown });
+});
+
 // Serve index — slide navigator
 app.get('/', (req, res) => {
   const indexFile = path.join(SLIDES_DIR, 'index.html');
