@@ -17,3 +17,6 @@ playback (nav links and root-relative assets break in the archive folder).
 ## Current deck
 
 Kept by **deckwolt**. Story: *woltspace is the scaffold for harnesses.*
+
+Copy for the live deck lives in `copy.md` — jerpint writes the words there, deckwolt builds the
+layout. See the README's copy-layer section.

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>deck copy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDE8DE;--surface:#F5F1E8;--surface-2:#FAF7F0;
+  --border:#D6CCBA;--border-2:#C4B89E;
+  --ink:#18100A;--ink-2:#5C4D3C;--ink-3:#9A8878;
+  --terra:#C4531E;--green:#3A6644;--amber:#C98B2A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);
+  display:flex;flex-direction:column;
+}
+header{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:10px 14px;border-bottom:1px solid var(--border);
+  background:var(--surface);position:sticky;top:0;z-index:5;
+}
+h1{font-size:15px;font-weight:600;margin-right:auto}
+h1 span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3);font-weight:400}
+button,a.btn{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:0.04em;padding:9px 15px;border-radius:7px;cursor:pointer;
+  border:1px solid var(--border);background:var(--surface-2);color:var(--ink-2);
+  text-decoration:none;transition:all .15s;
+}
+button:hover,a.btn:hover{border-color:var(--border-2);color:var(--ink)}
+button#save{background:var(--green);border-color:var(--green);color:#F5F1E8}
+button#save:hover{filter:brightness(1.15)}
+button#save:disabled{opacity:.45;cursor:default;filter:none}
+#msg{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  padding:7px 12px;border-radius:6px;display:none;
+}
+#msg.show{display:block}
+#msg.ok{background:#D6E8C8;color:#2A5A1E}
+#msg.err{background:#F0D5C8;color:#8A2F0E}
+#msg.warn{background:#F7EEDA;color:#8A5D14}
+textarea{
+  flex:1;width:100%;resize:none;border:none;outline:none;
+  padding:16px 18px 40px;background:var(--bg);color:var(--ink);
+  font-family:'JetBrains Mono',monospace;
+  font-size:13.5px;line-height:1.7;tab-size:2;
+}
+footer{
+  padding:8px 14px;border-top:1px solid var(--border);background:var(--surface);
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3);
+  display:flex;gap:14px;flex-wrap:wrap;
+}
+kbd{
+  font-family:inherit;font-size:10px;background:var(--surface-2);
+  border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--ink-2);
+}
+@media(max-width:560px){
+  h1{width:100%;margin-bottom:2px}
+  textarea{font-size:14px;padding:12px 13px 40px}
+  header{padding:9px 11px;gap:7px}
+  button,a.btn{padding:10px 13px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>deck copy <span id="stat">loading&hellip;</span></h1>
+  <div id="msg"></div>
+  <a class="btn" href="/" target="_blank">slides</a>
+  <button id="revert">revert</button>
+  <button id="save" disabled>save</button>
+</header>
+
+<textarea id="text" spellcheck="true" autocapitalize="off" autocorrect="off"></textarea>
+
+<footer>
+  <span><kbd>##&nbsp;slide-NN-slug</kbd> a slide</span>
+  <span><kbd>###&nbsp;key</kbd> a text slot</span>
+  <span><kbd>-&nbsp;</kbd> a list item</span>
+  <span><kbd>**bold**</kbd> <kbd>*italic*</kbd> <kbd>`code`</kbd></span>
+  <span><kbd>&lt;!--&nbsp;note&nbsp;--&gt;</kbd> never shown</span>
+  <span><kbd>Ctrl/Cmd+S</kbd> save</span>
+</footer>
+
+<script>
+var ta = document.getElementById('text');
+var saveBtn = document.getElementById('save');
+var revertBtn = document.getElementById('revert');
+var msgEl = document.getElementById('msg');
+var statEl = document.getElementById('stat');
+var original = '';
+
+function msg(kind, text, sticky) {
+  msgEl.className = 'show ' + kind;
+  msgEl.textContent = text;
+  if (!sticky) setTimeout(function () { msgEl.className = ''; }, 4000);
+}
+
+function dirty() {
+  var d = ta.value !== original;
+  saveBtn.disabled = !d;
+  statEl.textContent = d ? 'unsaved changes' : 'saved';
+  return d;
+}
+
+function load() {
+  fetch('/copy.md?t=' + Date.now())
+    .then(function (r) { return r.text(); })
+    .then(function (t) {
+      original = t;
+      ta.value = t;
+      dirty();
+    })
+    .catch(function () { msg('err', 'could not load copy.md', true); });
+}
+
+function save() {
+  if (!dirty()) return;
+  saveBtn.disabled = true;
+  statEl.textContent = 'saving…';
+  fetch('/api/copy', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text: ta.value })
+  })
+    .then(function (r) { return r.json().then(function (d) { return { status: r.status, d: d }; }); })
+    .then(function (res) {
+      if (res.status !== 200 || !res.d.ok) {
+        msg('err', res.d.error || 'save failed', true);
+        dirty();
+        return;
+      }
+      original = ta.value;
+      dirty();
+      var warn = [];
+      if (res.d.missing && res.d.missing.length) warn.push('no copy for: ' + res.d.missing.join(', '));
+      if (res.d.unknown && res.d.unknown.length) warn.push('no such slide: ' + res.d.unknown.join(', '));
+      if (res.d.orphans && res.d.orphans.length) warn.push('nowhere to show: ' + res.d.orphans.join(', '));
+      if (warn.length) msg('warn', warn.join(' · '), true);
+      else msg('ok', 'saved — slides reloaded (' + res.d.slides + ' blocks)');
+    })
+    .catch(function (e) { msg('err', 'save failed: ' + e.message, true); dirty(); });
+}
+
+ta.addEventListener('input', dirty);
+saveBtn.addEventListener('click', save);
+revertBtn.addEventListener('click', function () {
+  if (dirty() && !confirm('Throw away your unsaved changes?')) return;
+  load();
+  msg('ok', 'reloaded from disk');
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 's' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); save(); }
+});
+
+window.addEventListener('beforeunload', function (e) {
+  if (ta.value !== original) { e.preventDefault(); e.returnValue = ''; }
+});
+
+load();
+</script>
+</body>
+</html>

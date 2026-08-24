@@ -45,8 +45,8 @@ h1{font-family:var(--font-display);font-size:clamp(24px, 5vw, 32px);font-weight:
 </head>
 <body>
 <h1>woltspace deck</h1>
-<div class="sub">Live from jerpint's lodge</div>
-<div class="links"><a href="https://woltspace.com" target="_blank">woltspace.com</a> · <a href="https://github.com/jerpint/woltspace" target="_blank">github</a></div>
+<div class="sub">the scaffold for harnesses</div>
+<div class="links">Copy lives in <a href="/copy.md" target="_blank">copy.md</a> — edit it and slides reload · <a href="https://woltspace.com" target="_blank">woltspace.com</a> · <a href="https://github.com/jerpint/woltspace" target="_blank">github</a></div>
 <div class="grid" id="grid"></div>
 <script>
 fetch('/api/slides').then(r=>r.json()).then(slides=>{
@@ -65,6 +65,18 @@ fetch('/api/slides').then(r=>r.json()).then(slides=>{
     grid.appendChild(a);
   });
 });
+
+// Auto-reload — the grid used to never refresh, so edits looked like they
+// hadn't landed. Polls a hash of every slide plus copy.md and theme.css.
+(function(){
+  var last=null;
+  setInterval(function(){
+    fetch('/api/hash').then(function(r){return r.json()}).then(function(d){
+      if(last===null){last=d.hash;return}
+      if(d.hash!==last)location.reload();
+    }).catch(function(){});
+  },1500);
+})();
 </script>
 </body>
 </html>

@@ -1,0 +1,486 @@
+/* theme.css — shared deck styles. Slides stay thin; the look lives here. */
+
+:root {
+  --bg:#EDE8DE; --surface:#F5F1E8; --surface-2:#FAF7F0;
+  --border:#D6CCBA; --border-2:#C4B89E;
+  --ink:#18100A; --ink-2:#5C4D3C; --ink-3:#9A8878;
+  --terra:#C4531E; --terra-light:#F0D5C8;
+  --amber:#C98B2A; --amber-light:#F2E4C0;
+  --green:#3A6644; --green-light:#D6E8C8;
+  --forest:#4A8838; --forest-light:#D6E8C8;
+  --blue:#3A7BA8; --blue-light:#CFE3F0;
+  --font-display:'Preahvihear',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+
+body {
+  font-family:var(--font-body); background:var(--bg); color:var(--ink);
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; overflow:hidden;
+}
+
+/* ── layout ── */
+.slide {
+  width:100%; max-width:840px; padding:2rem 2.5rem 4.5rem;
+  display:flex; flex-direction:column; align-items:center;
+  gap:1.5rem; text-align:center;
+  animation:fadeUp 0.6s ease both;
+}
+.slide.left { text-align:left; align-items:stretch }
+.slide.tight { gap:1.05rem; padding-bottom:3.6rem }
+.slide.tight h1 { font-size:clamp(26px,4.3vw,42px) }
+.slide.tight .lede { font-size:clamp(14px,1.8vw,17px) }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px) } to { opacity:1; transform:translateY(0) } }
+
+/* ── type ── */
+.kicker {
+  font-family:var(--font-mono); font-size:11px; font-weight:600;
+  letter-spacing:0.18em; text-transform:uppercase; color:var(--terra);
+}
+/* ~~strike~~ — for "your ~~coding agents~~ wolts" */
+.struck { position:relative; display:inline-block; color:var(--ink-3) }
+.struck::after {
+  content:''; position:absolute; left:-2%; right:-2%; top:52%; height:2px;
+  background:var(--ink-3); transform:rotate(-3deg);
+}
+h1 {
+  font-family:var(--font-display); font-weight:300; line-height:1.12;
+  font-size:clamp(30px,5.2vw,52px); letter-spacing:-0.01em;
+}
+h2 {
+  font-family:var(--font-display); font-weight:300; line-height:1.2;
+  font-size:clamp(22px,3.4vw,32px);
+}
+h1 .accent, h2 .accent { color:var(--terra) }
+.lede {
+  font-size:clamp(15px,2.1vw,20px); font-weight:300; line-height:1.55;
+  color:var(--ink-2); max-width:44ch;
+}
+.slide.left .lede { max-width:60ch }
+.note {
+  font-family:var(--font-mono); font-size:12px; line-height:1.5; color:var(--ink-3);
+}
+strong { font-weight:600; color:var(--ink) }
+/* "main — rest" list items: the separator is restored here by default, and
+   suppressed by the layouts that give .rest its own block or pill. */
+.rest::before { content:'\a0\2014\a0' }
+ul.cards > li .rest::before,
+ul.rows > li .rest::before,
+ul.timeline > li .rest::before,
+ul.manifesto > li .rest::before { content:none }
+ul.chips > li .rest::before { content:'\a0' }
+code {
+  font-family:var(--font-mono); font-size:0.88em;
+  background:var(--surface-2); border:1px solid var(--border);
+  border-radius:4px; padding:1px 5px; color:var(--terra);
+}
+
+/* ── cards: a copy list rendered as a grid of titled cards ── */
+ul.cards { list-style:none; display:grid; gap:12px; width:100%;
+  grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr)) }
+ul.cards.two { grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr)) }
+@media (min-width:880px) { ul.cards.four { grid-template-columns:repeat(4,1fr) } }
+ul.cards.four > li { padding:15px 14px 14px }
+ul.cards.four > li strong { font-size:clamp(16px,1.9vw,19px) }
+ul.cards.four > li .rest { font-size:12.5px; line-height:1.4 }
+ul.cards > li {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:16px 18px; text-align:left; font-size:14px; line-height:1.5;
+  color:var(--ink-2); box-shadow:0 2px 10px rgba(24,16,10,0.04);
+}
+ul.cards > li strong {
+  display:block; font-family:var(--font-mono); font-size:11px; font-weight:600;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--terra);
+  margin-bottom:7px;
+}
+
+/* ── rows: a copy list rendered as tight labelled lines ── */
+ul.rows { list-style:none; width:100%; display:flex; flex-direction:column;
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  overflow:hidden; box-shadow:0 2px 10px rgba(24,16,10,0.04) }
+ul.rows > li {
+  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+  padding:12px 18px; text-align:left; font-size:14px; line-height:1.45; color:var(--ink-2);
+  border-bottom:1px solid var(--border);
+}
+ul.rows > li:last-child { border-bottom:none }
+ul.rows > li strong {
+  font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--ink);
+  min-width:9ch; flex-shrink:0;
+}
+ul.rows > li code { background:var(--surface-2) }
+
+/* ── bullets: a copy list rendered as plain prose points ── */
+ul.bullets { list-style:none; width:100%; max-width:60ch;
+  display:flex; flex-direction:column; gap:11px }
+ul.bullets > li {
+  position:relative; padding-left:20px; text-align:left;
+  font-size:clamp(14px,1.8vw,17px); line-height:1.5; color:var(--ink-2);
+}
+ul.bullets > li::before {
+  content:''; position:absolute; left:2px; top:0.62em;
+  width:7px; height:7px; border-radius:2px; background:var(--terra);
+}
+
+/* ── chips: a copy list rendered as inline mono tags ── */
+ul.chips { list-style:none; display:flex; flex-wrap:wrap; gap:8px; justify-content:center }
+.slide.left ul.chips { justify-content:flex-start }
+ul.chips > li {
+  font-family:var(--font-mono); font-size:12px; color:var(--ink-2);
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:999px; padding:5px 13px;
+}
+ul.chips > li strong { color:var(--terra); font-weight:600 }
+
+/* ── terminal block: a copy list whose "$ " lines are commands ── */
+ul.term {
+  list-style:none;
+  width:100%; background:#1C1710; border:1px solid #3A3026; border-radius:12px;
+  padding:16px 18px; text-align:left; overflow:auto;
+  font-family:var(--font-mono); font-size:clamp(11px,1.5vw,13.5px); line-height:1.65;
+  color:#E8E0D2; box-shadow:0 6px 24px rgba(24,16,10,0.18);
+}
+.term > li.cmd { color:#F2E4C0 }
+.term > li.cmd::before { content:'$ '; color:#5BC87A }
+.term > li.out { color:#9A8878 }
+.term > li strong { font-weight:400; color:#8FBF7A }
+.term > li code { background:transparent; border:none; padding:0; color:inherit }
+
+/* ── nav ── */
+.slide-nav {
+  position:fixed; bottom:1.5rem; left:0; right:0; z-index:20;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:0 2rem; pointer-events:none;
+}
+.slide-nav a {
+  pointer-events:auto;
+  font-family:var(--font-mono); font-size:12px; font-weight:500;
+  letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--ink-3); text-decoration:none;
+  padding:8px 16px; border:1px solid var(--border);
+  border-radius:6px; background:var(--surface); transition:all 0.15s;
+}
+.slide-nav a:hover { border-color:var(--border-2); color:var(--ink); background:var(--surface-2) }
+.slide-nav .hidden { visibility:hidden }
+
+@media (max-width:640px) {
+  body { overflow-y:auto; align-items:flex-start }
+  .slide { padding:1.6rem 1.2rem 1.4rem; gap:1.2rem }
+  ul.chips > li { font-size:11px; padding:4px 10px }
+  .swap ul.chips { gap:6px }
+  ul.rows > li { flex-direction:column; gap:4px }
+  ul.rows > li strong { min-width:0 }
+  /* On a phone the page scrolls, so a fixed nav floats over the content it is
+     meant to sit below. Put it in the flow instead. */
+  .slide-nav {
+    position:static; padding:0 1rem 1.4rem; margin-top:auto;
+    justify-content:center; gap:10px;
+  }
+  .slide-nav a { font-size:11px; padding:8px 14px }
+  .slide-nav .hidden { display:none }
+}
+
+/* ── hero slides (title / close): brand card floating over the forest scene ── */
+body.hero { background:#B8D4E8; justify-content:center }
+.hero-wrap {
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; z-index:2; padding:2rem 1.2rem 4.5rem;
+  animation:fadeUp 0.7s ease both;
+}
+.brand-card {
+  display:flex; flex-direction:column; align-items:center; gap:11px;
+  padding:36px 56px 32px; text-align:center;
+  background:rgba(237,232,222,0.86);
+  border:1px solid var(--border); border-radius:18px;
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  box-shadow:0 8px 40px rgba(24,16,10,0.14);
+}
+.brand-name {
+  font-family:var(--font-display); font-weight:300; line-height:1;
+  font-size:clamp(42px,8vw,72px); letter-spacing:-0.02em; color:var(--ink);
+}
+.brand-card .tagline {
+  font-family:var(--font-mono); font-size:clamp(12px,1.6vw,14px);
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--terra);
+}
+.brand-card .subtitle {
+  font-size:clamp(15px,2.2vw,20px); font-weight:300; line-height:1.55; color:var(--ink-2);
+  margin-top:2px;
+}
+.brand-card .note { margin-top:6px }
+.brand-card.solo { gap:6px; padding:38px 60px 34px }
+/* One line under the name carries the whole slide, so it reads at subtitle
+   scale in sentence case — not the small mono caps used as an eyebrow. */
+.brand-card.solo .tagline {
+  font-family:var(--font-body); font-weight:300;
+  font-size:clamp(17px,2.7vw,27px); line-height:1.35;
+  letter-spacing:0; text-transform:none; color:var(--terra);
+}
+@media (max-width:640px) {
+  .brand-card { padding:24px 28px 22px }
+  .brand-card.solo { padding:26px 30px 24px }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   Components ported from the April 2026 deck (prwolt's) — rebuilt as
+   copy-driven list layouts. A list item written "**label** — rest" gives
+   <strong> plus <span class="rest">, so each layout styles the two halves.
+   ══════════════════════════════════════════════════════════════════════ */
+
+@keyframes rowIn { from { opacity:0; transform:translateY(10px) } to { opacity:1; transform:translateY(0) } }
+
+/* ── accent cards: border-top accent, display-font label ── */
+ul.cards.accent > li {
+  border-top:3px solid var(--border-2); padding:20px 18px 18px;
+  display:flex; flex-direction:column; gap:8px; text-align:center;
+  transition:border-color 0.2s, transform 0.2s;
+}
+ul.cards.accent > li:hover { transform:translateY(-3px) }
+ul.cards.accent > li:nth-child(4n+1) { border-top-color:var(--terra) }
+ul.cards.accent > li:nth-child(4n+2) { border-top-color:var(--amber) }
+ul.cards.accent > li:nth-child(4n+3) { border-top-color:var(--forest) }
+ul.cards.accent > li:nth-child(4n+4) { border-top-color:var(--blue) }
+ul.cards.accent > li strong {
+  font-family:var(--font-display); font-weight:300; text-transform:none;
+  letter-spacing:0; font-size:clamp(18px,2.4vw,22px); color:var(--ink);
+  line-height:1.1; margin:0;
+}
+ul.cards.accent > li .rest { font-size:13.5px; line-height:1.45; color:var(--ink-2) }
+
+/* ── striped rows: left accent bar, display-font label ── */
+ul.rows.striped {
+  background:none; border:none; box-shadow:none;
+  gap:12px; overflow:visible;
+}
+ul.rows.striped > li {
+  background:var(--surface); border:1px solid var(--border);
+  border-left:4px solid var(--border-2); border-radius:12px;
+  padding:15px 20px; align-items:baseline; gap:14px;
+  opacity:0; animation:rowIn 0.5s ease forwards;
+  transition:border-color 0.2s, transform 0.2s;
+}
+ul.rows.striped > li:hover { transform:translateX(3px) }
+ul.rows.striped > li:nth-child(4n+1) { border-left-color:var(--terra) }
+ul.rows.striped > li:nth-child(4n+2) { border-left-color:var(--amber) }
+ul.rows.striped > li:nth-child(4n+3) { border-left-color:var(--forest) }
+ul.rows.striped > li:nth-child(4n+4) { border-left-color:var(--blue) }
+ul.rows.striped > li:nth-child(1) { animation-delay:0.12s }
+ul.rows.striped > li:nth-child(2) { animation-delay:0.24s }
+ul.rows.striped > li:nth-child(3) { animation-delay:0.36s }
+ul.rows.striped > li:nth-child(4) { animation-delay:0.48s }
+ul.rows.striped > li strong {
+  font-family:var(--font-mono); font-size:13px; color:var(--ink); min-width:11ch;
+}
+ul.rows.striped > li .rest { flex:1; min-width:0; color:var(--ink-2) }
+
+/* ── timeline: dot · title · consequence pill ── */
+ul.timeline {
+  list-style:none; width:100%; max-width:640px;
+  display:flex; flex-direction:column; gap:13px;
+}
+ul.timeline > li {
+  display:grid; grid-template-columns:14px auto minmax(0,1fr); gap:18px; align-items:center;
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:14px 22px; text-align:left;
+  opacity:0; animation:rowIn 0.5s ease forwards;
+  transition:border-color 0.2s, transform 0.2s;
+}
+ul.timeline > li:hover { border-color:var(--border-2); transform:translateX(3px) }
+ul.timeline > li::before {
+  content:''; width:14px; height:14px; border-radius:50%;
+  background:var(--terra); box-shadow:0 0 0 3px var(--terra-light);
+}
+ul.timeline > li:nth-child(4n+2)::before { background:var(--amber); box-shadow:0 0 0 3px var(--amber-light) }
+ul.timeline > li:nth-child(4n+3)::before { background:var(--forest); box-shadow:0 0 0 3px var(--forest-light) }
+ul.timeline > li:nth-child(4n+4)::before { background:var(--blue); box-shadow:0 0 0 3px var(--blue-light) }
+ul.timeline > li:nth-child(1) { animation-delay:0.1s }
+ul.timeline > li:nth-child(2) { animation-delay:0.22s }
+ul.timeline > li:nth-child(3) { animation-delay:0.34s }
+ul.timeline > li:nth-child(4) { animation-delay:0.46s }
+ul.timeline > li strong {
+  font-family:var(--font-display); font-weight:300;
+  font-size:clamp(16px,2.3vw,22px); line-height:1.15; color:var(--ink);
+}
+ul.timeline > li .rest {
+  font-family:var(--font-mono); font-size:clamp(10px,1.35vw,13px); font-weight:600;
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:6px 13px; border-radius:6px;
+  justify-self:end; text-align:center; text-wrap:balance;
+  color:var(--terra); background:var(--terra-light);
+}
+ul.timeline > li:nth-child(4n+2) .rest { color:var(--amber); background:var(--amber-light) }
+ul.timeline > li:nth-child(4n+3) .rest { color:var(--forest); background:var(--forest-light) }
+ul.timeline > li:nth-child(4n+4) .rest { color:var(--blue); background:var(--blue-light) }
+
+/* ── manifesto: big display statements, bold goes accent ── */
+ul.manifesto {
+  list-style:none; width:100%; max-width:660px;
+  display:flex; flex-direction:column;
+}
+ul.manifesto > li {
+  padding:14px 6px; text-align:left;
+  border-bottom:1px solid var(--border);
+  font-family:var(--font-display); font-weight:300; line-height:1.25;
+  font-size:clamp(19px,3.1vw,32px); color:var(--ink);
+}
+ul.manifesto > li:first-child { border-top:1px solid var(--border) }
+ul.manifesto > li strong, ul.manifesto > li em {
+  font-family:inherit; font-weight:300; font-style:normal; color:var(--terra);
+}
+ul.manifesto > li .rest {
+  display:block; margin-top:5px;
+  font-family:var(--font-body); font-size:clamp(13px,1.7vw,15.5px);
+  line-height:1.5; color:var(--ink-2);
+}
+ul.manifesto > li code { font-size:0.8em }
+
+/* ── terminal with window chrome ── */
+.terminal {
+  width:100%; max-width:620px; border-radius:10px; overflow:hidden;
+  box-shadow:0 6px 28px rgba(24,16,10,0.16);
+}
+.terminal-chrome {
+  background:#2A1F14; padding:10px 14px; display:flex; align-items:center; gap:7px;
+}
+.terminal-chrome i { width:10px; height:10px; border-radius:50%; display:block }
+.terminal-chrome i:nth-child(1) { background:#FF5F56 }
+.terminal-chrome i:nth-child(2) { background:#FFBD2E }
+.terminal-chrome i:nth-child(3) { background:#27C93F }
+.terminal ul.term { border:none; border-radius:0; box-shadow:none; background:#1A130C }
+
+/* ── pixel creatures (sprites.js) ── */
+.sprite { image-rendering:pixelated; display:flex; align-items:center; justify-content:center; flex-shrink:0 }
+.sprite svg { display:block }
+
+/* slide 03 — one creature, the harness swapping underneath it */
+.swap {
+  display:flex; flex-direction:column; align-items:center;
+  gap:clamp(8px,1.4vw,14px); width:100%;
+}
+/* A row of species beside a stacked list of harnesses — deliberately not
+   aligned row-to-row, because species track model tier, not harness. */
+.swap-crew { display:flex; align-items:flex-end; gap:clamp(8px,1.4vw,18px) }
+.swap-crew .sprite { animation:bob 2.6s ease-in-out infinite }
+.swap-crew .sprite:nth-child(2) { animation-delay:0.45s }
+.swap-crew .sprite:nth-child(3) { animation-delay:0.9s }
+@media (max-width:640px) { .swap-crew .sprite:nth-child(3) { display:none } }
+.swap ul.chips { width:auto; flex-direction:row; justify-content:center; gap:8px }
+.swap ul.chips > li { white-space:nowrap }
+@keyframes bob { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-6px) } }
+
+/* slide 05 — two wolts either side of the transcript */
+.talk {
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(10px,2.4vw,26px); width:100%;
+}
+.talk .terminal { flex:1; min-width:0 }
+.talk .sprite { animation:bob 2.6s ease-in-out infinite }
+.talk .sprite:last-child { animation-delay:1.3s }
+@media (max-width:640px) {
+  .talk .sprite { display:none }
+  .swap { gap:10px }
+}
+
+/* ── a slide that is only a statement ── */
+h1.huge { font-size:clamp(44px,11vw,132px); line-height:1 }
+
+/* ── QR pair, for the closing slide ── */
+.qr-pair {
+  display:flex; gap:clamp(16px,3vw,34px); justify-content:center; align-items:stretch;
+  margin-top:clamp(14px,2.4vw,24px); flex-wrap:wrap;
+}
+.qr-pair figure {
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  background:var(--surface-2); border:1px solid var(--border);
+  border-radius:14px; padding:13px 13px 10px;
+  box-shadow:0 6px 26px rgba(24,16,10,0.14);
+}
+.qr-pair img {
+  width:clamp(92px,11vw,128px); height:auto; display:block;
+  background:#FFFFFF; padding:5px; border-radius:4px;
+  image-rendering:pixelated;
+}
+.qr-pair figcaption {
+  font-family:var(--font-mono); font-size:11px; font-weight:600;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--terra);
+}
+.qr-url {
+  font-family:var(--font-mono); font-size:clamp(9.5px,1vw,12px);
+  color:var(--ink-2); letter-spacing:0; margin-top:-2px;
+  white-space:nowrap;   /* a URL broken mid-word is unreadable and unquotable */
+}
+@media (max-width:640px) { .qr-pair img { width:88px } }
+
+/* ── a slide whose whole argument is one sentence over a short stack ── */
+.claim {
+  font-family:var(--font-display); font-weight:300; line-height:1.18;
+  font-size:clamp(24px,4.4vw,44px); color:var(--ink); max-width:24ch;
+}
+.claim .accent, .claim strong { color:var(--terra); font-weight:300 }
+
+.stack { display:flex; flex-direction:column; gap:2px; width:100% }
+.stack .line {
+  font-family:var(--font-display); font-weight:300; line-height:1.3;
+  font-size:clamp(19px,3.2vw,34px); color:var(--ink-2);
+  padding:9px 2px; border-bottom:1px solid var(--border);
+}
+.stack .line:first-child { border-top:1px solid var(--border) }
+.stack .line strong { font-weight:300; color:var(--terra) }
+
+/* ── enumerate on 04, then explain one per slide — the numbers tie them
+   together, and they come from CSS so they never drift from the order. ── */
+.stack.numbered { counter-reset:part }
+.stack.numbered .line {
+  counter-increment:part;
+  display:flex; align-items:baseline; gap:clamp(12px,2.2vw,22px);
+}
+.stack.numbered .line::before {
+  content:'0' counter(part);
+  font-family:var(--font-mono); font-weight:600;
+  font-size:clamp(12px,1.5vw,16px); color:var(--terra);
+  flex-shrink:0; min-width:2.4ch;
+}
+
+/* Each explain slide carries its number in the kicker. Set --step per slide. */
+.kicker.step::before {
+  content:'0' var(--step, '') '\a0\a0';
+  color:var(--terra); opacity:.55;
+}
+/* Long labels shouldn't wrap the row into three lines. */
+ul.timeline > li strong { text-wrap:balance }
+
+
+/* ── statement slide: one line, the wolts under it. No lodge scene — that
+   belongs to the title slide alone. ── */
+body.statement { justify-content:center }
+.statement-wrap {
+  flex:1; display:flex; align-items:center; justify-content:center;
+  gap:clamp(10px,1.8vw,26px);
+  position:relative; z-index:2; padding:2rem 1.6rem 5rem;
+  animation:fadeUp 0.7s ease both;
+}
+.statement-text {
+  display:flex; flex-direction:column; align-items:flex-start;
+  gap:clamp(10px,1.6vw,18px); text-align:left;
+}
+.statement-wrap .kicker { color:var(--terra) }
+.statement-line {
+  font-family:var(--font-display); font-weight:300; line-height:1.14;
+  font-size:clamp(28px,5.4vw,62px); color:var(--ink);
+  letter-spacing:-0.01em;
+  /* wraps into a block beside the wolt; balance keeps the lines even.
+     fit-content so the box hugs the longest line instead of reserving 13ch
+     and leaving a gap before the wolt. */
+  max-width:11.5ch; width:fit-content; text-wrap:balance;
+}
+/* Static on purpose: the bobbing and drifting are the lodge's, not this slide's. */
+.statement-wolt { flex-shrink:0 }
+@media (max-width:700px) {
+  .statement-wrap { flex-direction:column; gap:18px }
+  .statement-text { align-items:center; text-align:center }
+  .statement-line { max-width:18ch }
+}
