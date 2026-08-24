@@ -1,4 +1,7 @@
-# woltspace-deck
+# deck
+
+The woltspace presentation deck. Repo: `woltspace-deck`; the app is named `deck`,
+which is what puts it at `deck.woltspace.com`.
 
 A presentation tool built for woltspace. **Copy lives in `copy.md`; layout lives in the slide
 HTML.** The human writes words in one markdown file, a wolt builds the slides, and the browser
@@ -18,7 +21,7 @@ Inside woltspace the platform handles this — start the app from the lodge, nev
 command directly:
 
 ```bash
-curl -X POST http://localhost:7777/apps/woltspace-deck/start
+curl -X POST http://localhost:7777/apps/deck/start
 ```
 
 ## The copy layer

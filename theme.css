@@ -353,7 +353,13 @@ ul.manifesto > li code { font-size:0.8em }
   display:flex; align-items:center; justify-content:center; gap:clamp(14px,3vw,34px);
   width:100%; flex-wrap:wrap;
 }
-.swap .sprite { animation:bob 2.6s ease-in-out infinite }
+/* A row of species beside a stacked list of harnesses — deliberately not
+   aligned row-to-row, because species track model tier, not harness. */
+.swap-crew { display:flex; align-items:flex-end; gap:clamp(8px,1.4vw,18px) }
+.swap-crew .sprite { animation:bob 2.6s ease-in-out infinite }
+.swap-crew .sprite:nth-child(2) { animation-delay:0.45s }
+.swap-crew .sprite:nth-child(3) { animation-delay:0.9s }
+@media (max-width:640px) { .swap-crew .sprite:nth-child(3) { display:none } }
 .swap ul.chips { width:auto; flex-direction:column; align-items:flex-start; gap:6px }
 .swap .note { max-width:34ch; text-align:left }
 .swap ul.chips > li { white-space:nowrap }

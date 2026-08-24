@@ -1,6 +1,6 @@
 {
-  "name": "woltspace-deck",
-  "description": "Woltspace presentation deck \u2014 slides built by wolts, editable by humans",
+  "name": "deck",
+  "description": "Woltspace presentation deck \u2014 copy in copy.md, layout in the slides",
   "stack": "node",
   "port": 4010,
   "install": "npm install",

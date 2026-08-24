@@ -76,7 +76,7 @@ who can reach it** — Cloudflare Access still gates the hostname, so an audienc
 hits a login wall:
 
 ```bash
-curl -sI https://woltspace-deck.woltspace.com/ | head -1   # → 302 to cloudflareaccess.com
+curl -sI https://deck.woltspace.com/ | head -1   # → 302 to cloudflareaccess.com
 ```
 
 `"public": true` in `woltspace.json` only means "serve it on the subdomain". It
@@ -91,6 +91,14 @@ does not mean unauthenticated.
   `decks/`, and the server source are all refused; only known asset types under
   the deck directory are served.
 
+### Why the hostname is what it is
+
+The lodge routes `{app-name}.{domain}` to the app of that name. This app is
+named `deck` in `woltspace.json` **and its directory is `wolts/apps/deck`** —
+the directory name is what the router matches. That, and nothing else, is why
+it answers at `deck.woltspace.com`. Rename either and the hostname moves with
+it; no Cloudflare or DNS change is involved.
+
 ### The one step left, and it is yours
 
 Open the hostname with a bypass policy. A more specific hostname match wins over
@@ -101,7 +109,7 @@ the `*.woltspace.com` wildcard, so no other app is affected:
 APP=$(curl -s -X POST \
   "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/access/apps" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json" \
-  --data '{"name":"woltspace-deck-public","domain":"woltspace-deck.woltspace.com","type":"self_hosted","session_duration":"24h"}' \
+  --data '{"name":"deck-public","domain":"deck.woltspace.com","type":"self_hosted","session_duration":"24h"}' \
   | python3 -c "import json,sys; print(json.load(sys.stdin)['result']['id'])")
 
 curl -s -X POST \
@@ -146,4 +154,4 @@ Two things worth knowing rather than fixing:
 - Arrow keys or space to advance.
 - Copy lives in `copy.md` — edit it and the open slide reloads. You can fix a
   typo between slides if you have to.
-- Grid of all slides: <https://woltspace-deck.woltspace.com/>
+- Grid of all slides: <https://deck.woltspace.com/>
