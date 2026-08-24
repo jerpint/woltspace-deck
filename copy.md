@@ -44,17 +44,16 @@ harness and scaffold
 the unit
 
 ### heading
-A wolt is the identity that **persists** the harness.
+The wolt is the identity that **persists**
 
 ### lede
-Switch harnesses and it shouldn't matter. Same name, same memory, same skills —
-a different engine underneath.
+Switching harnesses **shouldn't** matter 
 
 ### cards
-- **identity** — a name, a species, a role. Twelve lines of `wolt.json`.
+- **identity** — a name, a role, a responsibility.
 - **memory** — files on disk that outlive every session.
 - **home** — its own directory, its own site, its own apps.
-- **harness** — the swappable part. One line of config.
+- **skills** — what the wolt can do inside woltspace
 
 ### chips
 - **claude** — opus-5
