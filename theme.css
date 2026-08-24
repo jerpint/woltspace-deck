@@ -377,7 +377,7 @@ h1.huge { font-size:clamp(44px,11vw,132px); line-height:1 }
 
 /* ── QR pair, for the closing slide ── */
 .qr-pair {
-  display:flex; gap:clamp(16px,3vw,34px); justify-content:center; align-items:flex-start;
+  display:flex; gap:clamp(16px,3vw,34px); justify-content:center; align-items:stretch;
   margin-top:clamp(14px,2.4vw,24px); flex-wrap:wrap;
 }
 .qr-pair figure {
@@ -394,6 +394,11 @@ h1.huge { font-size:clamp(44px,11vw,132px); line-height:1 }
 .qr-pair figcaption {
   font-family:var(--font-mono); font-size:11px; font-weight:600;
   letter-spacing:0.12em; text-transform:uppercase; color:var(--terra);
+}
+.qr-url {
+  font-family:var(--font-mono); font-size:clamp(9.5px,1vw,12px);
+  color:var(--ink-2); letter-spacing:0; margin-top:-2px;
+  white-space:nowrap;   /* a URL broken mid-word is unreadable and unquotable */
 }
 @media (max-width:640px) { .qr-pair img { width:88px } }
 

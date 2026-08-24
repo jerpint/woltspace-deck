@@ -43,7 +43,7 @@ the unit
 A wolt is the identity that **persists** the harness.
 
 ### lede
-Switch harnesses and it shouldn't matter. Same name, same memory, same home —
+Switch harnesses and it shouldn't matter. Same name, same memory, same skills —
 a different engine underneath.
 
 ### cards
