@@ -16,7 +16,15 @@ const TERMINATOR = /^(#{2,3}\s|---+\s*$)/;
 // ── parse ──────────────────────────────────────────────────────────────
 // ## slide-01-title      starts a slide block
 // ### heading            starts a field; content runs to the next ###/##
+// Notes to self live in <!-- ... -->. Stripped before anything is parsed, so a
+// comment can sit anywhere — between slides or inside a field — and can hold
+// text that would otherwise look like a heading.
+function stripComments(text) {
+  return text.replace(/<!--[\s\S]*?-->[ \t]*\n?/g, '');
+}
+
 function parseCopy(text) {
+  text = stripComments(text);
   const slides = {};
   let slide = null;
   let field = null;
@@ -145,12 +153,34 @@ function saveFields(slideName, fields) {
       console.log(`[copy] no such field: ${slideName}/${key}`);
       continue;
     }
-    lines.splice(span.start, span.end - span.start, ...value.split('\n'), '');
+    // Notes in this field are the author's, not the slide's — an in-browser
+    // edit replaces the words but must not throw the notes away.
+    const notes = extractComments(lines.slice(span.start, span.end));
+    lines.splice(span.start, span.end - span.start, ...notes, ...value.split('\n'), '');
     changed++;
   }
 
   fs.writeFileSync(COPY_FILE, lines.join('\n'));
   return changed;
+}
+
+// Pull whole <!-- ... --> blocks out of a field's lines, so they survive a
+// rewrite of that field.
+function extractComments(lines) {
+  const out = [];
+  let open = false;
+  for (const line of lines) {
+    if (open) {
+      out.push(line);
+      if (line.includes('-->')) open = false;
+      continue;
+    }
+    const starts = line.indexOf('<!--');
+    if (starts === -1) continue;
+    out.push(line);
+    if (!line.includes('-->', starts + 4)) open = true;
+  }
+  return out;
 }
 
 // Lines [start, end) hold the field's content (header excluded).
@@ -185,4 +215,6 @@ function renderSlide(html, slideName, copy) {
   );
 }
 
-module.exports = { COPY_FILE, loadCopy, parseCopy, renderSlide, renderField, htmlToMd, saveFields };
+module.exports = {
+  COPY_FILE, loadCopy, parseCopy, renderSlide, renderField, htmlToMd, saveFields, stripComments,
+};

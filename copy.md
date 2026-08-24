@@ -159,9 +159,6 @@ woltspace
 ### tagline
 The scaffold for your harnesses
 
-### subtitle
-Bring your own harness.
-
 ### note
 Scan either one. Both are live right now.
 
@@ -184,6 +181,10 @@ the project
   first half is the title, in a timeline row the second half becomes the pill.
 - In a terminal block, a line starting `$ ` is a command; anything else is
   output, and `**bold**` in output highlights green.
+
+`<!-- like this -->` is a note to yourself. Never shown on a slide, can go
+anywhere (between slides or inside a slot), can span lines, and survives an
+in-browser edit of the same slot.
 
 Delete a `### block` and that slot falls back to the placeholder baked into the
 template — so a half-written deck still reads.
