@@ -9,14 +9,14 @@ that proves the rest. Everything before it is setup for the demo, not a substitu
 
 | # | Slide | Budget | The one job |
 |---|-------|--------|-------------|
-| 01 | title | 0:20 | Say the line: *woltspace is the scaffold for harnesses.* |
-| 02 | thesis | 1:10 | Harnesses are solved; the layer around them isn't. |
-| 03 | anatomy | 1:20 | What a wolt is — and that three harnesses run here today. |
-| 04 | persistence | 0:50 | Sessions are disposable, wolts aren't. |
-| 05 | iwcl | 1:10 | Agents coordinating without an orchestrator holding both. |
-| 06 | reach | 1:00 | Apps that stay up; a terminal in your pocket. |
-| 07 | demo | 3:30 | Show it. Hand off and switch away. |
-| 08 | close | 0:40 | Repeat the line, point at the repo, take questions. |
+| 01 | title | 0:20 | Say the line: *woltspace — the scaffold for your harnesses.* |
+| 02 | thesis | 1:10 | Coding is more than one session: harness vs scaffold. |
+| 03 | wolts | 1:20 | What a wolt is — and that three harnesses run here today. |
+| 04 | woltspace | 1:00 | The four things the scaffold gives you. The map for 05–06. |
+| 05 | iwcl | 1:10 | Coordination — agents talking with no orchestrator holding both. |
+| 06 | reach | 0:50 | How you reach them: apps that stay up, a terminal in your pocket. |
+| 07 | terminal | 3:30 | Show it. Hand off and switch away. |
+| 08 | close | 0:40 | Repeat the line, point at the QRs, take questions. |
 | | | **10:00** | |
 
 Ten minutes exactly with no slack, which means it's really nine — a demo always
@@ -26,12 +26,16 @@ overruns. Plan for that.
 
 Cut in this order. Each cut is safe on its own; the story still lands.
 
-1. **04 persistence** — the demo shows memory surviving better than a slide can.
-2. **02 thesis** → fold into the title beat: "harnesses are solved, the scaffold isn't."
-3. **06 reach** → keep only the telegram card and say the rest over the demo.
+1. **06 reach** — slide 04 already names "how you reach them"; say the rest over the demo.
+2. **02 thesis** → fold into the title beat: harness versus scaffold, one sentence.
 
-Do **not** cut 03 or 05. Anatomy earns the word "wolt" (everything after depends
-on it) and IWCL is the part nobody else has.
+Do **not** cut 03, 04 or 05. 03 earns the word "wolt" (everything after depends
+on it), 04 is the map the back half hangs off, and IWCL is the part nobody else
+has.
+
+Note: 04 lists *persistence* as one of four pillars, so the deck no longer has a
+slide arguing it. If the demo doesn't show memory surviving a restart, that claim
+goes unproven.
 
 ## Demo
 
