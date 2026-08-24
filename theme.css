@@ -169,11 +169,19 @@ ul.term {
 
 @media (max-width:640px) {
   body { overflow-y:auto; align-items:flex-start }
-  .slide { padding:1.6rem 1.2rem 4.5rem; gap:1.2rem }
+  .slide { padding:1.6rem 1.2rem 1.4rem; gap:1.2rem }
+  ul.chips > li { font-size:11px; padding:4px 10px }
+  .swap ul.chips { gap:6px }
   ul.rows > li { flex-direction:column; gap:4px }
   ul.rows > li strong { min-width:0 }
-  .slide-nav { padding:0 1rem; bottom:1rem }
-  .slide-nav a { font-size:11px; padding:6px 12px }
+  /* On a phone the page scrolls, so a fixed nav floats over the content it is
+     meant to sit below. Put it in the flow instead. */
+  .slide-nav {
+    position:static; padding:0 1rem 1.4rem; margin-top:auto;
+    justify-content:center; gap:10px;
+  }
+  .slide-nav a { font-size:11px; padding:8px 14px }
+  .slide-nav .hidden { display:none }
 }
 
 /* ── hero slides (title / close): brand card floating over the forest scene ── */
@@ -350,8 +358,8 @@ ul.manifesto > li code { font-size:0.8em }
 
 /* slide 03 — one creature, the harness swapping underneath it */
 .swap {
-  display:flex; align-items:center; justify-content:center; gap:clamp(14px,3vw,34px);
-  width:100%; flex-wrap:wrap;
+  display:flex; flex-direction:column; align-items:center;
+  gap:clamp(8px,1.4vw,14px); width:100%;
 }
 /* A row of species beside a stacked list of harnesses — deliberately not
    aligned row-to-row, because species track model tier, not harness. */
@@ -360,8 +368,7 @@ ul.manifesto > li code { font-size:0.8em }
 .swap-crew .sprite:nth-child(2) { animation-delay:0.45s }
 .swap-crew .sprite:nth-child(3) { animation-delay:0.9s }
 @media (max-width:640px) { .swap-crew .sprite:nth-child(3) { display:none } }
-.swap ul.chips { width:auto; flex-direction:column; align-items:flex-start; gap:6px }
-.swap .note { max-width:34ch; text-align:left }
+.swap ul.chips { width:auto; flex-direction:row; justify-content:center; gap:8px }
 .swap ul.chips > li { white-space:nowrap }
 @keyframes bob { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-6px) } }
 
