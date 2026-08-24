@@ -204,7 +204,18 @@ body.hero { background:#B8D4E8; justify-content:center }
   margin-top:2px;
 }
 .brand-card .note { margin-top:6px }
-@media (max-width:640px) { .brand-card { padding:24px 28px 22px } }
+.brand-card.solo { gap:6px; padding:38px 60px 34px }
+/* One line under the name carries the whole slide, so it reads at subtitle
+   scale in sentence case — not the small mono caps used as an eyebrow. */
+.brand-card.solo .tagline {
+  font-family:var(--font-body); font-weight:300;
+  font-size:clamp(17px,2.7vw,27px); line-height:1.35;
+  letter-spacing:0; text-transform:none; color:var(--terra);
+}
+@media (max-width:640px) {
+  .brand-card { padding:24px 28px 22px }
+  .brand-card.solo { padding:26px 30px 24px }
+}
 
 /* ══════════════════════════════════════════════════════════════════════
    Components ported from the April 2026 deck (prwolt's) — rebuilt as

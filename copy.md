@@ -32,9 +32,6 @@ woltspace
 ### tagline
 The scaffold for your harnesses
 
-### subtitle
-Bring your own harness.
-
 ---
 
 ## slide-02-thesis
