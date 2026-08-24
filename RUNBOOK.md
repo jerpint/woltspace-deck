@@ -65,22 +65,31 @@ button isn't in the projection.
 
 ## Going public before the talk
 
-One of the talk's points is that these slides are served from inside woltspace,
-over the public internet. **That isn't true yet** — the deck currently sits behind
-Cloudflare Access, so an audience hits a login wall:
+One of the talk's points is that these slides are served from inside woltspace
+over the public internet. That is true of the container; it is **not yet true of
+who can reach it** — Cloudflare Access still gates the hostname, so an audience
+hits a login wall:
 
 ```bash
 curl -sI https://woltspace-deck.woltspace.com/ | head -1   # → 302 to cloudflareaccess.com
 ```
 
 `"public": true` in `woltspace.json` only means "serve it on the subdomain". It
-does **not** mean unauthenticated. The wildcard Access application
-(`woltspace-apps`, covering `*.woltspace.com`) gates every app subdomain to
-jerpint's email.
+does not mean unauthenticated.
 
-To open just this one, add a dedicated Access application for
-`woltspace-deck.woltspace.com` with a **bypass** policy — a more specific
-hostname match wins over the wildcard, so no other app is affected:
+### What is already done
+
+- **Read-only by default.** `DECK_READONLY=1` is in the app's start command, so
+  writes are refused and `/copy`, `/copy.md` and `GET /api/copy` do not exist.
+  Check it, don't assume it: `curl -s localhost:4010/api/status`.
+- **Static serving is an allowlist.** Dotfiles (`.git`), `node_modules/`,
+  `decks/`, and the server source are all refused; only known asset types under
+  the deck directory are served.
+
+### The one step left, and it is yours
+
+Open the hostname with a bypass policy. A more specific hostname match wins over
+the `*.woltspace.com` wildcard, so no other app is affected:
 
 ```bash
 # Needs CLOUDFLARE_ACCOUNT_ID + CLOUDFLARE_API_TOKEN from /workspace/wolts/.env
@@ -96,28 +105,35 @@ curl -s -X POST \
   --data '{"name":"public-bypass","decision":"bypass","include":[{"everyone":{}}]}'
 ```
 
-Delete that application afterwards to close it again.
+Delete that Access application afterwards to close it again. Keep the `$APP` id.
 
-### Read the deck's own writes first
+### Order on the day
 
-**The deck must go read-only at the same time.** Editing is unauthenticated —
-that's fine for a local tool, but a public deck with an open `/api/save` means
-anyone who finds the URL can rewrite the slides while you're standing in front
-of them. Restart with the flag set:
+1. Confirm read-only: `curl -s localhost:4010/api/status` → `"readonly":true`.
+2. Confirm the writes are refused: `POST /api/save` and `/api/copy` → 403.
+3. Open Access with the commands above.
+4. Load it from a **phone on cell data**, in a browser with no Access cookie —
+   your own laptop is already logged in and will pass either way.
+5. Talk. Then delete the Access application.
 
-```bash
-DECK_READONLY=1   # in the app env, then restart the app
-curl -X POST http://localhost:7777/apps/woltspace-deck/stop
-curl -X POST http://localhost:7777/apps/woltspace-deck/start
-```
+### What is exposed while it is open
 
-Read-only keeps auto-reload (so deckwolt can still push fixes from the terminal)
-but removes the edit controls and refuses every write. The server prints which
-mode it's in on startup — check the log rather than assuming.
+Only the deck: slide pages, `theme.css`, `scene.js`, `sprites.js`, the QR SVGs,
+and three read-only JSON endpoints (`/api/slides`, `/api/status`, `/api/hash`).
+`/api/status` reports the slide count and whether the deck is read-only — no
+paths, no secrets.
 
-**Order on the day:** go read-only → verify writes are refused → open Access →
-load the deck from a phone on cell data (not your wifi, and not a browser that
-already has the Access cookie) → talk. Close Access afterwards.
+The hostname reaches the lodge's app router, which scopes strictly by subdomain:
+lodge paths (`/apps`, `/tui`, `/wolt/...`) all 404 on the deck hostname, on GET
+and POST alike. Verified, including Host-header probes and encoded traversal.
+
+Two things worth knowing rather than fixing:
+
+- Slides carry **real session ids** (`codexw-grumpy-den-45be2b`). They identify
+  a session; acting on one needs lodge access, which the public hostname does
+  not grant. Harmless, but they are real names on a public page.
+- The deck's **content** becomes public: the copy, the QRs, and the fact this
+  lodge exists at `woltspace.com`. That is the point of the slide.
 
 ## Mechanics
 
