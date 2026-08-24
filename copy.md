@@ -36,20 +36,23 @@ The scaffold for your harnesses
 
 ## slide-02-thesis
 
+
+
+
 ### kicker
 the thesis
 
 ### heading
-The harness is the easy part now.
+Coding is more than just a single session
 
 ### manifesto
-- The **harness** is solved. — Claude Code, Codex, opencode. Pick one, it works.
-- The **scaffold** isn't. — Where the agent lives. What it remembers. How you reach it. How two of them talk.
-- So you build it *yourself*. — Every time. Per harness. And you throw it away when you switch.
+- The **harness** is what drives coding agents. — Claude Code, Codex, opencode inside a terminal
+- The **scaffold** is where the agents persist - Context. How you reach it. Compute it has access to 
+
 
 ---
 
-## slide-03-anatomy
+## slide-03-wolts
 
 ### kicker
 the unit
@@ -77,26 +80,18 @@ All three run in one lodge. The wolt doesn't notice.
 
 ---
 
-## slide-04-persistence
+## slide-04-woltspace
 
 ### kicker
-persistence
+Woltspace is the scaffold for your wolts
+
 
 ### heading
-Sessions die. Wolts don't.
+The compute layer
+How you reach them
+persistence
+coordination
 
-### lede
-A session ends on a timeout, an OOM, a closed laptop. That's normal — so the
-wolt's whole self is on disk, and the next session boots straight back into it.
-
-### rows
-- **identity.md** — who I am. Rewritten rarely.
-- **context.md** — what's live right now, what's next. Rewritten every session.
-- **learnings.md** — patterns that earned their place.
-- **archive/** — journals. Grows forever, searched when needed.
-
-### note
-Boot files get rewritten, not appended. That's the whole trick.
 
 ---
 
@@ -141,7 +136,7 @@ from this box over the public internet.
 
 ---
 
-## slide-07-demo
+## slide-07-terminal
 
 ### kicker
 live

@@ -92,8 +92,13 @@ function isList(value) {
   return lines.length > 0 && lines.every(l => /^\s*-\s+/.test(l));
 }
 
-function renderField(value) {
+function renderField(value, mode) {
   if (!value) return '';
+  if (mode === 'lines') {
+    return value.split('\n').map(l => l.trim()).filter(Boolean)
+      .map(l => `<span class="line">${inlineMd(l.replace(/^\s*-\s+/, ''))}</span>`)
+      .join('\n');
+  }
   if (isList(value)) {
     const items = value.split('\n').filter(l => l.trim())
       .map(l => l.replace(/^\s*-\s+/, ''));
@@ -107,7 +112,7 @@ function renderField(value) {
       // Requires a spaced em/en dash, so mid-sentence hyphens are safe — and
       // both halves must have balanced markers, or a dash sitting INSIDE an
       // emphasis span would cut it in half and leave literal asterisks.
-      const split = item.match(/^([\s\S]+?)\s+[—–]\s+([\s\S]+)$/);
+      const split = item.match(/^([\s\S]+?)\s+[—–-]\s+([\s\S]+)$/);
       if (split && balanced(split[1]) && balanced(split[2])) {
         return `<li>${inlineMd(split[1].trim())}` +
                `<span class="rest">${inlineMd(split[2].trim())}</span></li>`;
@@ -210,7 +215,8 @@ function renderSlide(html, slideName, copy) {
     /(<(\w+)\b[^>]*\bdata-copy="([\w-]+)"[^>]*>)([\s\S]*?)(<\/\2>)/g,
     (match, open, tag, key, fallback, close) => {
       if (!(key in fields)) return match;   // no copy yet — keep the placeholder
-      return open + renderField(fields[key]) + close;
+      const mode = (open.match(/\bdata-copy-mode="([\w-]+)"/) || [])[1];
+      return open + renderField(fields[key], mode) + close;
     }
   );
 }
