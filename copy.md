@@ -42,7 +42,23 @@ On your computer. Your wolt is the agent that works here.
 
 ---
 
-## slide-04-demo
+## slide-04-agents
+
+### kicker
+switch tools, keep your wolt
+
+### heading
+Same wolt. Your choice of agent.
+
+### agents
+Claude Code · Codex · OpenCode
+
+### note
+Switch agents. Keep your identity, memory, and apps.
+
+---
+
+## slide-05-demo
 
 ### kicker
 let’s see it
@@ -52,7 +68,7 @@ Build. Save. Reopen.
 
 ---
 
-## slide-05-github
+## slide-06-github
 
 ### kicker
 your wolt helps with github
@@ -70,7 +86,7 @@ GitHub keeps your code and its history.
 
 ---
 
-## slide-06-share
+## slide-07-share
 
 ### brand
 woltspace

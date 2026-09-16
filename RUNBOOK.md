@@ -1,7 +1,7 @@
 # You built an app. Now what?
 
 Audience: comfortable with coding agents, new to engineering workflows.
-Informal and demo-led. Six slides. Duration and demo app still to be confirmed.
+Informal and demo-led. Seven slides. Duration and demo app still to be confirmed.
 The slide text is deliberately sparse. These are talking points, not a script.
 
 ## 01: opener
@@ -29,14 +29,22 @@ Introduce the actual demo wolt by name and briefly show its workspace.
 Woltspace is the place, the wolt does the work, and the app is what you keep and use.
 Transition: "Let's ask a wolt to build something."
 
-## 04: demo
+## 04: same wolt, your choice of agent
+Claude Code, Codex, and OpenCode are the tools driving the coding agent.
+You can start a new session for the same wolt with a different tool.
+The wolt's identity, file-based memory, and app files remain in its workspace.
+This does not transfer the previous tool's entire chat history automatically.
+Use familiar tool names on the slide and explain "harness" aloud only if helpful.
+Transition: "Let's use one of them to build our app."
+
+## 05: demo
 Demo candidate, not yet selected: a tiny shared suggestion box.
 Ask for an app that saves records on disk. Add one record, refresh, close and reopen.
 Explain only what is visible: a screen, code handling the request, saved data.
 Have a working checkpoint ready. Prefer one small live improvement over waiting
 for an entire unprepared build. Do not create or publish a demo app until selected.
 
-## 05: GitHub and safe improvements
+## 06: GitHub and safe improvements
 Ask the wolt to save the working version to GitHub.
 Show one named checkpoint and the history. A commit is a saved code checkpoint;
 a push copies local commits to GitHub. GitHub stores code and history, not
@@ -51,7 +59,7 @@ Show the change, test it, then ask to merge if happy. A pull request is a place 
 review a proposed change on GitHub, if useful to show. The wolt handles commands;
 the human judges the result. Preserve existing data when changing the app.
 
-## 06: share and close
+## 07: share and close
 Share the chosen demo app only with the human's authorization.
 Open it on a phone and submit something. Show that record on the laptop.
 The computer serving the app needs to stay on and connected for others to reach it.
