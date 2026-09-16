@@ -121,7 +121,7 @@ and tagged — see [DECKS.md](DECKS.md).
 
 ## Today's local draft
 
-Branch `feat/apps-you-can-keep-2026-09-16` contains eight sparse slides for
+Branch `feat/apps-you-can-keep-2026-09-16` contains six sparse slides for
 **You built an app. Now what?** Speaking and demo notes are in RUNBOOK.md.
 The demo app and talk duration are still to be selected.
 

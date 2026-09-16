@@ -27,40 +27,22 @@ How do I share it?
 ## slide-03-woltspace
 
 ### kicker
-what is woltspace?
+meet woltspace
 
 ### heading
 A home for agents and apps.
 
 ### lede
-Bring the coding agent you already use.
+On your computer. Your wolt is the agent that works here.
 
 ### cards
-- On your computer
-- Apps you can revisit
-- Tools to run and share them
+- **A name** and a role
+- **Memory** across sessions
+- **A caretaker** for your app
 
 ---
 
-## slide-04-wolt
-
-### kicker
-meet your wolt
-
-### heading
-Your agent, with a name and a home.
-
-### lede
-Come back to the wolt working on your app.
-
-### cards
-- A role
-- Memory across sessions
-- Your app’s ongoing caretaker
-
----
-
-## slide-05-demo
+## slide-04-demo
 
 ### kicker
 let’s see it
@@ -70,43 +52,25 @@ Build. Save. Reopen.
 
 ---
 
-## slide-06-history
+## slide-05-github
 
 ### kicker
-save your work
+your wolt helps with github
 
 ### heading
-GitHub keeps the code’s history.
+Save it. Try a change. Keep what works.
 
 ### timeline
-- Save a working version
-- See what changed
-- Go back when you need to
+- **Save** a working version
+- **Branch** to try a change
+- **Review** it, then merge
 
 ### note
-Ask your wolt: “Save this version to GitHub.”
+GitHub keeps your code and its history.
 
 ---
 
-## slide-07-improve
-
-### kicker
-make it better
-
-### heading
-Try a change. Then decide.
-
-### timeline
-- Branch: try it separately
-- Review: see it and test it
-- Merge: keep the change
-
-### note
-Ask your wolt: “Try this on a branch. Show me before merging.”
-
----
-
-## slide-08-share
+## slide-06-share
 
 ### brand
 woltspace
