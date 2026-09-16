@@ -1,10 +1,10 @@
 {
-  "name": "woltspace-deck",
-  "description": "Woltspace presentation deck \u2014 slides built by wolts, editable by humans",
+  "name": "deck",
+  "description": "Woltspace presentation deck \u2014 copy in copy.md, layout in the slides",
   "stack": "node",
   "port": 4010,
   "install": "npm install",
-  "start": "node server.js --port $PORT",
+  "start": "DECK_READONLY=1 node server.js --port $PORT",
   "keeper": "deckwolt",
   "emoji": "\ud83c\udfac",
   "public": true
