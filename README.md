@@ -118,3 +118,22 @@ a deck built for 10 minutes is a different deck than one built for 30.
 
 The live deck's slides sit at the repo root. When a talk is done it gets archived under `decks/`
 and tagged — see [DECKS.md](DECKS.md).
+
+## Today's local draft
+
+Branch `feat/apps-you-can-keep-2026-09-16` contains seven sparse slides for
+**You built an app. Now what?** Speaking and demo notes are in RUNBOOK.md.
+The demo app and talk duration are still to be selected.
+
+Render a static copy for review without starting or publishing the app:
+
+```bash
+node scripts/render-static.cjs
+```
+
+This writes `dist/` with filled copy, relative navigation, a slide grid, and
+keyboard controls. The static copy has no editing or save endpoints. Re-render
+after changing copy.md. For the n00b viewport review, pass
+`/Users/jerpint/.woltspace/wolts/n00b/wolt/site/deck-today` as the output directory.
+
+All work on this draft stays local. Do not push this branch.
