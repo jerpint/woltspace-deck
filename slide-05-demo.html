@@ -8,53 +8,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
-<style>
-.demo-crew{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:20px}
-.demo-builder{animation:wolt-hop 1s ease-in-out infinite}
-.demo-app{display:grid;grid-template-columns:repeat(3,24px);gap:5px;padding:16px;border:2px solid var(--terra);border-radius:10px;background:var(--surface)}
-.demo-app i{width:24px;height:24px;background:var(--terra);animation:block-build 3s ease-in-out infinite;animation-delay:calc(var(--i)*.12s)}
-.demo-app i:nth-child(3n){background:var(--forest)}
-.demo-saved{font-family:var(--font-mono);font-size:20px;color:var(--forest);animation:saved-pop 3s ease-in-out infinite}
-.pixel-party{position:fixed;pointer-events:none;width:10px;height:10px;left:50%;top:55%;animation:pixel-burst 2.5s ease-out forwards;background:var(--terra);z-index:20}
-@keyframes wolt-hop{50%{transform:translateY(-10px) rotate(-4deg)}}
-@keyframes block-build{0%,10%{opacity:0;transform:translateY(-16px)}35%,85%{opacity:1;transform:translateY(0)}100%{opacity:0}}
-@keyframes saved-pop{0%,35%{opacity:.2;transform:scale(.9)}55%,90%{opacity:1;transform:scale(1)}100%{opacity:.2}}
-@keyframes pixel-burst{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}
-@media(prefers-reduced-motion:reduce){.demo-builder,.demo-app i,.demo-saved{animation:none}.pixel-party{display:none}}
-@media(max-width:600px){.demo-crew{gap:14px}.demo-saved{font-size:16px}}
-</style>
 </head>
 <body>
 <div class="slide">
   <div class="kicker" data-copy="kicker">live</div>
   <h1 class="huge" data-copy="heading">demo time.</h1>
-  <div class="demo-crew" aria-label="A raccoon builds an app and saves it">
-    <div class="sprite demo-builder" data-sprite="raccoon" data-px="5"></div>
-    <div class="demo-app" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i></div>
-    <div class="demo-saved">✓ saved!</div>
-  </div>
 </div>
 
 <nav class="slide-nav">
 <a href="slide-04-agents.html">&larr; prev</a>
 <a href="slide-06-github.html">next &rarr;</a>
 </nav>
-<script src="sprites.js"></script>
-<script>
-(function(){
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  function celebrate(){
-    for(var i=0;i<40;i++){
-      var p=document.createElement('i');p.className='pixel-party';
-      p.style.setProperty('--x',((Math.random()-.5)*innerWidth*.85)+'px');
-      p.style.setProperty('--y',((Math.random()-.7)*innerHeight*.8)+'px');
-      p.style.setProperty('--r',(Math.random()*540)+'deg');
-      p.style.background=['#C4531E','#C49432','#4D7152','#527B96'][i%4];
-      document.body.appendChild(p);setTimeout(function(el){el.remove()},2600,p);
-    }
-  }
-  celebrate();setInterval(celebrate,6500);
-})();
-</script>
 </body>
 </html>

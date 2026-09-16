@@ -1,7 +1,8 @@
 # You built an app. Now what?
 
 Audience: comfortable with coding agents, new to engineering workflows.
-Informal and demo-led. Seven slides. Duration and demo app still to be confirmed.
+Informal and demo-led. Seven slides. Presented on September 16, 2026 with the
+pricing playground demo; confirm duration and demo availability before reuse.
 The slide text is deliberately sparse. These are talking points, not a script.
 
 ## 01: opener
@@ -38,11 +39,12 @@ Use familiar tool names on the slide and explain "harness" aloud only if helpful
 Transition: "Let's use one of them to build our app."
 
 ## 05: demo
-Demo candidate, not yet selected: a tiny shared suggestion box.
-Ask for an app that saves records on disk. Add one record, refresh, close and reopen.
-Explain only what is visible: a screen, code handling the request, saved data.
-Have a working checkpoint ready. Prefer one small live improvement over waiting
-for an entire unprepared build. Do not create or publish a demo app until selected.
+The September 16 demo used the pricing playground: price, customers, fixed costs,
+revenue, profit, and break-even. It uses mock inputs and has no database.
+Have a working checkpoint ready and show one small live improvement, such as an
+annual-plan discount. Explain what the demo actually saves; do not imply that
+its inputs demonstrate durable record storage. For a persistence demo, use an app
+that explicitly saves records on disk and verify refresh and reopen behavior.
 
 ## 06: GitHub and safe improvements
 Ask the wolt to save the working version to GitHub.
@@ -50,7 +52,7 @@ Show one named checkpoint and the history. A commit is a saved code checkpoint;
 a push copies local commits to GitHub. GitHub stores code and history, not
 necessarily the database, secrets, or a running app. App data needs its own backups.
 The audience does not need to learn Git commands to ask for this workflow.
-These presentation files are committed locally only; do not push this branch.
+Keep the reusable presentation in GitHub and review future changes in a pull request.
 
 ### Safe improvements (same slide)
 Ask for one small feature on a branch. A branch is a separate version of the code
@@ -61,7 +63,8 @@ the human judges the result. Preserve existing data when changing the app.
 
 ## 07: share and close
 Share the chosen demo app only with the human's authorization.
-Open it on a phone and submit something. Show that record on the laptop.
+Open it on a phone and demonstrate the same app. If the chosen demo saves shared
+records, submit one and show it on the laptop.
 The computer serving the app needs to stay on and connected for others to reach it.
 The closing QRs point to Woltspace's source and website, not to the demo app.
 Repeat: keep it, improve it, share it.

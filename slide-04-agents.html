@@ -8,22 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Preahvihear&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
-<style>
-.portal-stage{position:relative;flex-shrink:0;width:260px;height:310px}
-.agent-portal{position:absolute;left:50%;width:150px;height:72px;transform:translateX(-50%);border:5px dashed var(--portal);border-radius:50%;box-shadow:0 0 22px color-mix(in srgb,var(--portal) 35%,transparent);animation:portal-orbit 3s linear infinite}
-.agent-portal:nth-child(1){top:12px;--portal:#C4531E}
-.agent-portal:nth-child(2){top:118px;--portal:#4D7152;animation-direction:reverse}
-.agent-portal:nth-child(3){top:224px;--portal:#527B96}
-.portal-traveler{position:absolute;left:50%;top:0;transform:translateX(-50%);animation:wolt-teleport 9s ease-in-out infinite;z-index:3}
-.portal-star{position:absolute;left:50%;top:50%;font-size:32px;color:var(--terra);animation:portal-star 4s ease-in-out infinite;pointer-events:none}
-.portal-star:nth-of-type(5){left:8%;top:20%;animation-delay:1s;color:#4D7152}
-.portal-star:nth-of-type(6){left:84%;top:75%;animation-delay:2s;color:#527B96}
-@keyframes portal-orbit{50%{transform:translateX(-50%) rotate(12deg) scale(1.12)}100%{transform:translateX(-50%) rotate(0deg)}}
-@keyframes wolt-teleport{0%,24%{transform:translate(-50%,-8px) scale(1) rotate(-5deg)}30%{transform:translate(-50%,15px) scale(0) rotate(180deg)}34%,57%{transform:translate(-50%,98px) scale(1) rotate(5deg)}63%{transform:translate(-50%,122px) scale(0) rotate(-180deg)}67%,90%{transform:translate(-50%,204px) scale(1) rotate(-5deg)}96%{transform:translate(-50%,226px) scale(0) rotate(180deg)}100%{transform:translate(-50%,-8px) scale(1) rotate(-5deg)}}
-@keyframes portal-star{0%,100%{transform:scale(.3) rotate(0);opacity:.2}50%{transform:scale(1.2) rotate(180deg);opacity:1}}
-@media(max-width:700px){.portal-stage{zoom:.65}}
-@media(prefers-reduced-motion:reduce){.agent-portal,.portal-traveler,.portal-star{animation:none}}
-</style>
 </head>
 <body class="statement">
 <div class="statement-wrap">
@@ -33,11 +17,7 @@
     <p class="lede" data-copy="agents"></p>
     <div class="note" data-copy="note"></div>
   </div>
-  <div class="portal-stage" role="img" aria-label="The same raccoon teleports between three coding agent portals">
-    <div class="agent-portal"></div><div class="agent-portal"></div><div class="agent-portal"></div>
-    <div class="sprite portal-traveler" data-sprite="raccoon" data-px="5"></div>
-    <span class="portal-star" aria-hidden="true">✦</span><span class="portal-star" aria-hidden="true">✦</span><span class="portal-star" aria-hidden="true">✦</span>
-  </div>
+  <div class="sprite statement-wolt" data-sprite="beaver" data-px="7"></div>
 </div>
 
 <nav class="slide-nav">
