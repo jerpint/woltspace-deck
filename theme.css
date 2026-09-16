@@ -484,3 +484,11 @@ body.statement { justify-content:center }
   .statement-text { align-items:center; text-align:center }
   .statement-line { max-width:18ch }
 }
+
+/* Supporting copy stays readable when the deck is projected. */
+.kicker { font-size:clamp(14px,1.5vw,17px); letter-spacing:0.12em }
+.note { font-size:clamp(15px,1.7vw,19px) }
+.slide.tight .lede { font-size:clamp(17px,2vw,21px) }
+ul.cards > li { font-size:clamp(17px,1.8vw,20px) }
+.qr-pair figcaption { font-size:clamp(14px,1.5vw,17px) }
+.qr-url { font-size:clamp(12px,1.2vw,15px) }
